@@ -1,0 +1,29 @@
+backend:
+  name: test-repo
+
+local_backend: true
+
+media_folder: "public/uploads"
+public_folder: "/uploads"
+
+collections:
+  - name: "notices"
+    label: "공지사항"
+    folder: "src/content/notices"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    fields:
+      - { label: "제목", name: "title", widget: "string" }
+      - { label: "팝업으로 띄우기", name: "popup", widget: "boolean", default: false }
+      - { label: "본문", name: "body", widget: "markdown" }
+
+  - name: "board"
+    label: "게시판"
+    folder: "src/content/board"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    fields:
+      - { label: "카테고리", name: "category", widget: "select", options: ["공지", "가정통신문", "행사"] }
+      - { label: "제목", name: "title", widget: "string" }
+      - { label: "작성일", name: "date", widget: "datetime" }
+      - { label: "본문", name: "body", widget: "markdown" }

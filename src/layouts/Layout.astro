@@ -1,14 +1,36 @@
+---
+const { title = '제주 발도르프 킨더' } = Astro.props;
+---
+
 <!doctype html>
-<html lang="en">
+<html lang="ko">
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="generator" content={Astro.generator} />
-		<title>Astro Basics</title>
+		<title>{title}</title>
 	</head>
+
 	<body>
-		<slot />
+		<header>
+			<nav>
+				<a href="/">Home</a>
+				<a href="/about/">킨더 소개</a>
+				<a href="/waldorf/">발도르프 교육이란</a>
+				<a href="/admission/">입학 문의</a>
+				<a href="/notices/">공지사항</a>
+				<a href="/board/">게시판</a>
+			</nav>
+		</header>
+
+		<main>
+			<slot />
+		</main>
+
+		<footer>
+			<p>© {new Date().getFullYear()} 제주 발도르프 킨더</p>
+		</footer>
 	</body>
 </html>
 
@@ -18,5 +40,28 @@
 		margin: 0;
 		width: 100%;
 		height: 100%;
+		font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+	}
+
+	header {
+		padding: 16px 24px;
+		border-bottom: 1px solid #eee;
+	}
+
+	nav a {
+		margin-right: 16px;
+		text-decoration: none;
+		color: #333;
+	}
+
+	main {
+		padding: 32px 24px;
+	}
+
+	footer {
+		padding: 24px;
+		border-top: 1px solid #eee;
+		font-size: 14px;
+		color: #666;
 	}
 </style>

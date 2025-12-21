@@ -1,0 +1,37 @@
+---
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('board');
+  return posts.map((p) => ({
+    params: { slug: p.slug },
+    props: { entry: p },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await entry.render();
+---
+
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{entry.data.title}</title>
+  </head>
+  <body>
+    <h1>{entry.data.title}</h1>
+
+    <p>
+      {entry.data.category ? <strong>{entry.data.category}</strong> : null}
+      {entry.data.date ? <span> · {new Date(entry.data.date).toLocaleDateString('ko-KR')}</span> : null}
+    </p>
+
+    <article>
+      <Content />
+    </article>
+
+    <p><a href="/board/">← 게시판 목록</a></p>
+  </body>
+</html>

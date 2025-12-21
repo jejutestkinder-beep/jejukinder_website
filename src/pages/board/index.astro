@@ -1,0 +1,36 @@
+---
+import { getCollection } from 'astro:content';
+const posts = await getCollection('board');
+
+// 최신순 정렬(날짜가 있으면 날짜 기준, 없으면 그대로)
+posts.sort((a, b) => {
+  const ad = a.data.date ? new Date(a.data.date).getTime() : 0;
+  const bd = b.data.date ? new Date(b.data.date).getTime() : 0;
+  return bd - ad;
+});
+---
+
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>게시판</title>
+  </head>
+  <body>
+    <h1>게시판</h1>
+    <p>총 글 수: {posts.length}</p>
+
+    <ul>
+      {posts.map((p) => (
+        <li>
+          <a href={`/board/${p.slug}/`}>{p.data.title}</a>
+          {p.data.category ? <span> · {p.data.category}</span> : null}
+          {p.data.date ? <span> · {new Date(p.data.date).toLocaleDateString('ko-KR')}</span> : null}
+        </li>
+      ))}
+    </ul>
+
+    <p><a href="/">← 홈</a></p>
+  </body>
+</html>

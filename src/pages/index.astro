@@ -1,11 +1,219 @@
 ---
-import Welcome from '../components/Welcome.astro';
 import Layout from '../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+const notices = await getCollection('notices');
+
+// popup: true 인 공지들만
+const popupCandidates = notices
+  .filter((n) => n.data.popup === true)
+  // (선택) popup_until이 있으면 만료된 건 제외
+  .filter((n) => {
+    const anyData = n.data as any;
+    const until = anyData.popup_until;
+    if (!until) return true;
+    // until이 Date로 들어오도록 schema를 z.coerce.date()로 해뒀다면 Date일 것
+    try {
+      const untilMs = until instanceof Date ? until.getTime() : new Date(until).getTime();
+      return Date.now() <= untilMs;
+    } catch {
+      return true;
+    }
+  });
+
+// 최신 1개 선택: slug가 "YYYY-MM-DD-..." 형태면 문자열 내림차순이 최신
+popupCandidates.sort((a, b) => (a.slug < b.slug ? 1 : a.slug > b.slug ? -1 : 0));
+
+const popupNotice = popupCandidates[0] ?? null;
+
+let PopupContent: any = null;
+if (popupNotice) {
+  const rendered = await popupNotice.render();
+  PopupContent = rendered.Content;
+}
 ---
 
-<Layout>
-	<Welcome />
+<Layout title="제주 발도르프 킨더">
+  {popupNotice && (
+    <>
+      <!-- 팝업 오버레이 -->
+      <div id="popup-overlay" class="popup-overlay" style="display: none;">
+        <div class="popup-modal" role="dialog" aria-modal="true" aria-label="공지 팝업">
+          <div class="popup-header">
+            <strong class="popup-title">{popupNotice.data.title}</strong>
+            <button id="popup-close" class="popup-close" type="button" aria-label="닫기">✕</button>
+          </div>
+
+          <div class="popup-body">
+            <PopupContent />
+          </div>
+
+          <div class="popup-actions">
+            <button id="popup-hide-today" class="popup-btn" type="button">오늘 하루 보지 않기</button>
+            <button id="popup-close-2" class="popup-btn primary" type="button">닫기</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 홈에서만 실행되는 팝업 스크립트 -->
+      <script is:inline define:vars={{ slug: popupNotice.slug }}>
+        document.addEventListener("DOMContentLoaded", () => {
+          const overlay = document.getElementById("popup-overlay");
+
+          if (!overlay) return;
+
+          const todayKey = new Date().toISOString().slice(0, 10); // YYYY-MM-DD
+          const storageKey = `kinder_popup_hide_${slug}`;
+
+          const hide = () => {
+            overlay.style.display = "none";
+            document.body.style.overflow = "";
+          };
+
+          const show = () => {
+            overlay.removeAttribute("hidden");
+            overlay.style.display = "flex";
+            document.body.style.overflow = "hidden";
+          };
+
+          // 오늘 숨김 처리 체크
+          const stored = localStorage.getItem(storageKey);
+          if (stored === todayKey) {
+            hide();
+            return;
+          }
+
+          // 처음 표시
+          show();
+
+          // 닫기 버튼들
+          const closeBtn1 = document.getElementById("popup-close");
+          const closeBtn2 = document.getElementById("popup-close-2");
+          const hideTodayBtn = document.getElementById("popup-hide-today");
+
+          if (closeBtn1) {
+            closeBtn1.addEventListener("click", () => {
+              hide();
+            });
+          }
+
+          if (closeBtn2) {
+            closeBtn2.addEventListener("click", () => {
+              hide();
+            });
+          }
+
+          if (hideTodayBtn) {
+            hideTodayBtn.addEventListener("click", () => {
+              localStorage.setItem(storageKey, todayKey);
+              hide();
+            });
+          }
+
+          // 바깥(오버레이) 클릭하면 닫기
+          overlay.addEventListener("click", (e) => {
+            if (e.target === overlay) {
+              hide();
+            }
+          });
+
+          // ESC로 닫기
+          document.addEventListener("keydown", (e) => {
+            if (e.key === "Escape") hide();
+          });
+        });
+      </script>
+    </>
+  )}
+
+  <!-- ======= 홈 콘텐츠 ======= -->
+  <section>
+    <h2>아이들이 꽃처럼 피어나는 곳</h2>
+    <h1>제주 발도르프 킨더</h1>
+    <a href="/admission/">입학 문의</a>
+  </section>
+
+  <section>
+    <h1>아름다운 공간에서</h1>
+    <div>이미지 3개</div>
+  </section>
+
+  <section>
+    <h1>예술적인 교육을</h1>
+    <div>이미지 3개</div>
+  </section>
+
+  <section>
+    <h1>자연과 더불어</h1>
+    <div>이미지 3개</div>
+  </section>
+
+  <section>
+    <h1>킨더 입학 문의</h1>
+    <a href="/admission/">문의하기</a>
+  </section>
+
+  <style>
+    .popup-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.45);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      z-index: 9999;
+    }
+    .popup-modal {
+      width: min(720px, 100%);
+      background: white;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.25);
+    }
+    .popup-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 16px 18px;
+      border-bottom: 1px solid #eee;
+    }
+    .popup-title {
+      font-size: 16px;
+    }
+    .popup-close {
+      border: 0;
+      background: transparent;
+      font-size: 18px;
+      cursor: pointer;
+      padding: 6px 8px;
+      line-height: 1;
+    }
+    .popup-body {
+      padding: 16px 18px;
+      max-height: 55vh;
+      overflow: auto;
+    }
+    .popup-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+      padding: 14px 18px;
+      border-top: 1px solid #eee;
+    }
+    .popup-btn {
+      border: 1px solid #ddd;
+      background: #fff;
+      padding: 10px 12px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+    .popup-btn.primary {
+      border-color: #222;
+      background: #222;
+      color: white;
+    }
+  </style>
 </Layout>
