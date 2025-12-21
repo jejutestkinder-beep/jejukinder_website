@@ -138,10 +138,12 @@ if (popupNotice) {
 
   <!-- ======= 홈 콘텐츠 ======= -->
   <section class="hero-section">
-    <h2>아이들이 꽃처럼 피어나는 곳</h2>
-    <h1>제주 발도르프 킨더</h1>
     <img src={mainImage.src} alt="제주 발도르프 킨더" class="hero-image" />
-    <a href="/admission/">입학 문의</a>
+    <div class="hero-content">
+      <h2>아이들이 꽃처럼 피어나는 곳</h2>
+      <h1>제주 발도르프 킨더</h1>
+      <a href="/admission/" class="hero-cta">입학 문의</a>
+    </div>
   </section>
 
   <section class="image-section">
@@ -178,15 +180,78 @@ if (popupNotice) {
 
   <style>
     .hero-section {
-      text-align: center;
-      padding: 60px 24px;
+      position: relative;
+      width: 100%;
+      overflow: hidden;
     }
     .hero-image {
       width: 100%;
-      max-width: 1200px;
-      height: auto;
-      margin: 40px 0;
-      border-radius: 12px;
+      height: 100vh;
+      min-height: 600px;
+      object-fit: cover;
+      display: block;
+    }
+    .hero-content {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+      color: white;
+      z-index: 1;
+      width: 100%;
+      padding: 0 24px;
+    }
+    .hero-content h2 {
+      margin: 0 0 16px 0;
+      font-size: 1.5rem;
+      color: white;
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    }
+    .hero-content h1 {
+      margin: 0 0 32px 0;
+      font-size: 3rem;
+      color: white;
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    }
+    .hero-cta {
+      display: inline-block;
+      padding: 14px 32px;
+      background: #222;
+      color: white;
+      text-decoration: none;
+      border-radius: 8px;
+      font-size: 1.1rem;
+      transition: background 0.2s;
+    }
+    .hero-cta:hover {
+      background: #444;
+    }
+    .hero-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.3);
+      z-index: 0;
+    }
+    
+    @media (max-width: 768px) {
+      .hero-image {
+        min-height: 500px;
+      }
+      .hero-content h2 {
+        font-size: 1.2rem;
+      }
+      .hero-content h1 {
+        font-size: 2rem;
+      }
+      .hero-cta {
+        padding: 12px 24px;
+        font-size: 1rem;
+      }
     }
     .image-section {
       padding: 60px 24px;
