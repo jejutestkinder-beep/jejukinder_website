@@ -33,39 +33,47 @@ const { title = '제주 발도르프 킨더' } = Astro.props;
 			<p>© {new Date().getFullYear()} 제주 발도르프 킨더</p>
 		</footer>
 		<script is:inline>
-  (function () {
-    // 위젯 로드 안 됐으면 끝
-    if (!window.netlifyIdentity) return;
+			(function () {
+				// Netlify Identity 위젯이 로드될 때까지 대기
+				function waitForIdentity() {
+					if (!window.netlifyIdentity) {
+						setTimeout(waitForIdentity, 50);
+						return;
+					}
 
-    function handleToken() {
-      const hash = window.location.hash || "";
+					const hash = window.location.hash || "";
+					const hasToken =
+						hash.includes("invite_token=") ||
+						hash.includes("recovery_token=") ||
+						hash.includes("confirmation_token=");
 
-      // Netlify Identity 이메일 링크는 보통 이런 hash를 달고 옴:
-      // #invite_token=...
-      // #recovery_token=...
-      // #confirmation_token=...
-      const hasIdentityToken =
-        hash.includes("invite_token=") ||
-        hash.includes("recovery_token=") ||
-        hash.includes("confirmation_token=");
+					if (!hasToken) return;
 
-      if (!hasIdentityToken) return;
+					// admin 페이지가 아니면 admin으로 리다이렉트
+					if (!window.location.pathname.startsWith("/admin/")) {
+						window.location.href = "/admin/" + hash;
+						return;
+					}
 
-      // admin 페이지가 아니면 admin으로 리다이렉트
-      if (!window.location.pathname.startsWith("/admin/")) {
-        window.location.href = "/admin/" + hash;
-        return;
-      }
+					// admin 페이지에서 토큰 처리
+					function handleToken() {
+						if (hash.includes("invite_token=") || hash.includes("recovery_token=")) {
+							window.netlifyIdentity.open("signup");
+						} else {
+							window.netlifyIdentity.open();
+						}
+					}
 
-      // admin 페이지에 있으면 위젯 열기
-      window.netlifyIdentity.open();
-    }
+					window.netlifyIdentity.on("init", handleToken);
+					window.netlifyIdentity.init();
 
-    window.netlifyIdentity.on("init", handleToken);
-    // init이 이미 끝났을 수도 있어서 한 번 더
-    setTimeout(handleToken, 0);
-  })();
-</script>
+					// init이 이미 완료되었을 수 있으므로 한 번 더 확인
+					setTimeout(handleToken, 100);
+				}
+
+				waitForIdentity();
+			})();
+		</script>
 	</body>
 </html>
 

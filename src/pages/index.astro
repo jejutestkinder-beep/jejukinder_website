@@ -179,12 +179,12 @@ if (popupNotice) {
   </section>
 
   <style>
+    /* Hero Section */
     .hero-section {
       position: relative;
-      width: 100%;
-      overflow: hidden;
-      margin: -32px -24px;
       width: calc(100% + 48px);
+      margin: -32px -24px;
+      overflow: hidden;
     }
     .hero-image {
       width: 100%;
@@ -198,22 +198,20 @@ if (popupNotice) {
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
+      width: 100%;
+      padding: 0 24px;
       text-align: center;
       color: white;
       z-index: 1;
-      width: 100%;
-      padding: 0 24px;
     }
     .hero-content h2 {
       margin: 0 0 16px 0;
       font-size: 1.5rem;
-      color: white;
       text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
     }
     .hero-content h1 {
       margin: 0 0 32px 0;
       font-size: 3rem;
-      color: white;
       text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
     }
     .hero-cta {
@@ -239,26 +237,8 @@ if (popupNotice) {
       background: rgba(0, 0, 0, 0.3);
       z-index: 0;
     }
-    
-    @media (max-width: 768px) {
-      .hero-section {
-        margin: -32px -24px;
-        width: calc(100% + 48px);
-      }
-      .hero-image {
-        min-height: 500px;
-      }
-      .hero-content h2 {
-        font-size: 1.2rem;
-      }
-      .hero-content h1 {
-        font-size: 2rem;
-      }
-      .hero-cta {
-        padding: 12px 24px;
-        font-size: 1rem;
-      }
-    }
+
+    /* Image Sections */
     .image-section {
       padding: 60px 24px;
       text-align: center;
@@ -273,12 +253,6 @@ if (popupNotice) {
       max-width: 1200px;
       margin: 0 auto;
     }
-    
-    @media (max-width: 768px) {
-      .image-grid {
-        grid-template-columns: 1fr;
-      }
-    }
     .image-grid img {
       width: 100%;
       aspect-ratio: 4 / 3;
@@ -286,17 +260,8 @@ if (popupNotice) {
       border-radius: 12px;
       display: block;
     }
-    .image-placeholder {
-      width: 100%;
-      height: 300px;
-      background: #f0f0f0;
-      border-radius: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #999;
-    }
 
+    /* Popup */
     .popup-overlay {
       position: fixed;
       inset: 0;
@@ -357,6 +322,30 @@ if (popupNotice) {
       border-color: #222;
       background: #222;
       color: white;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .hero-section {
+        margin: -32px -24px;
+        width: calc(100% + 48px);
+      }
+      .hero-image {
+        min-height: 500px;
+      }
+      .hero-content h2 {
+        font-size: 1.2rem;
+      }
+      .hero-content h1 {
+        font-size: 2rem;
+      }
+      .hero-cta {
+        padding: 12px 24px;
+        font-size: 1rem;
+      }
+      .image-grid {
+        grid-template-columns: 1fr;
+      }
     }
   </style>
 </Layout>
