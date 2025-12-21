@@ -183,6 +183,8 @@ if (popupNotice) {
       position: relative;
       width: 100%;
       overflow: hidden;
+      margin: -32px -24px;
+      width: calc(100% + 48px);
     }
     .hero-image {
       width: 100%;
@@ -239,6 +241,10 @@ if (popupNotice) {
     }
     
     @media (max-width: 768px) {
+      .hero-section {
+        margin: -32px -24px;
+        width: calc(100% + 48px);
+      }
       .hero-image {
         min-height: 500px;
       }

@@ -37,7 +37,7 @@ const { title = '제주 발도르프 킨더' } = Astro.props;
     // 위젯 로드 안 됐으면 끝
     if (!window.netlifyIdentity) return;
 
-    function openIfTokenPresent() {
+    function handleToken() {
       const hash = window.location.hash || "";
 
       // Netlify Identity 이메일 링크는 보통 이런 hash를 달고 옴:
@@ -51,13 +51,19 @@ const { title = '제주 발도르프 킨더' } = Astro.props;
 
       if (!hasIdentityToken) return;
 
-      // 위젯 열기 (비번 설정/리셋 모달이 떠야 정상)
+      // admin 페이지가 아니면 admin으로 리다이렉트
+      if (!window.location.pathname.startsWith("/admin/")) {
+        window.location.href = "/admin/" + hash;
+        return;
+      }
+
+      // admin 페이지에 있으면 위젯 열기
       window.netlifyIdentity.open();
     }
 
-    window.netlifyIdentity.on("init", openIfTokenPresent);
+    window.netlifyIdentity.on("init", handleToken);
     // init이 이미 끝났을 수도 있어서 한 번 더
-    setTimeout(openIfTokenPresent, 0);
+    setTimeout(handleToken, 0);
   })();
 </script>
 	</body>
