@@ -9,6 +9,7 @@ const { title = '제주 발도르프 킨더' } = Astro.props;
 		<meta name="viewport" content="width=device-width" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="generator" content={Astro.generator} />
+		<script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
 		<title>{title}</title>
 	</head>
 
@@ -31,6 +32,34 @@ const { title = '제주 발도르프 킨더' } = Astro.props;
 		<footer>
 			<p>© {new Date().getFullYear()} 제주 발도르프 킨더</p>
 		</footer>
+		<script is:inline>
+  (function () {
+    // 위젯 로드 안 됐으면 끝
+    if (!window.netlifyIdentity) return;
+
+    function openIfTokenPresent() {
+      const hash = window.location.hash || "";
+
+      // Netlify Identity 이메일 링크는 보통 이런 hash를 달고 옴:
+      // #invite_token=...
+      // #recovery_token=...
+      // #confirmation_token=...
+      const hasIdentityToken =
+        hash.includes("invite_token=") ||
+        hash.includes("recovery_token=") ||
+        hash.includes("confirmation_token=");
+
+      if (!hasIdentityToken) return;
+
+      // 위젯 열기 (비번 설정/리셋 모달이 떠야 정상)
+      window.netlifyIdentity.open();
+    }
+
+    window.netlifyIdentity.on("init", openIfTokenPresent);
+    // init이 이미 끝났을 수도 있어서 한 번 더
+    setTimeout(openIfTokenPresent, 0);
+  })();
+</script>
 	</body>
 </html>
 
