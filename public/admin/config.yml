@@ -1,6 +1,9 @@
 backend:
   name: git-gateway
+  repo: jejutestkinder-beep/jejukinder_website
   branch: main
+  base_url: https://chipper-lebkuchen-cc3872.netlify.app
+  auth_endpoint: /.netlify/functions/auth
 
 publish_mode: editorial_workflow
 
