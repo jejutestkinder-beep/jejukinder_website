@@ -11,7 +11,7 @@ exports.handler = async (event) => {
     const client_id = process.env.GITHUB_CLIENT_ID;
     const client_secret = process.env.GITHUB_CLIENT_SECRET;
   
-    const res = await fetch("https://github.com/login/oauth/access_token", {
+    const tokenRes = await fetch("https://github.com/login/oauth/access_token", {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -24,7 +24,7 @@ exports.handler = async (event) => {
       }),
     });
   
-    const data = await res.json();
+    const data = await tokenRes.json();
   
     if (!data.access_token) {
       return {
@@ -33,10 +33,13 @@ exports.handler = async (event) => {
       };
     }
   
+    // 🔑 절대 URL로 /admin 리다이렉트
+    const siteUrl = "https://chipper-lebkuchen-cc3872.netlify.app";
+  
     return {
       statusCode: 302,
       headers: {
-        Location: `/admin/#access_token=${data.access_token}&token_type=bearer`,
+        Location: `${siteUrl}/admin/#access_token=${data.access_token}&token_type=bearer`,
         "Cache-Control": "no-cache",
       },
       body: "",
