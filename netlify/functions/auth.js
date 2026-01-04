@@ -1,10 +1,31 @@
 exports.handler = async (event) => {
 	const code = event.queryStringParameters?.code;
+	const provider = event.queryStringParameters?.provider;
+	const site_id = event.queryStringParameters?.site_id;
+	const scope = event.queryStringParameters?.scope;
 
+	// code가 없으면 GitHub 인증 페이지로 리다이렉트
 	if (!code) {
+		const client_id = process.env.GITHUB_CLIENT_ID;
+		if (!client_id) {
+			return {
+				statusCode: 500,
+				body: JSON.stringify({ error: "GITHUB_CLIENT_ID not configured" }),
+			};
+		}
+
+		const protocol = event.headers['x-forwarded-proto'] || 'https';
+		const host = event.headers.host;
+		const redirect_uri = `${protocol}://${host}${event.path}`;
+		const githubAuthUrl = `https://github.com/login/oauth/authorize?client_id=${client_id}&redirect_uri=${encodeURIComponent(redirect_uri)}&scope=${scope || 'repo'}`;
+
 		return {
-			statusCode: 400,
-			body: JSON.stringify({ error: "Missing code parameter" }),
+			statusCode: 302,
+			headers: {
+				Location: githubAuthUrl,
+				"Cache-Control": "no-cache",
+			},
+			body: "",
 		};
 	}
 
