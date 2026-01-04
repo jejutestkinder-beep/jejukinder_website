@@ -2,7 +2,6 @@ backend:
   name: github
   repo: jejutestkinder-beep/jejukinder_website
   branch: main
-  auth_endpoint: https://chipper-lebkuchen-cc3872.netlify.app/.netlify/functions/auth
 
 
 publish_mode: editorial_workflow
