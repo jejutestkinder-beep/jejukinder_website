@@ -16,34 +16,69 @@ const { title = '제주 발도르프 킨더' } = Astro.props;
 	<body>
 		<header>
 			<nav class="main-nav">
-				<div class="nav-item">
-					<a href="/" class="nav-link">제주 발도르프 어린이집</a>
+				<div class="nav-item logo-item">
+					<a href="/" class="logo-link">
+						<img src="/src/assets/waldorf-logo.png" alt="제주 발도르프 어린이집" class="nav-logo">
+					</a>
 				</div>
-				<div class="nav-item dropdown">
-					<a href="/about/" class="nav-link">어린이집 소개</a>
-					<div class="dropdown-menu">
+				<div class="desktop-nav">
+					<div class="nav-item dropdown">
+						<a href="/about/" class="nav-link">어린이집 소개</a>
+						<div class="dropdown-menu">
+							<a href="/about/philosophy/">운영 철학</a>
+							<a href="/about/status/">현황</a>
+						</div>
+					</div>
+					<div class="nav-item dropdown">
+						<a href="/waldorf/" class="nav-link">발도르프란?</a>
+						<div class="dropdown-menu">
+							<a href="/waldorf/education/">발도르프 유아 교육</a>
+							<a href="/waldorf/rhythm/">어린이집 리듬 생활</a>
+						</div>
+					</div>
+					<div class="nav-item">
+						<a href="/contact/" class="nav-link">문의하기</a>
+					</div>
+					<div class="nav-item">
+						<a href="/notices/" class="nav-link">공지사항</a>
+					</div>
+					<div class="nav-item">
+						<a href="/board/" class="nav-link">게시판</a>
+					</div>
+				</div>
+				<button class="mobile-menu-toggle" aria-label="메뉴">
+					<span></span>
+					<span></span>
+					<span></span>
+				</button>
+			</nav>
+			<div class="mobile-nav">
+				<div class="mobile-nav-item">
+					<a href="/about/">어린이집 소개</a>
+					<div class="mobile-submenu">
 						<a href="/about/philosophy/">운영 철학</a>
 						<a href="/about/status/">현황</a>
 					</div>
 				</div>
-				<div class="nav-item dropdown">
-					<a href="/waldorf/" class="nav-link">발도르프란?</a>
-					<div class="dropdown-menu">
+				<div class="mobile-nav-item">
+					<a href="/waldorf/">발도르프란?</a>
+					<div class="mobile-submenu">
 						<a href="/waldorf/education/">발도르프 유아 교육</a>
 						<a href="/waldorf/rhythm/">어린이집 리듬 생활</a>
 					</div>
 				</div>
-				<div class="nav-item">
-					<a href="/contact/" class="nav-link">문의하기</a>
+				<div class="mobile-nav-item no-submenu">
+					<a href="/contact/">문의하기</a>
 				</div>
-				<div class="nav-item">
-					<a href="/notices/" class="nav-link">공지사항</a>
+				<div class="mobile-nav-item no-submenu">
+					<a href="/notices/">공지사항</a>
 				</div>
-				<div class="nav-item">
-					<a href="/board/" class="nav-link">게시판</a>
+				<div class="mobile-nav-item no-submenu">
+					<a href="/board/">게시판</a>
 				</div>
-			</nav>
+			</div>
 		</header>
+		<div class="mobile-backdrop"></div>
 
 		<main>
 			<slot />
@@ -93,6 +128,48 @@ const { title = '제주 발도르프 킨더' } = Astro.props;
 
 				waitForIdentity();
 			})();
+
+			// Mobile menu functionality
+			const mobileToggle = document.querySelector('.mobile-menu-toggle');
+			const mobileNav = document.querySelector('.mobile-nav');
+			const mobileBackdrop = document.querySelector('.mobile-backdrop');
+			const mobileNavItems = document.querySelectorAll('.mobile-nav-item:not(.no-submenu)');
+
+			function toggleMobileMenu() {
+				mobileToggle.classList.toggle('active');
+				mobileNav.classList.toggle('active');
+				mobileBackdrop.classList.toggle('active');
+				document.body.style.overflow = mobileNav.classList.contains('active') ? 'hidden' : '';
+			}
+
+			function closeMobileMenu() {
+				mobileToggle.classList.remove('active');
+				mobileNav.classList.remove('active');
+				mobileBackdrop.classList.remove('active');
+				document.body.style.overflow = '';
+			}
+
+			mobileToggle.addEventListener('click', toggleMobileMenu);
+			mobileBackdrop.addEventListener('click', closeMobileMenu);
+
+			// Handle submenu toggles
+			mobileNavItems.forEach(item => {
+				const link = item.querySelector('a');
+				link.addEventListener('click', (e) => {
+					e.preventDefault();
+					item.classList.toggle('active');
+				});
+			});
+
+			// Close menu when clicking on submenu links
+			document.querySelectorAll('.mobile-submenu a').forEach(link => {
+				link.addEventListener('click', closeMobileMenu);
+			});
+
+			// Close menu when clicking on no-submenu items
+			document.querySelectorAll('.mobile-nav-item.no-submenu a').forEach(link => {
+				link.addEventListener('click', closeMobileMenu);
+			});
 		</script>
 	</body>
 </html>
@@ -113,7 +190,33 @@ const { title = '제주 발도르프 킨더' } = Astro.props;
 
 	.main-nav {
 		display: flex;
+		justify-content: space-between;
+		align-items: center;
+	}
+
+	.desktop-nav {
+		display: flex;
 		gap: 24px;
+		align-items: center;
+	}
+
+	.logo-item {
+		margin-right: 8px;
+	}
+
+	.logo-link {
+		display: block;
+		padding: 4px;
+	}
+
+	.nav-logo {
+		height: 40px;
+		width: auto;
+		transition: opacity 0.2s;
+	}
+
+	.nav-logo:hover {
+		opacity: 0.8;
 	}
 
 	.nav-item {
@@ -175,6 +278,127 @@ const { title = '제주 발도르프 킨더' } = Astro.props;
 		background-color: #f8f8f8;
 	}
 
+	/* Mobile menu toggle */
+	.mobile-menu-toggle {
+		display: none;
+		flex-direction: column;
+		background: none;
+		border: none;
+		cursor: pointer;
+		padding: 8px;
+		gap: 3px;
+	}
+
+	.mobile-menu-toggle span {
+		display: block;
+		width: 25px;
+		height: 3px;
+		background-color: #333;
+		border-radius: 2px;
+		transition: all 0.3s;
+	}
+
+	.mobile-menu-toggle.active span:nth-child(1) {
+		transform: rotate(45deg) translate(5px, 5px);
+	}
+
+	.mobile-menu-toggle.active span:nth-child(2) {
+		opacity: 0;
+	}
+
+	.mobile-menu-toggle.active span:nth-child(3) {
+		transform: rotate(-45deg) translate(7px, -6px);
+	}
+
+	/* Mobile navigation */
+	.mobile-nav {
+		display: none;
+		position: fixed;
+		top: 0;
+		left: -100%;
+		width: 280px;
+		height: 100vh;
+		background: white;
+		box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+		z-index: 1000;
+		padding: 80px 0 20px;
+		overflow-y: auto;
+		transition: left 0.3s ease;
+	}
+
+	.mobile-nav.active {
+		left: 0;
+	}
+
+	.mobile-nav-item {
+		border-bottom: 1px solid #f0f0f0;
+	}
+
+	.mobile-nav-item > a {
+		display: block;
+		padding: 16px 24px;
+		color: #333;
+		text-decoration: none;
+		font-size: 16px;
+		position: relative;
+	}
+
+	.mobile-nav-item > a::after {
+		content: '▼';
+		position: absolute;
+		right: 24px;
+		font-size: 12px;
+		transition: transform 0.2s;
+	}
+
+	.mobile-nav-item.no-submenu > a::after {
+		display: none;
+	}
+
+	.mobile-nav-item.active > a::after {
+		transform: rotate(180deg);
+	}
+
+	.mobile-submenu {
+		max-height: 0;
+		overflow: hidden;
+		background: #f8f8f8;
+		transition: max-height 0.3s ease;
+	}
+
+	.mobile-nav-item.active .mobile-submenu {
+		max-height: 200px;
+	}
+
+	.mobile-submenu a {
+		display: block;
+		padding: 12px 48px;
+		color: #666;
+		text-decoration: none;
+		font-size: 14px;
+	}
+
+	.mobile-submenu a:hover,
+	.mobile-nav-item > a:hover {
+		background-color: #f5f5f5;
+	}
+
+	/* Backdrop for mobile menu */
+	.mobile-backdrop {
+		display: none;
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		background: rgba(0,0,0,0.5);
+		z-index: 999;
+	}
+
+	.mobile-backdrop.active {
+		display: block;
+	}
+
 	main {
 		padding: 32px 24px;
 	}
@@ -184,5 +408,80 @@ const { title = '제주 발도르프 킨더' } = Astro.props;
 		border-top: 1px solid #eee;
 		font-size: 14px;
 		color: #666;
+	}
+
+	/* Responsive Breakpoints */
+	/* Tablet (768px - 1024px) */
+	@media (max-width: 1024px) {
+		.desktop-nav {
+			gap: 16px;
+		}
+		
+		.nav-link {
+			padding: 6px 10px;
+			font-size: 14px;
+		}
+
+		.nav-logo {
+			height: 36px;
+		}
+
+		main {
+			padding: 24px 16px;
+		}
+	}
+
+	/* Small tablet/Large mobile (480px - 768px) */
+	@media (max-width: 768px) {
+		.desktop-nav {
+			display: none;
+		}
+
+		.mobile-menu-toggle {
+			display: flex;
+		}
+
+		.mobile-nav {
+			display: block;
+		}
+
+		.nav-logo {
+			height: 32px;
+		}
+
+		header {
+			padding: 12px 16px;
+		}
+
+		main {
+			padding: 20px 12px;
+		}
+	}
+
+	/* Mobile (up to 480px) */
+	@media (max-width: 480px) {
+		.main-nav {
+			padding: 0 8px;
+		}
+
+		.nav-logo {
+			height: 28px;
+		}
+
+		.mobile-nav {
+			width: 260px;
+		}
+
+		header {
+			padding: 10px 12px;
+		}
+
+		main {
+			padding: 16px 8px;
+		}
+
+		footer {
+			padding: 16px 12px;
+		}
 	}
 </style>
