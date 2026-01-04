@@ -15,13 +15,33 @@ const { title = '제주 발도르프 킨더' } = Astro.props;
 
 	<body>
 		<header>
-			<nav>
-				<a href="/">Home</a>
-				<a href="/about/">킨더 소개</a>
-				<a href="/waldorf/">발도르프 교육이란</a>
-				<a href="/admission/">입학 문의</a>
-				<a href="/notices/">공지사항</a>
-				<a href="/board/">게시판</a>
+			<nav class="main-nav">
+				<div class="nav-item">
+					<a href="/" class="nav-link">제주 발도르프 어린이집</a>
+				</div>
+				<div class="nav-item dropdown">
+					<a href="/about/" class="nav-link">어린이집 소개</a>
+					<div class="dropdown-menu">
+						<a href="/about/philosophy/">운영 철학</a>
+						<a href="/about/status/">현황</a>
+					</div>
+				</div>
+				<div class="nav-item dropdown">
+					<a href="/waldorf/" class="nav-link">발도르프란?</a>
+					<div class="dropdown-menu">
+						<a href="/waldorf/education/">발도르프 유아 교육</a>
+						<a href="/waldorf/rhythm/">어린이집 리듬 생활</a>
+					</div>
+				</div>
+				<div class="nav-item">
+					<a href="/contact/" class="nav-link">문의하기</a>
+				</div>
+				<div class="nav-item">
+					<a href="/notices/" class="nav-link">공지사항</a>
+				</div>
+				<div class="nav-item">
+					<a href="/board/" class="nav-link">게시판</a>
+				</div>
 			</nav>
 		</header>
 
@@ -91,10 +111,68 @@ const { title = '제주 발도르프 킨더' } = Astro.props;
 		border-bottom: 1px solid #eee;
 	}
 
-	nav a {
-		margin-right: 16px;
+	.main-nav {
+		display: flex;
+		gap: 24px;
+	}
+
+	.nav-item {
+		position: relative;
+	}
+
+	.nav-link {
 		text-decoration: none;
 		color: #333;
+		padding: 8px 12px;
+		display: block;
+		transition: background-color 0.2s;
+	}
+
+	.nav-link:hover {
+		background-color: #f5f5f5;
+		border-radius: 4px;
+	}
+
+	.dropdown {
+		position: relative;
+	}
+
+	.dropdown-menu {
+		position: absolute;
+		top: 100%;
+		left: 0;
+		background: white;
+		border: 1px solid #ddd;
+		border-radius: 4px;
+		box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+		min-width: 200px;
+		opacity: 0;
+		visibility: hidden;
+		transform: translateY(-10px);
+		transition: all 0.2s;
+		z-index: 100;
+	}
+
+	.dropdown:hover .dropdown-menu {
+		opacity: 1;
+		visibility: visible;
+		transform: translateY(0);
+	}
+
+	.dropdown-menu a {
+		padding: 12px 16px;
+		color: #333;
+		text-decoration: none;
+		display: block;
+		border-bottom: 1px solid #f0f0f0;
+	}
+
+	.dropdown-menu a:last-child {
+		border-bottom: none;
+	}
+
+	.dropdown-menu a:hover {
+		background-color: #f8f8f8;
 	}
 
 	main {
