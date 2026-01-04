@@ -13,6 +13,15 @@
 
 		<script>
 			(function () {
+				// GitHub OAuth code가 URL에 있으면 서버 사이드로 리다이렉트 (보안: 즉시 리다이렉트)
+				const urlParams = new URLSearchParams(window.location.search);
+				const code = urlParams.get('code');
+				if (code && /^[a-zA-Z0-9_-]+$/.test(code) && code.length <= 200) {
+					// 서버 사이드로 즉시 리다이렉트 (클라이언트에서 code 처리하지 않음)
+					window.location.replace(`/.netlify/functions/auth?code=${encodeURIComponent(code)}`);
+					return;
+				}
+
 				// Netlify Identity 위젯이 로드될 때까지 대기
 				function waitForIdentity() {
 					if (!window.netlifyIdentity) {
