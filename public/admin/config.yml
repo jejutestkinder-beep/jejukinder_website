@@ -1,5 +1,5 @@
 backend:
-  name: git-gateway
+  name: github
   repo: jejutestkinder-beep/jejukinder_website
   branch: main
   base_url: https://chipper-lebkuchen-cc3872.netlify.app
