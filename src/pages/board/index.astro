@@ -1,4 +1,5 @@
 ---
+import Layout from '../../layouts/Layout.astro';
 import { getCollection } from 'astro:content';
 const posts = await getCollection('board');
 
@@ -10,27 +11,19 @@ posts.sort((a, b) => {
 });
 ---
 
-<!doctype html>
-<html lang="ko">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>게시판</title>
-  </head>
-  <body>
-    <h1>게시판</h1>
-    <p>총 글 수: {posts.length}</p>
+<Layout title="게시판 - 제주 발도르프 킨더">
+  <h1>게시판</h1>
+  <p>총 글 수: {posts.length}</p>
 
-    <ul>
-      {posts.map((p) => (
-        <li>
-          <a href={`/board/${p.slug}/`}>{p.data.title}</a>
-          {p.data.category ? <span> · {p.data.category}</span> : null}
-          {p.data.date ? <span> · {new Date(p.data.date).toLocaleDateString('ko-KR')}</span> : null}
-        </li>
-      ))}
-    </ul>
+  <ul>
+    {posts.map((p) => (
+      <li>
+        <a href={`/board/${p.slug}/`}>{p.data.title}</a>
+        {p.data.category ? <span> · {p.data.category}</span> : null}
+        {p.data.date ? <span> · {new Date(p.data.date).toLocaleDateString('ko-KR')}</span> : null}
+      </li>
+    ))}
+  </ul>
 
-    <p><a href="/">← 홈</a></p>
-  </body>
-</html>
+  <p><a href="/">← 홈</a></p>
+</Layout>

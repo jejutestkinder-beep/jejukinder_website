@@ -1,8 +1,112 @@
 ---
 import Layout from '../../layouts/Layout.astro';
+
+const images = {
+  hero: "/images/hero-phil.jpg",
+  section3: "/images/philosophy.jpg",
+  section4: "/images/teachers.jpg",
+  section5: "/images/human-image.jpg",
+};
 ---
 
-<Layout title="운영 철학 - 제주 발도르프 킨더">
-	<h1>운영 철학</h1>
-	<p>저희 제주 발도르프 킨더의 운영 철학을 소개합니다.</p>
+<Layout title="운영 철학">
+  <main class="content-wrapper">
+    
+    <section class="hero-section" style={`background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url(${images.hero});`}>
+      <div class="container">
+        <h1 class="hero-title">어린이집 운영 철학</h1>
+      </div>
+    </section>
+
+    <section class="statement-section py-20 bg-white">
+      <div class="container max-w-4xl text-center">
+        <h2 class="text-3xl font-bold mb-6 text-green-800">제주 발도르프 어린이집은,</h2>
+        <p class="text-xl font-medium mb-8 leading-relaxed">
+          어린이집, 가정, 지역사회가 함께하는 <br/><strong>교육공동체</strong>를 지향합니다.
+        </p>
+        <div class="body-text text-gray-600 leading-loose space-y-2">
+          <p>영유아들이 개별성을 존중받으며 몸과 마음이 건강하게 자랄 수 있는 터전,</p>
+          <p>부모들의 양육과 교육에 신뢰할 수 있는 안내와 도움을 줄 수 있는 곳,</p>
+          <p>교사들이 마음껏 교육관을 펼칠 수 있는 일터,</p>
+          <p>그곳에 참여한 모든 이들이</p>
+          <p>교육공동체를 통해 아이와 함께 삶을 가꾸고 성숙해 가는 어린이집이 됩니다.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="py-20 bg-gray-50">
+      <div class="container grid md:grid-cols-2 gap-12 items-center">
+        <div class="order-2 md:order-1">
+          <img src={images.section3} alt="원훈 이미지" class="rounded-2xl shadow-lg w-full h-80 object-cover" />
+        </div>
+        <div class="order-1 md:order-2">
+          <span class="text-green-600 font-bold uppercase tracking-wider">Motto</span>
+          <h2 class="text-4xl font-bold mt-2 mb-6">원훈</h2>
+          <h2 class="text-4xl font-bold mt-2 mb-6" leading-relaxed">따뜻하고 부드럽고 신나게</h2>
+			<p class="text-lg text-gray-700 leading-relaxed">아이들이 꽃처럼 피어나는 곳</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="py-20 bg-white">
+      <div class="container grid md:grid-cols-2 gap-12 items-center">
+        <div>
+          <span class="text-green-600 font-bold uppercase tracking-wider">Teachers</span>
+          <h2 class="text-4xl font-bold mt-2 mb-6">교사상</h2>
+          <p class="text-lg text-gray-700 leading-relaxed">
+            어린이를 지극히 사랑하고 자신이 곧 모방의 대상임을 자각하며 바른 언어생활과 삶을 가꾸는 아름다운 태도를 유지하기 위해 노력합니다.
+			자신을 사랑하고 몸과 마음을 건강하게 유지하며 내면을 가꾸고 동료와 협력하며, 연구하고 실천하는 성실한 교사가 됩니다.
+          </p>
+        </div>
+        <div>
+          <img src={images.section4} alt="교사상 이미지" class="rounded-2xl shadow-lg w-full h-80 object-cover" />
+        </div>
+      </div>
+    </section>
+
+    <section class="py-20 bg-gray-50">
+      <div class="container grid md:grid-cols-2 gap-12 items-center">
+        <div>
+          <img src={images.section5} alt="인간상 이미지" class="rounded-2xl shadow-lg w-full h-80 object-cover" />
+        </div>
+        <div>
+          <span class="text-green-600 font-bold uppercase tracking-wider">Vision</span>
+          <h2 class="text-4xl font-bold mt-2 mb-6">인간상</h2>
+          <p class="text-lg text-gray-700 leading-relaxed">
+            - 건강한 사람 : 자기의 소중함을 알고, 건강하고 안전한 생활습관을 기른다.
+- 자주적인 사람 : 자기의 일을 스스로 해결하는 기초능력을 기른다.
+- 창의적인 사람 : 호기심과 탐구심을 가지고 상상력과 창의력을 기른다.
+- 감성이 풍부한 사람 : 일상에서 아름다움을 느끼고 문화적 감수성을 기른다.
+- 더불어 사는 사람 : 사람과 자연을 존중하고 배려하며 소통하는 태도를 기른다.
+          </p>
+        </div>
+      </div>
+    </section>
+
+  </main>
 </Layout>
+
+<style>
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+  .hero-section {
+    height: 60vh;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: white;
+  }
+  .hero-title {
+    font-size: 3.5rem;
+    font-weight: 800;
+    text-shadow: 0 4px 10px rgba(0,0,0,0.3);
+  }
+  .py-20 { padding-top: 5rem; padding-bottom: 5rem; }
+  /* Tailwind CSS가 프로젝트에 기본 포함되어 있다고 가정하고 작성했습니다. */
+</style>

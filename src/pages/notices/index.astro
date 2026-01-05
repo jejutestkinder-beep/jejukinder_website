@@ -1,23 +1,16 @@
 ---
+import Layout from '../../layouts/Layout.astro';
 import { getCollection } from 'astro:content';
 const notices = await getCollection('notices');
 ---
 
-<!doctype html>
-<html lang="ko">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>공지사항</title>
-  </head>
-  <body>
-    <h1>공지사항</h1>
-    <ul>
-      {notices.map((n) => (
-        <li>
-          <a href={`/notices/${n.slug}/`}>{n.data.title}</a>
-        </li>
-      ))}
-    </ul>
-  </body>
-</html>
+<Layout title="공지사항 - 제주 발도르프 킨더">
+  <h1>공지사항</h1>
+  <ul>
+    {notices.map((n) => (
+      <li>
+        <a href={`/notices/${n.slug}/`}>{n.data.title}</a>
+      </li>
+    ))}
+  </ul>
+</Layout>

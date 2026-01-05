@@ -1,4 +1,5 @@
 ---
+import Layout from '../../layouts/Layout.astro';
 import { getCollection } from 'astro:content';
 
 export async function getStaticPaths() {
@@ -13,20 +14,12 @@ const { entry } = Astro.props;
 const { Content } = await entry.render();
 ---
 
-<!doctype html>
-<html lang="ko">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>{entry.data.title}</title>
-  </head>
-  <body>
-    <h1>{entry.data.title}</h1>
+<Layout title={entry.data.title}>
+  <h1>{entry.data.title}</h1>
 
-    <article>
-      <Content />
-    </article>
+  <article>
+    <Content />
+  </article>
 
-    <p><a href="/notices/">← 공지사항 목록</a></p>
-  </body>
-</html>
+  <p><a href="/notices/">← 공지사항 목록</a></p>
+</Layout>

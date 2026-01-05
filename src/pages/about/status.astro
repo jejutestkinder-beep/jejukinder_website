@@ -1,8 +1,115 @@
 ---
 import Layout from '../../layouts/Layout.astro';
+
+const images = {
+  hero: "/images/hero-status.jpg",
+  section1: "/images/philosophy.jpg",
+  section2: "/images/teachers.jpg",
+  section3: "/images/human-image.jpg",
+};
 ---
 
-<Layout title="현황 - 제주 발도르프 킨더">
-	<h1>어린이집 현황</h1>
-	<p>제주 발도르프 킨더의 현황을 안내합니다.</p>
+<Layout title="어린이집 현황">
+	<main class="content-wrapper">
+    
+    <section class="hero-section" style={`background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url(${images.hero});`}>
+      <div class="container">
+        <h1 class="hero-title">제주 발도르프 어린이집 현황</h1>
+      </div>
+    
+	</section>
+	   <section class="statement-section py-20 bg-white">
+      <div class="container max-w-4xl text-center">
+        <h2 class="text-3xl font-bold mb-6 text-green-800">제주발도르프 어린이집은 한경면 저지리에 자리하여</h2>
+		<h2 class="text-3xl font-bold mb-6 text-green-800">2024년 10월 첫 발걸음을 내딛었습니다.</h2>
+      </div>
+    </section>
+
+	 <section class="py-20 bg-gray-50">
+      <div class="container grid md:grid-cols-2 gap-12 items-center">
+        <div class="order-2 md:order-1">
+          <img src={images.section3} alt="연혁 이미지" class="rounded-2xl shadow-lg w-full h-80 object-cover" />
+        </div>
+        <div class="order-1 md:order-2">
+          <h2 class="text-4xl font-bold mt-2 mb-6">연혁</h2>
+			<p class="text-lg text-gray-700">2024년 10월16일 준비모임 : 김주아,안경술,용지항(어린이집 인가준비)</p>
+			<p class="text-lg text-gray-700">2024년 12월24일 어린이집 운영위원모임 : 김주아,신지현,유지온,용지항,정윤후</p>
+			<p class="text-lg text-gray-700">2024년 1월11일 어린이집 설명회</p>
+			<p class="text-lg text-gray-700">2025년 2월13일 리모델링 시작</p>
+			<p class="text-lg text-gray-700">2025년 3월10일 어린이집 홍보시작</p>
+			<p class="text-lg text-gray-700">2025년 8월 가정어린이집 인가 (9명출발)</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="py-20 bg-white">
+      <div class="container grid md:grid-cols-1 items-center">
+        <div>
+          <h2 class="text-4xl font-bold mt-2 mb-6">시설</h2>
+        </div>
+	</div>
+	<div class="container grid md:grid-cols-2 items-center">
+        <div>
+          <h2 class="text-4xl font-bold mt-2 mb-6">바다반 시설</h2>
+        </div>
+		<div>
+          <h2 class="text-4xl font-bold mt-2 mb-6">오름반 시설</h2>
+        </div>
+	</div>
+</section>
+	
+
+    <section class="py-20 bg-gray-50">
+      <div class="container grid md:grid-cols-2 gap-12 items-center">
+        <div>
+          <img src={images.section5} alt="선생님 이미지" class="rounded-2xl shadow-lg w-full h-80 object-cover" />
+        </div>
+        <div>
+          <span class="text-green-600 font-bold uppercase tracking-wider">Vision</span>
+          <h2 class="text-4xl font-bold mt-2 mb-6">교사진</h2>
+          <p class="text-lg text-gray-700 leading-relaxed">
+- 원장: 박형자
+- 교사: 김보라
+- 보조교사: 남인우
+          </p>
+        </div>
+      </div>
+    </section>
 </Layout>
+
+
+
+
+
+
+    
+
+   
+
+  </main>
+</Layout>
+
+<style>
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+  .hero-section {
+    height: 60vh;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: white;
+  }
+  .hero-title {
+    font-size: 3.5rem;
+    font-weight: 800;
+    text-shadow: 0 4px 10px rgba(0,0,0,0.3);
+  }
+  .py-20 { padding-top: 5rem; padding-bottom: 5rem; }
+  /* Tailwind CSS가 프로젝트에 기본 포함되어 있다고 가정하고 작성했습니다. */
+</style>
