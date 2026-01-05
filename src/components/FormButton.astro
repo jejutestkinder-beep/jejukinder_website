@@ -1,0 +1,19 @@
+---
+interface Props {
+  type?: 'submit' | 'button' | 'reset';
+  variant?: 'primary' | 'secondary';
+  size?: 'normal' | 'lg';
+}
+
+const { type = 'button', variant = 'primary', size = 'normal' } = Astro.props;
+
+const buttonClasses = [
+  'btn',
+  variant === 'primary' ? 'btn-primary' : 'btn-secondary',
+  size === 'lg' ? 'btn-lg' : ''
+].filter(Boolean).join(' ');
+---
+
+<button type={type} class={buttonClasses}>
+  <slot />
+</button>

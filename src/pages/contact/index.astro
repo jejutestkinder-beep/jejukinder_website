@@ -1,0 +1,78 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Container from '../../components/Container.astro';
+import PageTitle from '../../components/PageTitle.astro';
+import Card from '../../components/Card.astro';
+import FormInput from '../../components/FormInput.astro';
+import FormTextarea from '../../components/FormTextarea.astro';
+import FormButton from '../../components/FormButton.astro';
+---
+
+<Layout title="문의하기 - 제주 발도르프 킨더">
+	<Container size="sm">
+		<PageTitle subtitle="제주 발도르프 킨더에 문의사항이 있으시면 아래 양식을 작성해주세요.">
+			문의하기
+		</PageTitle>
+
+		<Card class="p-8">
+			<form
+				name="contact"
+				method="POST"
+				action="/contact/success/"
+				data-netlify="true"
+				netlify-honeypot="bot-field"
+			>
+			<!-- Netlify Forms - hidden fields -->
+			<input type="hidden" name="form-name" value="contact" />
+
+			<!-- Honeypot for spam protection -->
+			<p class="hidden">
+				<label>
+					Don't fill this out if you're human: <input name="bot-field" />
+				</label>
+			</p>
+
+			<!-- Form Fields using reusable components -->
+			<FormInput
+				label="이름"
+				name="name"
+				type="text"
+				required={true}
+				placeholder="홍길동"
+			/>
+
+			<FormInput
+				label="이메일"
+				name="email"
+				type="email"
+				required={true}
+				placeholder="example@email.com"
+			/>
+
+			<FormInput
+				label="연락처"
+				name="phone"
+				type="tel"
+				required={true}
+				placeholder="010-1234-5678"
+			/>
+
+			<FormTextarea
+				label="메시지"
+				name="message"
+				required={true}
+				rows={6}
+				placeholder="문의하실 내용을 입력해주세요."
+			/>
+
+			<!-- Submit Button -->
+			<div class="flex justify-end">
+				<FormButton type="submit" variant="primary" size="lg">
+					보내기
+				</FormButton>
+			</div>
+			</form>
+		</Card>
+
+	</Container>
+</Layout>
