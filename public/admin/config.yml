@@ -3,6 +3,7 @@ backend:
   repo: jejutestkinder-beep/jejukinder_website
   branch: main
 
+locale: 'ko'
 
 publish_mode: editorial_workflow
 
