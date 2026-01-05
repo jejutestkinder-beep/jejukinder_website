@@ -4,16 +4,19 @@ export const collections = {
   notices: defineCollection({
     schema: z.object({
       title: z.string(),
+      author: z.string().optional(),
+      date: z.coerce.date().optional(),
       popup: z.boolean().optional(),
-      popup_until: z.coerce.date().optional(), // 나중에 팝업 만료일 쓸 때
+      popup_until: z.coerce.date().optional(),
     }),
   }),
 
   board: defineCollection({
     schema: z.object({
       title: z.string(),
+      author: z.string().optional(),
       category: z.string().optional(),
-      date: z.coerce.date().optional(), // ✅ 핵심: datetime을 Date로 강제 변환
+      date: z.coerce.date().optional(),
     }),
   }),
 };

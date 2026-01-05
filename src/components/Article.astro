@@ -1,0 +1,80 @@
+---
+interface Props {
+  title: string;
+  date?: Date;
+  category?: string;
+  author?: string;
+  backUrl: string;
+  backLabel: string;
+}
+
+const { title, date, category, author, backUrl, backLabel } = Astro.props;
+---
+
+<article class="max-w-4xl mx-auto">
+  <!-- 뒤로가기 버튼 -->
+  <div class="mb-6">
+    <a
+      href={backUrl}
+      class="inline-flex items-center text-sm text-gray-600 hover:text-green-600 transition-colors"
+    >
+      <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+      </svg>
+      {backLabel}
+    </a>
+  </div>
+
+  <!-- 헤더 -->
+  <header class="mb-8 pb-6 border-b border-gray-200">
+    <h1 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+      {title}
+    </h1>
+
+    <div class="flex flex-wrap items-center gap-3 text-sm text-gray-600">
+      {category && (
+        <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
+          {category}
+        </span>
+      )}
+      {author && (
+        <span class="flex items-center">
+          <svg class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+          </svg>
+          {author}
+        </span>
+      )}
+      {date && (
+        <time datetime={date.toISOString()} class="flex items-center">
+          <svg class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+          </svg>
+          {new Date(date).toLocaleDateString('ko-KR', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+          })}
+        </time>
+      )}
+    </div>
+  </header>
+
+  <!-- 본문 -->
+  <div class="prose prose-lg max-w-none prose-headings:font-bold prose-headings:text-gray-900 prose-p:text-gray-700 prose-p:leading-relaxed prose-a:text-green-600 prose-a:no-underline hover:prose-a:underline prose-strong:text-gray-900 prose-ul:text-gray-700 prose-ol:text-gray-700 prose-img:rounded-lg prose-img:shadow-md">
+    <slot />
+  </div>
+
+  <!-- 하단 뒤로가기 버튼 -->
+  <div class="mt-12 pt-6 border-t border-gray-200">
+    <a
+      href={backUrl}
+      class="inline-flex items-center px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-lg transition-colors"
+    >
+      <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+      </svg>
+      {backLabel}
+    </a>
+  </div>
+</article>

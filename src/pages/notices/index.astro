@@ -1,16 +1,18 @@
 ---
 import Layout from '../../layouts/Layout.astro';
+import PostList from '../../components/PostList.astro';
 import { getCollection } from 'astro:content';
+
 const notices = await getCollection('notices');
+
+// 최신순 정렬
+notices.sort((a, b) => {
+  const ad = a.data.date ? new Date(a.data.date).getTime() : 0;
+  const bd = b.data.date ? new Date(b.data.date).getTime() : 0;
+  return bd - ad;
+});
 ---
 
 <Layout title="공지사항 - 제주 발도르프 킨더">
-  <h1>공지사항</h1>
-  <ul>
-    {notices.map((n) => (
-      <li>
-        <a href={`/notices/${n.slug}/`}>{n.data.title}</a>
-      </li>
-    ))}
-  </ul>
+  <PostList title="공지사항" items={notices} type="notice" />
 </Layout>

@@ -17,6 +17,8 @@ collections:
     slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
     fields:
       - { label: "제목", name: "title", widget: "string" }
+      - { label: "작성자", name: "author", widget: "string", required: false }
+      - { label: "작성일", name: "date", widget: "datetime", required: false }
       - { label: "팝업으로 띄우기", name: "popup", widget: "boolean", default: false }
       - { label: "본문", name: "body", widget: "markdown" }
 
@@ -26,7 +28,8 @@ collections:
     create: true
     slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
     fields:
-      - { label: "카테고리", name: "category", widget: "select", options: ["공지", "가정통신문", "행사"] }
       - { label: "제목", name: "title", widget: "string" }
+      - { label: "작성자", name: "author", widget: "string", required: false }
+      - { label: "카테고리", name: "category", widget: "select", options: ["공지", "가정통신문", "행사"], required: false }
       - { label: "작성일", name: "date", widget: "datetime" }
       - { label: "본문", name: "body", widget: "markdown" }

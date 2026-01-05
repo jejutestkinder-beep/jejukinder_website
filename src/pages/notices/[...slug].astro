@@ -1,5 +1,6 @@
 ---
 import Layout from '../../layouts/Layout.astro';
+import Article from '../../components/Article.astro';
 import { getCollection } from 'astro:content';
 
 export async function getStaticPaths() {
@@ -15,11 +16,13 @@ const { Content } = await entry.render();
 ---
 
 <Layout title={entry.data.title}>
-  <h1>{entry.data.title}</h1>
-
-  <article>
+  <Article
+    title={entry.data.title}
+    date={entry.data.date}
+    author={entry.data.author}
+    backUrl="/notices/"
+    backLabel="공지사항 목록"
+  >
     <Content />
-  </article>
-
-  <p><a href="/notices/">← 공지사항 목록</a></p>
+  </Article>
 </Layout>

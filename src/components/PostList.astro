@@ -1,0 +1,113 @@
+---
+interface Props {
+  title: string;
+  items: any[];
+  type: 'board' | 'notice';
+}
+
+const { title, items, type } = Astro.props;
+---
+
+<div class="max-w-5xl mx-auto">
+  <!-- 헤더 -->
+  <div class="mb-8">
+    <h1 class="text-3xl font-bold mb-2">{title}</h1>
+    <p class="text-gray-600">
+      총 {items.length}개의 {type === 'board' ? '글' : '공지'}
+    </p>
+  </div>
+
+  <!-- 테이블 -->
+  <div class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
+    <table class="w-full">
+      <thead class="bg-gray-50 border-b border-gray-200">
+        <tr>
+          <th class="px-6 py-4 text-left text-sm font-semibold text-gray-700 w-20">
+            번호
+          </th>
+          {type === 'board' && (
+            <th class="px-6 py-4 text-left text-sm font-semibold text-gray-700 hidden md:table-cell w-32">
+              카테고리
+            </th>
+          )}
+          <th class="px-6 py-4 text-left text-sm font-semibold text-gray-700">
+            제목
+          </th>
+          <th class="px-6 py-4 text-left text-sm font-semibold text-gray-700 hidden lg:table-cell w-28">
+            작성자
+          </th>
+          <th class="px-6 py-4 text-left text-sm font-semibold text-gray-700 hidden sm:table-cell w-32">
+            날짜
+          </th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-gray-200">
+        {items.map((item, index) => (
+          <tr class="hover:bg-gray-50 transition-colors">
+            <td class="px-6 py-4 text-sm text-gray-600">
+              {items.length - index}
+            </td>
+
+            {type === 'board' && (
+              <td class="px-6 py-4 text-sm hidden md:table-cell">
+                {item.data.category ? (
+                  <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                    {item.data.category}
+                  </span>
+                ) : (
+                  <span class="text-gray-400">-</span>
+                )}
+              </td>
+            )}
+
+            <td class="px-6 py-4">
+              <a
+                href={type === 'board' ? `/board/${item.slug}/` : `/notices/${item.slug}/`}
+                class={`hover:text-green-600 transition-colors ${type === 'notice' ? 'font-medium' : ''} text-gray-900`}
+              >
+                {item.data.title}
+              </a>
+
+              {type === 'board' && item.data.category && (
+                <span class="md:hidden ml-2 inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-green-100 text-green-800">
+                  {item.data.category}
+                </span>
+              )}
+
+              {type === 'notice' && item.data.popup && (
+                <span class="ml-2 inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-red-100 text-red-800">
+                  중요
+                </span>
+              )}
+            </td>
+
+            <td class="px-6 py-4 text-sm text-gray-600 hidden lg:table-cell">
+              {item.data.author || '-'}
+            </td>
+
+            <td class="px-6 py-4 text-sm text-gray-600 hidden sm:table-cell">
+              {item.data.date
+                ? new Date(item.data.date).toLocaleDateString('ko-KR', {
+                    year: 'numeric',
+                    month: '2-digit',
+                    day: '2-digit'
+                  }).replace(/\./g, '.').replace(/\s/g, '')
+                : '-'}
+            </td>
+          </tr>
+        ))}
+
+        {items.length === 0 && (
+          <tr>
+            <td
+              colspan={type === 'board' ? '5' : '4'}
+              class="px-6 py-12 text-center text-gray-500"
+            >
+              등록된 {type === 'board' ? '게시글' : '공지사항'}이 없습니다.
+            </td>
+          </tr>
+        )}
+      </tbody>
+    </table>
+  </div>
+</div>

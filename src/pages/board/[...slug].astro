@@ -1,5 +1,6 @@
 ---
 import Layout from '../../layouts/Layout.astro';
+import Article from '../../components/Article.astro';
 import { getCollection } from 'astro:content';
 
 export async function getStaticPaths() {
@@ -15,16 +16,14 @@ const { Content } = await entry.render();
 ---
 
 <Layout title={entry.data.title}>
-  <h1>{entry.data.title}</h1>
-
-  <p>
-    {entry.data.category ? <strong>{entry.data.category}</strong> : null}
-    {entry.data.date ? <span> · {new Date(entry.data.date).toLocaleDateString('ko-KR')}</span> : null}
-  </p>
-
-  <article>
+  <Article
+    title={entry.data.title}
+    date={entry.data.date}
+    category={entry.data.category}
+    author={entry.data.author}
+    backUrl="/board/"
+    backLabel="게시판 목록"
+  >
     <Content />
-  </article>
-
-  <p><a href="/board/">← 게시판 목록</a></p>
+  </Article>
 </Layout>
