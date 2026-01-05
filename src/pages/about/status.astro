@@ -13,10 +13,9 @@ const images = {
 	<main class="content-wrapper">
     
     <section class="hero-section" style={`background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url(${images.hero});`}>
-      <div class="container">
+      <div class="hero-content">
         <h1 class="hero-title">제주 발도르프 어린이집 현황</h1>
       </div>
-    
 	</section>
 	   <section class="statement-section py-20 bg-white">
       <div class="container max-w-4xl text-center">
@@ -90,26 +89,16 @@ const images = {
 </Layout>
 
 <style>
-  .container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 20px;
-  }
   .hero-section {
-    height: 60vh;
     background-size: cover;
     background-position: center;
     display: flex;
     align-items: center;
     justify-content: center;
-    text-align: center;
-    color: white;
   }
   .hero-title {
+    @apply text-white drop-shadow-lg;
     font-size: 3.5rem;
     font-weight: 800;
-    text-shadow: 0 4px 10px rgba(0,0,0,0.3);
   }
-  .py-20 { padding-top: 5rem; padding-bottom: 5rem; }
-  /* Tailwind CSS가 프로젝트에 기본 포함되어 있다고 가정하고 작성했습니다. */
 </style>
