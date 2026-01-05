@@ -1,11 +1,26 @@
 ---
+import Pagination from './Pagination.astro';
+
 interface Props {
   title: string;
   items: any[];
   type: 'board' | 'notice';
+  page?: {
+    currentPage: number;
+    lastPage: number;
+    total: number;
+    url: {
+      prev?: string;
+      next?: string;
+    };
+  };
 }
 
-const { title, items, type } = Astro.props;
+const { title, items, type, page } = Astro.props;
+
+// Calculate starting index for post numbering
+const totalPosts = page?.total || items.length;
+const startIndex = page ? (page.currentPage - 1) * 15 : 0;
 ---
 
 <div class="max-w-5xl mx-auto">
@@ -13,7 +28,12 @@ const { title, items, type } = Astro.props;
   <div class="mb-8">
     <h1 class="text-3xl font-bold mb-2">{title}</h1>
     <p class="text-gray-600">
-      총 {items.length}개의 {type === 'board' ? '글' : '공지'}
+      총 {totalPosts}개의 {type === 'board' ? '글' : '공지'}
+      {page && page.lastPage > 1 && (
+        <span class="text-gray-400 ml-2">
+          (페이지 {page.currentPage} / {page.lastPage})
+        </span>
+      )}
     </p>
   </div>
 
@@ -45,7 +65,7 @@ const { title, items, type } = Astro.props;
         {items.map((item, index) => (
           <tr class="hover:bg-gray-50 transition-colors">
             <td class="px-6 py-4 text-sm text-gray-600">
-              {items.length - index}
+              {totalPosts - (startIndex + index)}
             </td>
 
             {type === 'board' && (
@@ -110,4 +130,7 @@ const { title, items, type } = Astro.props;
       </tbody>
     </table>
   </div>
+
+  <!-- Pagination -->
+  {page && <Pagination page={page} />}
 </div>
