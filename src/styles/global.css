@@ -135,13 +135,13 @@
   }
 
   .btn-primary {
-    @apply bg-green-500 text-white hover:bg-green-600
-           focus:ring-green-200;
+    @apply bg-custom-rose text-white hover:bg-custom-rose/90
+           focus:ring-custom-rose/30;
   }
 
   .btn-secondary {
-    @apply bg-gray-200 text-gray-700 hover:bg-gray-300
-           focus:ring-gray-200;
+    @apply bg-white text-custom-rose border-2 border-custom-rose hover:bg-custom-rose/5
+           focus:ring-custom-rose/30;
   }
 
   .btn-lg {
