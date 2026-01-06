@@ -49,30 +49,32 @@ import waldorfLogo from '../assets/waldorf-logo.png';
 			<span class="absolute left-1/2 bottom-2.5 w-[25px] h-0.5 bg-gray-800 rounded transition-all origin-center -translate-x-1/2 mobile-menu-line"></span>
 		</button>
 	</nav>
-	<div class="lg:hidden fixed top-0 -left-full w-[280px] md:w-[280px] sm:w-[260px] h-screen bg-white shadow-lg z-[1000] pt-20 pb-5 overflow-y-auto transition-[left] duration-300 ease-in-out mobile-nav">
+	<div class="lg:hidden fixed top-0 -left-full w-[280px] sm:w-[260px] h-screen bg-white shadow-lg z-[1000] pt-20 pb-5 overflow-y-auto transition-[left] duration-300 ease-in-out mobile-nav">
 		<div class="border-b border-gray-100 mobile-nav-item">
-			<a href="#" class="block px-6 py-4 text-gray-800 no-underline text-base relative">어린이집 소개</a>
+			<a href="#" class="block px-6 py-4 text-gray-800 no-underline text-base relative after:content-['▼'] after:absolute after:right-6 after:text-xs after:transition-transform after:duration-200">어린이집 소개</a>
 			<div class="max-h-0 overflow-hidden bg-gray-50 transition-[max-height] duration-300 ease-in-out mobile-submenu">
 				<a href="/about/philosophy/" class="block px-12 py-3 text-gray-600 no-underline text-sm">운영 철학</a>
 				<a href="/about/status/" class="block px-12 py-3 text-gray-600 no-underline text-sm">현황</a>
+				<a href="/about/faq/" class="block px-12 py-3 text-gray-600 no-underline text-sm">자주 묻는 질문</a>
+				<a href="/about/testimonial/" class="block px-12 py-3 text-gray-600 no-underline text-sm">어린이집 후기</a>
 			</div>
 		</div>
 		<div class="border-b border-gray-100 mobile-nav-item">
-			<a href="#" class="block px-6 py-4 text-gray-800 no-underline text-base relative">발도르프란?</a>
+			<a href="#" class="block px-6 py-4 text-gray-800 no-underline text-base relative after:content-['▼'] after:absolute after:right-6 after:text-xs after:transition-transform after:duration-200">발도르프란?</a>
 			<div class="max-h-0 overflow-hidden bg-gray-50 transition-[max-height] duration-300 ease-in-out mobile-submenu">
 				<a href="/waldorf/education/" class="block px-12 py-3 text-gray-600 no-underline text-sm">발도르프 유아 교육</a>
 				<a href="/waldorf/rhythm/" class="block px-12 py-3 text-gray-600 no-underline text-sm">어린이집 리듬 생활</a>
 			</div>
 		</div>
 		<div class="border-b border-gray-100 mobile-nav-item">
-			<a href="#" class="block px-6 py-4 text-gray-800 no-underline text-base relative">게시판</a>
+			<a href="#" class="block px-6 py-4 text-gray-800 no-underline text-base relative after:content-['▼'] after:absolute after:right-6 after:text-xs after:transition-transform after:duration-200">어린이집 소식</a>
 			<div class="max-h-0 overflow-hidden bg-gray-50 transition-[max-height] duration-300 ease-in-out mobile-submenu">
-				<a href="/notices/" class="block px-12 py-3 text-gray-600 no-underline text-sm">공지사항</a>
-				<a href="/board/" class="block px-12 py-3 text-gray-600 no-underline text-sm">새소식</a>
+				<a href="/notices/" class="block px-12 py-3 text-gray-600 no-underline text-sm">공지 사항</a>
+				<a href="/board/" class="block px-12 py-3 text-gray-600 no-underline text-sm">어린이집 이야기</a>
 			</div>
 		</div>
 		<div class="border-b border-gray-100 mobile-nav-item">
-			<a href="#" class="block px-6 py-4 text-gray-800 no-underline text-base relative">문의하기</a>
+			<a href="#" class="block px-6 py-4 text-gray-800 no-underline text-base relative after:content-['▼'] after:absolute after:right-6 after:text-xs after:transition-transform after:duration-200">문의하기</a>
 			<div class="max-h-0 overflow-hidden bg-gray-50 transition-[max-height] duration-300 ease-in-out mobile-submenu">
 				<a href="https://docs.google.com/forms/d/e/1FAIpQLSccyRwbI42sdBHoiWLcz7A-BywQAY7I7ce_NVQUo6puvjFsVA/viewform?usp=header" target="_blank" rel="noopener noreferrer" class="block px-12 py-3 text-gray-600 no-underline text-sm">입학 상담 신청</a>
 				<a href="/contact/" class="block px-12 py-3 text-gray-600 no-underline text-sm">문의하기</a>
@@ -148,19 +150,7 @@ import waldorfLogo from '../assets/waldorf-logo.png';
 		left: 0;
 	}
 
-	/* Mobile nav item dropdown icon */
-	.mobile-nav-item > a::after {
-		content: '▼';
-		position: absolute;
-		right: 24px;
-		font-size: 12px;
-		transition: transform 0.2s;
-	}
-
-	.mobile-nav-item.no-submenu > a::after {
-		display: none;
-	}
-
+	/* Mobile nav item dropdown icon rotation */
 	.mobile-nav-item.active > a::after {
 		transform: rotate(180deg);
 	}
