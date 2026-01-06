@@ -1,0 +1,32 @@
+---
+interface Props {
+  imageSrc: string;
+  subtitle: string;
+  title: string;
+  ctaText: string;
+  ctaLink: string;
+}
+
+const { imageSrc, subtitle, title, ctaText, ctaLink } = Astro.props;
+---
+
+<section class="relative w-[calc(100%+48px)] -mx-6 -mt-8 overflow-hidden">
+  <div class="absolute inset-0 bg-black/30 z-[1]" aria-hidden="true"></div>
+  <img
+    src={imageSrc}
+    alt=""
+    class="w-full h-screen min-h-[600px] md:min-h-[600px] object-cover block"
+    loading="eager"
+  />
+  <div class="absolute inset-0 flex flex-col items-center justify-center px-6 text-center text-white z-[2]">
+    <p class="m-0 text-xl md:text-2xl mb-4 drop-shadow-lg font-semibold text-white">
+      {subtitle}
+    </p>
+    <h1 class="m-0 text-4xl md:text-6xl lg:text-7xl mb-8 drop-shadow-lg text-white">
+      {title}
+    </h1>
+    <a href={ctaLink} class="btn btn-secondary btn-lg" aria-label={ctaText}>
+      {ctaText}
+    </a>
+  </div>
+</section>

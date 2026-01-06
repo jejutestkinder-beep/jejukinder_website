@@ -1,0 +1,109 @@
+---
+import { colors } from '../utils/colors';
+
+type ColorName = 'brown' | 'bgPink' | 'lightPink' | 'lightYellow' | 'grey' | 'darkGrey' | 'rose' | 'green' | 'white' | 'black' | string;
+
+interface Props {
+  title: string;
+  description?: string;
+  images: {
+    src: string;
+    alt: string;
+  }[];
+  titleTag?: 'h1' | 'h2' | 'h3';
+  descriptionTag?: 'h6' | 'p';
+  titleColor?: ColorName;
+  descriptionColor?: ColorName;
+  bgColor?: ColorName;
+}
+
+const { title, description, images, titleTag = 'h2', descriptionTag = 'h6', titleColor, descriptionColor, bgColor } = Astro.props;
+const TitleTag = titleTag;
+const DescriptionTag = descriptionTag;
+
+const getBgClass = (color?: ColorName): string => {
+  if (!color) return '';
+  const colorMap: Record<string, string> = {
+    white: 'bg-white',
+    black: 'bg-black',
+    brown: 'bg-custom-brown',
+    grey: 'bg-custom-grey',
+    rose: 'bg-custom-rose',
+    green: 'bg-custom-green',
+    bgPink: 'bg-custom-bg-pink',
+    lightPink: 'bg-custom-light-pink',
+    lightYellow: 'bg-custom-light-yellow',
+  };
+
+  return colorMap[color] || '';
+};
+
+const getBgStyle = (color?: ColorName): string => {
+  if (!color) return '';
+  if (colors[color as keyof typeof colors]) {
+    return `background-color: ${colors[color as keyof typeof colors]};`;
+  }
+  return `background-color: ${color};`;
+};
+
+const getTextColorStyle = (color?: ColorName): string => {
+  if (!color) return '';
+  if (colors[color as keyof typeof colors]) {
+    return `color: ${colors[color as keyof typeof colors]};`;
+  }
+  return `color: ${color};`;
+};
+
+const bgClass = getBgClass(bgColor);
+const bgStyle = getBgStyle(bgColor);
+const titleColorStyle = getTextColorStyle(titleColor);
+const descriptionColorStyle = getTextColorStyle(descriptionColor);
+
+// Tailwind classes for title based on whether description exists
+const titleClasses = description ? 'mb-4' : 'mb-10';
+---
+
+<section class:list={["mt-16 md:mt-20 py-16 md:py-[60px] px-6 text-center", bgClass]} style={bgStyle}>
+  <TitleTag class={titleClasses} style={titleColorStyle}>{title}</TitleTag>
+  {description && (
+    <DescriptionTag class="mb-10 mt-0" style={descriptionColorStyle} set:html={description} />
+  )}
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+    {images.map((img, index) => (
+      <img
+        src={img.src}
+        alt={img.alt}
+        class="w-full aspect-[4/3] object-cover rounded-xl block opacity-0 translate-y-5 transition-all duration-[600ms] ease-out"
+        data-delay={index * 200}
+        data-fade="true"
+      />
+    ))}
+  </div>
+</section>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const images = document.querySelectorAll('[data-fade="true"]');
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        const img = entry.target as HTMLElement;
+        const delay = img.dataset.delay || '0';
+
+        if (entry.isIntersecting) {
+          setTimeout(() => {
+            img.classList.remove('opacity-0', 'translate-y-5');
+            img.classList.add('opacity-100', 'translate-y-0');
+          }, parseInt(delay));
+        } else {
+          img.classList.remove('opacity-100', 'translate-y-0');
+          img.classList.add('opacity-0', 'translate-y-5');
+        }
+      });
+    }, {
+      threshold: 0.1
+    });
+
+    images.forEach((img) => observer.observe(img));
+  });
+</script>

@@ -1,6 +1,10 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import { getCollection } from 'astro:content';
+import HeroIndex from '../components/HeroIndex.astro';
+import Content3Col from '../components/Content3Col.astro';
+import ContactSection from '../components/ContactSection.astro';
+import NoticePopup from '../components/NoticePopup.astro';
 import mainImage from '../assets/main-hero.png';
 import space1 from '../assets/space-1.png';
 import space2 from '../assets/space-2.png';
@@ -14,15 +18,12 @@ import nature3 from '../assets/nature-3.png';
 
 const notices = await getCollection('notices');
 
-// popup: true 인 공지들만
 const popupCandidates = notices
   .filter((n) => n.data.popup === true)
-  // (선택) popup_until이 있으면 만료된 건 제외
   .filter((n) => {
     const anyData = n.data as any;
     const until = anyData.popup_until;
     if (!until) return true;
-    // until이 Date로 들어오도록 schema를 z.coerce.date()로 해뒀다면 Date일 것
     try {
       const untilMs = until instanceof Date ? until.getTime() : new Date(until).getTime();
       return Date.now() <= untilMs;
@@ -31,7 +32,6 @@ const popupCandidates = notices
     }
   });
 
-// 최신 1개 선택: slug가 "YYYY-MM-DD-..." 형태면 문자열 내림차순이 최신
 popupCandidates.sort((a, b) => (a.slug < b.slug ? 1 : a.slug > b.slug ? -1 : 0));
 
 const popupNotice = popupCandidates[0] ?? null;
@@ -44,314 +44,59 @@ if (popupNotice) {
 ---
 
 <Layout title="제주 발도르프 어린이집">
-  {popupNotice && (
-    <>
-      <!-- 팝업 오버레이 -->
-      <div id="popup-overlay" class="popup-overlay" style="display: none;">
-        <div class="popup-modal" role="dialog" aria-modal="true" aria-label="공지 팝업">
-          <div class="popup-header">
-            <strong class="popup-title">{popupNotice.data.title}</strong>
-            <button id="popup-close" class="popup-close" type="button" aria-label="닫기">✕</button>
-          </div>
-
-          <div class="popup-body">
-            <PopupContent />
-          </div>
-
-          <div class="popup-actions">
-            <button id="popup-hide-today" class="popup-btn" type="button">오늘 하루 보지 않기</button>
-            <button id="popup-close-2" class="popup-btn primary" type="button">닫기</button>
-          </div>
-        </div>
-      </div>
-
-      <!-- 홈에서만 실행되는 팝업 스크립트 -->
-      <script is:inline define:vars={{ slug: popupNotice.slug }}>
-        document.addEventListener("DOMContentLoaded", () => {
-          const overlay = document.getElementById("popup-overlay");
-
-          if (!overlay) return;
-
-          const todayKey = new Date().toISOString().slice(0, 10); // YYYY-MM-DD
-          const storageKey = `kinder_popup_hide_${slug}`;
-
-          const hide = () => {
-            overlay.style.display = "none";
-            document.body.style.overflow = "";
-          };
-
-          const show = () => {
-            overlay.removeAttribute("hidden");
-            overlay.style.display = "flex";
-            document.body.style.overflow = "hidden";
-          };
-
-          // 오늘 숨김 처리 체크
-          const stored = localStorage.getItem(storageKey);
-          if (stored === todayKey) {
-            hide();
-            return;
-          }
-
-          // 처음 표시
-          show();
-
-          // 닫기 버튼들
-          const closeBtn1 = document.getElementById("popup-close");
-          const closeBtn2 = document.getElementById("popup-close-2");
-          const hideTodayBtn = document.getElementById("popup-hide-today");
-
-          if (closeBtn1) {
-            closeBtn1.addEventListener("click", () => {
-              hide();
-            });
-          }
-
-          if (closeBtn2) {
-            closeBtn2.addEventListener("click", () => {
-              hide();
-            });
-          }
-
-          if (hideTodayBtn) {
-            hideTodayBtn.addEventListener("click", () => {
-              localStorage.setItem(storageKey, todayKey);
-              hide();
-            });
-          }
-
-          // 바깥(오버레이) 클릭하면 닫기
-          overlay.addEventListener("click", (e) => {
-            if (e.target === overlay) {
-              hide();
-            }
-          });
-
-          // ESC로 닫기
-          document.addEventListener("keydown", (e) => {
-            if (e.key === "Escape") hide();
-          });
-        });
-      </script>
-    </>
+  {popupNotice && PopupContent && (
+    <NoticePopup notice={popupNotice} Content={PopupContent} />
   )}
 
-  <!-- ======= 홈 콘텐츠 ======= -->
-  <section class="hero-section">
-    <img src={mainImage.src} alt="제주 발도르프 어린이집" class="hero-image" />
-    <div class="hero-content">
-      <h3>아이들이 꽃처럼 피어나는 곳</h3>
-      <h1>제주 발도르프 어린이집</h1>
-      <a href="/admission/" class="hero-cta">입학 문의</a>
-    </div>
-  </section>
+  <HeroIndex
+    imageSrc={mainImage.src}
+    subtitle="아이들이 꽃처럼 피어나는 곳"
+    title="제주 발도르프 어린이집"
+    ctaText="입소 상담하기"
+    ctaLink="/admission/"
+  />
 
-  <section class="image-section">
-    <h3>아름다운 공간에서</h3>
-    <div class="image-grid">
-      <img src={space1.src} alt="공간 1" />
-      <img src={space2.src} alt="공간 2" />
-      <img src={space3.src} alt="공간 3" />
-    </div>
-  </section>
+  <Content3Col
+    title="아름다운 공간에서"
+    titleColor="brown"
+    titleTag="h1"
+    description="교사와 학부모가 꾸민 제주발도르프어린이집에서, 아이들은 매일 영감을 받습니다."
+    descriptionColor="black"
+    images={[
+      { src: space1.src, alt: "공간 1" },
+      { src: space2.src, alt: "공간 2" },
+      { src: space3.src, alt: "공간 3" }
+    ]}
+  />
 
-  <section class="image-section">
-    <h3>예술적인 교육을</h3>
-    <div class="image-grid">
-      <img src={art1.src} alt="예술 교육 1" />
-      <img src={art2.src} alt="예술 교육 2" />
-      <img src={art3.src} alt="예술 교육 3" />
-    </div>
-  </section>
+  <Content3Col
+    title="예술적인 교육을"
+    titleTag="h1"
+    titleColor="brown"
+    description="발도르프의 교육은 <strong>교육예술</strong>이라 합니다.<br />  제주발도르프어린이집에서는 아이의 발달 단계에 맞는 아름다운 예술 활동을 통해 창의력을 기릅니다."
+    bgColor="bgPink"
+    images={[
+      { src: art1.src, alt: "예술 교육 1" },
+      { src: art2.src, alt: "예술 교육 2" },
+      { src: art3.src, alt: "예술 교육 3" }
+    ]}
+  />
 
-  <section class="image-section">
-    <h3>자연과 더불어</h3>
-    <div class="image-grid">
-      <img src={nature1.src} alt="자연 1" />
-      <img src={nature2.src} alt="자연 2" />
-      <img src={nature3.src} alt="자연 3" />
-    </div>
-  </section>
+  <Content3Col
+    title="자연과 더불어"
+    titleTag="h1"
+    titleColor="brown"
+    description="마을에서, 곶자왈에서, 마당에서, <br/ > 제주발도르프어린이집의 아이들은 매일 매일 자연과 만납니다."
+    images={[
+      { src: nature1.src, alt: "자연 1" },
+      { src: nature2.src, alt: "자연 2" },
+      { src: nature3.src, alt: "자연 3" }
+    ]}
+  />
 
-  <section>
-    <h1>어린이집 입소 문의</h1>
-    <a href="https://docs.google.com/forms/d/e/1FAIpQLSccyRwbI42sdBHoiWLcz7A-BywQAY7I7ce_NVQUo6puvjFsVA/viewform">입소 문의</a>
-  </section>
-
-  <style>
-    /* Hero Section */
-    .hero-section {
-      position: relative;
-      width: calc(100% + 48px);
-      margin: -32px -24px;
-      overflow: hidden;
-      height: auto !important;
-    }
-    .hero-image {
-      width: 100%;
-      height: 100vh;
-      min-height: 600px;
-      object-fit: cover;
-      display: block;
-    }
-    .hero-content {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: 100%;
-      padding: 0 24px;
-      text-align: center;
-      color: white;
-      z-index: 1;
-    }
-    .hero-content h3 {
-      margin: 0 0 16px 0;
-      font-size: 1.5rem;
-      color: white;
-      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-    }
-    .hero-content h1 {
-      margin: 0 0 32px 0;
-      font-size: 4rem;
-      color: white;
-      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-    }
-    
-    @media (max-width: 768px) {
-      .hero-content h3 {
-        font-size: 1.2rem;
-      }
-      .hero-content h1 {
-        font-size: 2rem;
-      }
-    }
-    .hero-cta {
-      display: inline-block;
-      padding: 14px 32px;
-      background: #222;
-      color: white;
-      text-decoration: none;
-      border-radius: 8px;
-      font-size: 1.1rem;
-      transition: background 0.2s;
-    }
-    .hero-cta:hover {
-      background: #444;
-    }
-    .hero-section::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: rgba(0, 0, 0, 0.3);
-      z-index: 0;
-    }
-
-    /* Image Sections */
-    .image-section {
-      padding: 60px 24px;
-      text-align: center;
-    }
-    .image-section h1 {
-      margin-bottom: 40px;
-    }
-    .image-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 24px;
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-    .image-grid img {
-      width: 100%;
-      aspect-ratio: 4 / 3;
-      object-fit: cover;
-      border-radius: 12px;
-      display: block;
-    }
-
-    /* Popup */
-    .popup-overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.45);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
-      z-index: 9999;
-    }
-    .popup-modal {
-      width: min(720px, 100%);
-      background: white;
-      border-radius: 16px;
-      overflow: hidden;
-      box-shadow: 0 20px 60px rgba(0,0,0,0.25);
-    }
-    .popup-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      padding: 16px 18px;
-      border-bottom: 1px solid #eee;
-    }
-    .popup-title {
-      font-size: 16px;
-    }
-    .popup-close {
-      border: 0;
-      background: transparent;
-      font-size: 18px;
-      cursor: pointer;
-      padding: 6px 8px;
-      line-height: 1;
-    }
-    .popup-body {
-      padding: 16px 18px;
-      max-height: 55vh;
-      overflow: auto;
-    }
-    .popup-actions {
-      display: flex;
-      justify-content: flex-end;
-      gap: 10px;
-      padding: 14px 18px;
-      border-top: 1px solid #eee;
-    }
-    .popup-btn {
-      border: 1px solid #ddd;
-      background: #fff;
-      padding: 10px 12px;
-      border-radius: 10px;
-      cursor: pointer;
-      font-size: 14px;
-    }
-    .popup-btn.primary {
-      border-color: #222;
-      background: #222;
-      color: white;
-    }
-
-    /* Responsive */
-    @media (max-width: 768px) {
-      .hero-section {
-        margin: -32px -24px;
-        width: calc(100% + 48px);
-      }
-      .hero-image {
-        min-height: 500px;
-      }
-      .hero-cta {
-        padding: 12px 24px;
-        font-size: 1rem;
-      }
-      .image-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-  </style>
+  <ContactSection
+    title="어린이집 입소 문의"
+    linkText="입소 문의"
+    linkUrl="https://docs.google.com/forms/d/e/1FAIpQLSccyRwbI42sdBHoiWLcz7A-BywQAY7I7ce_NVQUo6puvjFsVA/viewform"
+  />
 </Layout>
