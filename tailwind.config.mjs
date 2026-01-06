@@ -16,6 +16,18 @@ export default {
 					800: '#065f46',
 					900: '#064e3b',
 				},
+				custom: {
+					brown: '#674949',
+					'bg-pink': '#FFFAF8',
+					'light-pink': '#FFEEE8',
+					'light-yellow': '#FFFDF4',
+					grey: '#D0CECE',
+					'dark-grey': '#6C6C6C',
+					rose: '#C64444',
+					green: '#227A71',
+					white: '#FFFFFF',
+					black: '#000000',
+				},
 			},
 			fontFamily: {
 				heading: ['gaegu', 'cursive'], // h1, h2

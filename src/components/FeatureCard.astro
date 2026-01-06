@@ -1,0 +1,23 @@
+---
+interface Props {
+  image: ImageMetadata;
+  title: string;
+  description: string;
+  imageAlt?: string;
+  titleTag?: 'h3' | 'h4' | 'h5';
+}
+
+const { image, title, description, imageAlt = title, titleTag = 'h5' } = Astro.props;
+const TitleTag = titleTag;
+---
+
+<div class="flex gap-6 items-start">
+  <div class="w-32 h-32 md:w-40 md:h-40 flex-shrink-0 bg-grey-100 rounded-xl overflow-hidden">
+    <img src={image.src} alt={imageAlt} class="w-full h-full object-cover" />
+  </div>
+  <div class="flex-1">
+    <TitleTag class="mb-3">{title}</TitleTag>
+    <p set:html={description} />
+  </div>
+</div>
+

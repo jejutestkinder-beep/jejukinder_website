@@ -1,0 +1,95 @@
+---
+import FeatureCard from './FeatureCard.astro';
+import { colors } from '../utils/colors';
+
+interface Feature {
+  image: ImageMetadata;
+  title: string;
+  description: string;
+  imageAlt?: string;
+  titleTag?: 'h3' | 'h4' | 'h5';
+}
+
+type ColorName = 'brown' | 'bgPink' | 'lightPink' | 'lightYellow' | 'grey' | 'darkGrey' | 'rose' | 'green' | 'white' | 'black' | string;
+
+interface Props {
+  title?: string;
+  features: Feature[];
+  bgColor?: ColorName;
+  titleCenter?: boolean;
+  titleColor?: ColorName;
+  noBottomPadding?: boolean;
+}
+
+const { 
+  title, 
+  features, 
+  bgColor = 'bgPink',
+  titleCenter = true,
+  titleColor,
+  noBottomPadding = false
+} = Astro.props;
+
+// Map color names to Tailwind classes or use custom colors
+const getBgClass = (color: ColorName): string => {
+  const colorMap: Record<string, string> = {
+    white: 'bg-white',
+    black: 'bg-black',
+    brown: 'bg-custom-brown',
+    grey: 'bg-custom-grey',
+    rose: 'bg-custom-rose',
+    green: 'bg-custom-green',
+  };
+  
+  return colorMap[color] || '';
+};
+
+const getBgStyle = (color: ColorName): string => {
+  // If it's a predefined color name from our palette, use the color value
+  if (colors[color as keyof typeof colors]) {
+    return `background-color: ${colors[color as keyof typeof colors]};`;
+  }
+  // If it's a custom color code, use inline style
+  return `background-color: ${color};`;
+};
+
+const getTitleColorStyle = (color?: ColorName): string => {
+  if (!color) return '';
+  // If it's a predefined color name from our palette, use the color value
+  if (colors[color as keyof typeof colors]) {
+    return `color: ${colors[color as keyof typeof colors]};`;
+  }
+  // If it's a custom color code, use inline style
+  return `color: ${color};`;
+};
+
+const bgClass = getBgClass(bgColor);
+const bgStyle = getBgStyle(bgColor);
+const titleClass = titleCenter ? 'text-center' : '';
+const titleColorStyle = getTitleColorStyle(titleColor);
+const paddingClass = noBottomPadding 
+  ? 'pt-16 md:pt-20 pb-16 md:pb-20 -mb-4 md:-mb-5 lg:-mb-6 xl:-mb-8' 
+  : 'py-16 md:py-20';
+---
+
+<section class={`${paddingClass} ${bgClass} w-[calc(100%+48px)] -mx-6`} style={bgStyle}>
+  <div class="max-w-6xl mx-auto px-6">
+    {title && (
+      <div class={`mb-[1.25rem] ${titleClass}`}>
+        <h2 style={titleColorStyle}>{title}</h2>
+      </div>
+    )}
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
+      {features.map((feature) => (
+        <FeatureCard
+          image={feature.image}
+          title={feature.title}
+          description={feature.description}
+          imageAlt={feature.imageAlt}
+          titleTag={feature.titleTag || 'h5'}
+        />
+      ))}
+    </div>
+  </div>
+</section>
+

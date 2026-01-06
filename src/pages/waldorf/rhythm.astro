@@ -1,45 +1,138 @@
 ---
 import Layout from '../../layouts/Layout.astro';
+import Hero from '../../components/Hero.astro';
+import CardSection from '../../components/CardSection.astro';
 import space1 from '../../assets/space-1.png';
 import space2 from '../../assets/space-2.png';
 import space3 from '../../assets/space-3.png';
 ---
 
 <Layout title="어린이집 리듬 생활 - 제주 발도르프 킨더">
-  <section class="relative overflow-hidden h-[60vh] min-h-[400px] md:h-[50vh] md:min-h-[300px] w-[calc(100%+48px)] -mx-6">
-    <img src={space1.src} alt="어린이집 리듬 생활" class="absolute inset-0 w-full h-full object-cover" />
-    <div class="absolute inset-0 bg-black/40 z-10"></div>
-    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full px-6 text-center z-20">
-      <h1 class="text-white drop-shadow-lg m-0 mb-4">어린이집 리듬 생활</h1>
-      <h2 class="text-white drop-shadow-lg m-0 text-2xl md:text-3xl">제주 발도르프 어린이집의 리듬 활동을 소개합니다.</h2>
-    </div>
-  </section>
+  <Hero
+    image={space1}
+    title="어린이집 리듬 생활"
+    description="제주 발도르프 어린이집의 리듬 활동을 소개합니다."
+    imageAlt="어린이집 리듬 생활"
+  />
 
-  <section class="py-16 md:py-20 bg-gray-50">
-    <div class="max-w-4xl mx-auto px-6 text-center">
-      <h2>자연스러운 배움</h2>
-    </div>
-      <div class="max-w-6xl mx-auto px-6">
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
-          <div class="flex gap-6 items-start">
-            <div class="w-32 h-32 md:w-40 md:h-40 flex-shrink-0 bg-gray-100 rounded-xl overflow-hidden">
-              <img src={space2.src} alt="자유놀이" class="w-full h-full object-cover" />
-            </div>
-            <div class="flex-1">
-              <h3 class="mb-3">자유놀이</h3>
-              <p>아이의 주변에는 진지하게 삶을 가꾸고 살아가는 어른의 모습이 필요합니다. 의미 있는 성인들의 행위를 아이들은 모방하고 받아들이며, 내면화된 것을 놀이로 구현합니다. 아이가 받아들인 것을 상상력을 발휘하여 놀이 속에서 자기만의 세상을 만드는 것입니다.</p>
-            </div>
-          </div>
-          <div class="flex gap-6 items-start">
-            <div class="w-32 h-32 md:w-40 md:h-40 flex-shrink-0 bg-gray-100 rounded-xl overflow-hidden">
-              <img src={space3.src} alt="긴 산책" class="w-full h-full object-cover" />
-            </div>
-            <div class="flex-1">
-              <h3 class="mb-3">긴 산책</h3>
-              <p>매주 같은 곳으로 가는 숲 나들이는 계절 따라 변화하는 자연을 온몸으로 느끼고 경험할 수 있습니다. 흙과 나뭇잎, 나뭇가지가 있는 자연지형의 숲길은 아이들의 균형감각, 운동감각을 건강하게 발달시킬 수 있는 좋은 시간이 됩니다.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-  </section>
+  <CardSection
+    title="자연스러운 배움"
+	titleColor="brown"
+    bgColor="white"
+    titleCenter={false}
+    features={[
+      {
+        image: space2,
+        title: "자유놀이",
+        description: "아이들은 의미 있는 어른들의 모습을 모방하고, 내면화된 것을 놀이로 구현합니다.<br />아이가 받아들인 것을 상상력을 발휘하여 놀이 속에서 자기만의 세상을 만드는 것입니다.",
+        imageAlt: "자유놀이",
+        titleTag: "h5"
+      },
+      {
+        image: space3,
+        title: "긴 산책",
+        description: "매주 같은 곳으로 가는 숲 나들이는 계절 따라 변화하는 자연을 온몸으로 느끼고 경험할 수 있습니다.<br />흙과 나뭇잎, 나뭇가지가 있는 자연지형의 숲길은 아이들의 균형감각, 운동감각을 건강하게 발달시킬 수 있는 좋은 시간이 됩니다.",
+        imageAlt: "긴 산책",
+        titleTag: "h5"
+      }
+    ]}
+  />
+  
+  <CardSection
+    title="예술 경험"
+	titleColor="brown"
+    bgColor="bgPink"
+    titleCenter={false}
+    features={[
+      {
+        image: space2,
+        title: "습식수채화",
+        description: "빛을 발하는 좋은 물감으로 젖은 종이에 그리는 과정은 색이 가진 느낌을 충분히 경험하게 합니다.</br> 빨강, 노랑, 파랑의 세 가지 색으로만 그려 형태보다는 색의 느낌을 중요시하고, 자연스러운 색의 섞임으로 다양한 색이 만들어지는 경험을 할수 있습니다.",
+        imageAlt: "습식수채화",
+        titleTag: "h5"
+      },
+      {
+        image: space3,
+        title: "밀랍 조형 놀이",
+        description: "천연 벌집에서 가져온 밀랍은 고유의 향이 아이들의 후각을 보호합니다. </br>손의 온기로 말랑하게 녹여 형태를 만드는 과정은 의지를 기르고, 건강한 몸을 형성하는데 도움이 됩니다.",
+        imageAlt: "밀랍 조형 놀이",
+        titleTag: "h5"
+      },
+	 {
+        image: space3,
+        title: "수공예, 목공예 ",
+        description: "교사의 생활작업을 통해 배운 수공예와 목공예는 오랜 시간 정성을 들여 아름답고 쓸모 있는 생활용품을 만듭니다. </br>흙과 나뭇잎, 나뭇가지가 있는 자연지형의 숲길은 아이들의 균형감각, 운동감각을 건강하게 발달시킬 수 있는 좋은 시간이 됩니다.",
+        imageAlt: "수공예, 목공예",
+        titleTag: "h5"
+      },
+	  {
+        image: space3,
+        title: "오이리트미(아름다운 리듬)",
+        description: "움직임을 예술적(언어와 음악과 함께)으로 표현하는 활동입니다. </br> 신체 발달과 함께 아이들의 사고,감성,의지발달을 돕는 교욱적예술활동입니다.",
+        imageAlt: "오이리트미",
+        titleTag: "h5"
+      }
+    ]}
+  />
+
+  <CardSection
+    title="다양한 방식으로 만나는 이야기"
+	titleColor="brown"
+    bgColor="white"
+    titleCenter={false}
+    features={[
+      {
+        image: space2,
+        title: "라이겐",
+        description: "라이겐은 이야기를 움직임으로 표현하는 것입니다. 교사는 계절이나 절기에 따라 적절한 라이겐을 고르고 만듭니다.</br>라이겐을 통해 계절의 변화, 우리 고유의 명절 지내기, 수작업, 혹은 생업에 관련된 몸의 움직임을 경험할 수 있습니다. ",
+        imageAlt: "라이겐",
+        titleTag: "h5"
+      },
+      {
+        image: space3,
+        title: "손유희",
+        description: "단순히 주의집중을 위한 손유희가 아니라, 손으로 들려주는 소박하고 아름다운 이야기입니다.</br>다양한 의성어, 의태어로 표현하는 시나 이야기는 아이들에게 말하기의 기쁨을 줍니다. 또한 손유희를 통해 눈을 맞추고 따뜻하게 어루만져 주는 경험은 아이들의 촉감각을 자극하고 안정감을 줍니다.",
+        imageAlt: "손유희",
+        titleTag: "h5"
+      },
+	 {
+        image: space3,
+        title: "이야기 들려주기",
+        description: "이야기는 인류에게 오랫동안 내적인 자양분이 되어왔습니다. 영유아들의 나이에 따라 적절한 양분이 되는 이야기를 고르고 하루 중 고요한 시간에 이야기를 들려줍니다 </br>3주 동안 같은 이야기를 반복하여 듣기는 아이들에게 내적인 안정감을 제공하고 좋은 이야기를 내면 깊숙이 받아들여 양분으로 저장할 수 있게 해줍니다.",
+        imageAlt: "이야기 들려주기",
+        titleTag: "h5"
+      },
+	  {
+        image: space3,
+        title: "인형극",
+        description: "3주간 들은 이야기를 마지막 주 인형극으로 봅니다.</br>주인공과 함께 어려움을 극복하고 좋은 것을 선물로 받는 과정은 세상에서 겪게 되는 어려움과 역경을 이겨낼 수 있는 내적인 힘을 갖게 할 것입니다.",
+        imageAlt: "오이리트미",
+        titleTag: "h5"
+      }
+    ]}
+  />
+  <CardSection
+    title="먹고, 쉬며 자라는 하루"
+    bgColor="bgPink"
+    titleCenter={false}
+    titleColor="brown"
+    noBottomPadding={true}
+    features={[
+      {
+        image: space2,
+        title: "간식, 식사",
+        description: "매주 요일마다 다르게 제공되는 간식의 종류와 곡물은 감각으로 요일 리듬의 흐름과 반복을 느낄 수 있게 하고자 하는 배려입니다.",
+        imageAlt: "간식 식사",
+        titleTag: "h5"
+      },
+      {
+        image: space3,
+        title: "휴식",
+        description: "영아반은 매일 한 시간 반 이상의 낮잠을 잘 수 있도록 보장하고, 유아반의 경우 6세까지는 적어도 하루 30분 이상 조용한 휴식을 취할 수 있도록 합니다.</br>잠은 깨어있을 때 받아들인 많은 인상을 소화하고 내면화하는 귀중한 시간입니다.",
+        imageAlt: "휴식",
+        titleTag: "h5"
+      }
+    ]}
+  />
+
 </Layout>
