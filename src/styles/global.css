@@ -32,6 +32,10 @@
   h5 {
     @apply font-body text-xl md:text-2xl font-bold text-gray-800 mb-4;
   }
+
+  h6 {
+    @apply font-body text-lg md:text-lg font-normal text-gray-800 mb-4;
+  }
   
   p {
     @apply font-body text-base text-gray-700 leading-relaxed mb-4;

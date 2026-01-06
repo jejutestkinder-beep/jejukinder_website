@@ -3,11 +3,12 @@ import FeatureCard from './FeatureCard.astro';
 import { colors } from '../utils/colors';
 
 interface Feature {
-  image: ImageMetadata;
+  image?: ImageMetadata;
   title: string;
   description: string;
   imageAlt?: string;
   titleTag?: 'h3' | 'h4' | 'h5';
+  imageSize?: 'large' | 'small';
 }
 
 type ColorName = 'brown' | 'bgPink' | 'lightPink' | 'lightYellow' | 'grey' | 'darkGrey' | 'rose' | 'green' | 'white' | 'black' | string;
@@ -87,6 +88,7 @@ const paddingClass = noBottomPadding
           description={feature.description}
           imageAlt={feature.imageAlt}
           titleTag={feature.titleTag || 'h5'}
+          imageSize={feature.imageSize || 'large'}
         />
       ))}
     </div>

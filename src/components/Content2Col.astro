@@ -1,0 +1,72 @@
+---
+import { colors } from '../utils/colors';
+
+type ColorName = 'brown' | 'bgPink' | 'lightPink' | 'lightYellow' | 'grey' | 'darkGrey' | 'rose' | 'green' | 'white' | 'black' | string;
+
+interface Props {
+  image?: ImageMetadata;
+  imagePosition?: 'left' | 'right';
+  imageAlt?: string;
+  title?: string;
+  description?: string;
+  titleColor?: ColorName;
+  textColor?: ColorName;
+  textAlign?: 'top' | 'middle' | 'bottom';
+  bgColor?: 'white' | 'gray' | string;
+  class?: string;
+}
+
+const {
+  image,
+  imagePosition = 'left',
+  imageAlt = '',
+  title,
+  description,
+  titleColor,
+  textColor,
+  textAlign = 'middle',
+  bgColor = 'white',
+  class: className = ''
+} = Astro.props;
+
+const bgClass = bgColor === 'white' ? 'bg-white' : bgColor === 'gray' ? 'bg-gray-50' : '';
+const bgStyle = bgColor !== 'white' && bgColor !== 'gray' ? `background-color: ${bgColor};` : '';
+
+const getTextColorStyle = (color?: ColorName): string => {
+  if (!color) return '';
+  if (colors[color as keyof typeof colors]) {
+    return `color: ${colors[color as keyof typeof colors]} !important;`;
+  }
+  return `color: ${color} !important;`;
+};
+
+const titleColorStyle = getTextColorStyle(titleColor);
+const textColorStyle = getTextColorStyle(textColor);
+const alignClass = textAlign === 'top' ? 'items-start' : textAlign === 'bottom' ? 'items-end' : 'items-center';
+const imageOrder = imagePosition === 'right' ? 'order-2' : 'order-1';
+const textOrder = imagePosition === 'right' ? 'order-1' : 'order-2';
+---
+
+<section class={`py-16 md:py-20 ${bgClass} ${className}`} style={bgStyle}>
+  <div class="max-w-6xl mx-auto px-6">
+    <div class={`grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16 ${alignClass}`}>
+      {image && (
+        <div class={`w-full ${imageOrder}`}>
+          <div class="w-full aspect-[4/3] bg-gray-100 rounded-xl overflow-hidden">
+            <img src={image.src} alt={imageAlt} class="w-full h-full object-cover" />
+          </div>
+        </div>
+      )}
+      <div class={`w-full ${image ? textOrder : ''}`} style={textColorStyle}>
+        {title && (
+          <h2 class="mb-6" style={titleColorStyle} set:html={title} />
+        )}
+        {description && (
+          <h6 class="mb-3 font-normal" set:html={description} />
+        )}
+        <slot />
+      </div>
+    </div>
+  </div>
+</section>
+
