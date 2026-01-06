@@ -7,8 +7,11 @@ interface Props {
   image?: ImageMetadata;
   imagePosition?: 'left' | 'right';
   imageAlt?: string;
+  label?: string;
+  labelColor?: 'rose' | 'white' | 'green';
   title?: string;
   description?: string;
+  descriptionList?: string[];
   titleColor?: ColorName;
   textColor?: ColorName;
   textAlign?: 'top' | 'middle' | 'bottom';
@@ -20,8 +23,11 @@ const {
   image,
   imagePosition = 'left',
   imageAlt = '',
+  label,
+  labelColor = 'rose',
   title,
   description,
+  descriptionList,
   titleColor,
   textColor,
   textAlign = 'middle',
@@ -42,6 +48,11 @@ const getTextColorStyle = (color?: ColorName): string => {
 
 const titleColorStyle = getTextColorStyle(titleColor);
 const textColorStyle = getTextColorStyle(textColor);
+const labelColorStyle = labelColor === 'rose' 
+  ? `color: ${colors.rose} !important;` 
+  : labelColor === 'white' 
+  ? `color: ${colors.white} !important;` 
+  : `color: ${colors.green} !important;`;
 const alignClass = textAlign === 'top' ? 'items-start' : textAlign === 'bottom' ? 'items-end' : 'items-center';
 const imageOrder = imagePosition === 'right' ? 'order-2' : 'order-1';
 const textOrder = imagePosition === 'right' ? 'order-1' : 'order-2';
@@ -52,21 +63,86 @@ const textOrder = imagePosition === 'right' ? 'order-1' : 'order-2';
     <div class={`grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16 ${alignClass}`}>
       {image && (
         <div class={`w-full ${imageOrder}`}>
-          <div class="w-full aspect-[4/3] bg-gray-100 rounded-xl overflow-hidden">
-            <img src={image.src} alt={imageAlt} class="w-full h-full object-cover" />
+          <div class="w-full aspect-[4/3] rounded-xl overflow-hidden">
+            <img 
+              src={image.src} 
+              alt={imageAlt} 
+              class="w-full h-full object-cover rounded-xl animate-fade-in parallax-image" 
+              data-parallax="true"
+            />
           </div>
         </div>
       )}
       <div class={`w-full ${image ? textOrder : ''}`} style={textColorStyle}>
+        {label && (
+          <h6 class="mb-3 font-bold uppercase tracking-wider" style={labelColorStyle}>{label}</h6>
+        )}
         {title && (
           <h2 class="mb-6" style={titleColorStyle} set:html={title} />
         )}
         {description && (
           <h6 class="mb-3 font-normal" set:html={description} />
         )}
+        {descriptionList && descriptionList.length > 0 && (
+          <ul class="mb-3 font-normal list-disc list-inside space-y-2" style={textColorStyle}>
+            {descriptionList.map((item) => (
+              <li set:html={item} />
+            ))}
+          </ul>
+        )}
         <slot />
       </div>
     </div>
   </div>
 </section>
+
+<script>
+  function initParallax() {
+    const parallaxImages = document.querySelectorAll('.parallax-image[data-parallax="true"]');
+    
+    if (parallaxImages.length === 0) return;
+
+    let ticking = false;
+
+    function updateParallax() {
+      parallaxImages.forEach((img) => {
+        const rect = img.getBoundingClientRect();
+        const windowHeight = window.innerHeight;
+        
+        // 이미지가 뷰포트에 보일 때만 parallax 효과 적용
+        if (rect.bottom >= 0 && rect.top <= windowHeight) {
+          // 이미지의 중앙점이 뷰포트의 어디에 있는지 계산
+          const imageCenter = rect.top + rect.height / 2;
+          const viewportCenter = windowHeight / 2;
+          const offset = (imageCenter - viewportCenter) * 0.15; // 0.15는 움직임 강도
+          
+          img.style.transform = `translateY(${offset}px)`;
+          img.style.transition = 'transform 0.1s ease-out';
+        }
+      });
+      
+      ticking = false;
+    }
+
+    function requestTick() {
+      if (!ticking) {
+        requestAnimationFrame(updateParallax);
+        ticking = true;
+      }
+    }
+
+    window.addEventListener('scroll', requestTick, { passive: true });
+    window.addEventListener('resize', requestTick, { passive: true });
+    
+    // 초기 실행
+    updateParallax();
+  }
+
+  // DOM이 로드된 후 실행
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initParallax);
+  } else {
+    initParallax();
+  }
+</script>
 
