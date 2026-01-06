@@ -13,15 +13,18 @@ const images = {
 <Layout title="어린이집 현황">
 	<main class="content-wrapper">
     
-    <section class="hero-section" style={`background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url(${images.hero});`}>
-      <div class="hero-content">
+    <section class="relative overflow-hidden h-[60vh] min-h-[400px] md:h-[50vh] md:min-h-[300px] w-[calc(100%+48px)] -mx-6" style={`background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url(${images.hero});`}>
+      <div class="absolute inset-0 bg-black/40 z-10"></div>
+      <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full px-6 text-center z-20">
         <h1 class="hero-title">제주 발도르프 어린이집 현황</h1>
       </div>
 	</section>
     <section class="py-20 bg-white">
       <div class="container grid md:grid-cols-2 gap-12 items-center">
         <div class="order-2 md:order-1">
-          <img src={triageImage.src} alt="제주발도르프 어린이집" class="w-full h-auto" />
+          <div class="w-full aspect-[4/3] bg-gray-100 rounded-xl flex items-center justify-center text-gray-500">
+            <p>이미지 placeholder</p>
+          </div>
         </div>
         <div class="order-1 md:order-2">
           <h2 class="text-3xl font-bold mb-6 text-green-800">제주발도르프어린이집은<br />부모와 아이가 함께 행복하고<br />건강하게 성장하기 위한 제주발도르프<br />교육공동체의 일원입니다.</h2>

@@ -12,8 +12,9 @@ const images = {
 <Layout title="운영 철학">
   <main class="content-wrapper">
     
-    <section class="hero-section" style={`background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url(${images.hero});`}>
-      <div class="hero-content">
+    <section class="relative overflow-hidden h-[60vh] min-h-[400px] md:h-[50vh] md:min-h-[300px] w-[calc(100%+48px)] -mx-6" style={`background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url(${images.hero});`}>
+      <div class="absolute inset-0 bg-black/40 z-10"></div>
+      <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full px-6 text-center z-20">
         <h1 class="hero-title">어린이집 운영 철학</h1>
       </div>
     </section>
