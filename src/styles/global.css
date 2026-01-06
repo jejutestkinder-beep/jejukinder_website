@@ -11,10 +11,12 @@
   /* Headings with Gaegu font */
   h1 {
     @apply font-heading text-5xl md:text-5xl font-bold text-gray-900 mb-6 leading-tight;
+    letter-spacing: -0.02em;
   }
 
   h2 {
     @apply font-heading text-3xl md:text-4xl font-bold text-gray-800 mb-5 leading-tight;
+    letter-spacing: -0.01em;
   }
 
   /* Body text with Nanum Gothic */
