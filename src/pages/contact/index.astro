@@ -19,12 +19,7 @@ import FormButton from '../../components/FormButton.astro';
 				id="contact-form"
 				name="contact"
 				method="POST"
-				data-netlify="true"
-				netlify-honeypot="bot-field"
 			>
-			<!-- Netlify Forms - hidden fields -->
-			<input type="hidden" name="form-name" value="contact" />
-
 			<!-- Honeypot for spam protection -->
 			<p class="hidden">
 				<label>
@@ -77,37 +72,51 @@ import FormButton from '../../components/FormButton.astro';
 		<script>
 			const form = document.getElementById('contact-form');
 			if (form) {
-				form.addEventListener('submit', async (e) => {
+				form.addEventListener('submit', (e) => {
 					e.preventDefault();
 					
 					const formData = new FormData(form);
-					const submitButton = form.querySelector('button[type="submit"]');
-					const originalText = submitButton?.textContent;
+					const name = formData.get('name');
+					const email = formData.get('email');
+					const phone = formData.get('phone');
+					const message = formData.get('message');
+					const botField = formData.get('bot-field');
 					
-					// 버튼 비활성화
-					if (submitButton) {
-						submitButton.disabled = true;
-						submitButton.textContent = '전송 중...';
+					// Honeypot 체크 (스팸 방지)
+					if (botField) {
+						return;
 					}
 					
-					try {
-						const response = await fetch('/', {
-							method: 'POST',
-							headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-							body: new URLSearchParams(formData).toString(),
-						});
-						
-						if (response.ok) {
-							// 성공 페이지로 리다이렉트
-							window.location.href = '/contact/success/';
-						} else {
-							// 에러 페이지로 리다이렉트
-							window.location.href = '/contact/error/';
-						}
-					} catch (error) {
-						console.error('Form submission error:', error);
-						window.location.href = '/contact/error/';
+					// 필수 필드 검증
+					if (!name || !email || !phone || !message) {
+						alert('모든 필드를 입력해주세요.');
+						return;
 					}
+					
+					// 이메일 내용 구성
+					const subject = encodeURIComponent(`[제주 발도르프 어린이집] 문의하기: ${name}`);
+					const body = encodeURIComponent(`새로운 문의가 접수되었습니다.
+
+이름: ${name}
+이메일: ${email}
+연락처: ${phone}
+
+메시지:
+${message}
+
+---
+이 메시지는 제주 발도르프 어린이집 웹사이트 문의 폼에서 자동으로 전송되었습니다.`);
+					
+					// mailto 링크 생성
+					const mailtoLink = `mailto:jejutestkinder@gmail.com?subject=${subject}&body=${body}`;
+					
+					// 이메일 클라이언트 열기
+					window.location.href = mailtoLink;
+					
+					// 성공 페이지로 리다이렉트 (약간의 지연 후)
+					setTimeout(() => {
+						window.location.href = '/contact/success/';
+					}, 500);
 				});
 			}
 		</script>
