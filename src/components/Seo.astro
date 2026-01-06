@@ -1,5 +1,5 @@
 ---
-import { Seo } from 'astro-seo';
+import { SEO } from 'astro-seo';
 
 export interface Props {
   title: string;
@@ -46,16 +46,20 @@ const twitterImage = twitterCard?.image || ogImage;
 const twitterCardType = twitterCard?.card || 'summary_large_image';
 ---
 
-<Seo
+<SEO
   title={title}
   description={description}
   canonical={canonical || currentUrl}
   openGraph={{
-    title: ogTitle,
-    description: ogDescription,
-    url: ogUrl,
-    type: ogType,
-    images: ogImage ? [{ url: ogImage }] : undefined,
+    basic: {
+      title: ogTitle,
+      type: ogType,
+      image: ogImage,
+    },
+    optional: {
+      description: ogDescription,
+      url: ogUrl,
+    }
   }}
   twitter={{
     card: twitterCardType,

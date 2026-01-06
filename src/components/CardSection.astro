@@ -5,10 +5,11 @@ import { colors } from '../utils/colors';
 interface Feature {
   image?: ImageMetadata;
   title: string;
-  description: string;
+  description?: string;
   imageAlt?: string;
   titleTag?: 'h3' | 'h4' | 'h5';
   imageSize?: 'large' | 'small';
+  cardType?: 'default' | 'image';
 }
 
 type ColorName = 'brown' | 'bgPink' | 'lightPink' | 'lightYellow' | 'grey' | 'darkGrey' | 'rose' | 'green' | 'white' | 'black' | string;
@@ -89,6 +90,7 @@ const paddingClass = noBottomPadding
           imageAlt={feature.imageAlt}
           titleTag={feature.titleTag || 'h5'}
           imageSize={feature.imageSize || 'large'}
+          cardType={feature.cardType || 'default'}
         />
       ))}
     </div>

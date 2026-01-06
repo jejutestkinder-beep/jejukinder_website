@@ -2,13 +2,14 @@
 interface Props {
   image?: ImageMetadata;
   title: string;
-  description: string;
+  description?: string;
   imageAlt?: string;
   titleTag?: 'h3' | 'h4' | 'h5';
   imageSize?: 'large' | 'small';
+  cardType?: 'default' | 'image';
 }
 
-const { image, title, description, imageAlt = title, titleTag = 'h5', imageSize = 'large' } = Astro.props;
+const { image, title, description, imageAlt = title, titleTag = 'h5', imageSize = 'large', cardType = 'default' } = Astro.props;
 const TitleTag = titleTag;
 
 const imageSizeClass = imageSize === 'small' 
@@ -16,15 +17,26 @@ const imageSizeClass = imageSize === 'small'
   : 'w-32 h-32 md:w-40 md:h-40';
 ---
 
-<div class="flex gap-6 items-start">
-  {image && (
-    <div class={`${imageSizeClass} flex-shrink-0 bg-gray-100 rounded-xl overflow-hidden`}>
-      <img src={image.src} alt={imageAlt} class="w-full h-full object-cover" />
-    </div>
-  )}
-  <div class="flex-1">
-    <TitleTag class="mb-3">{title}</TitleTag>
-    <p set:html={description} />
+{cardType === 'image' ? (
+  <div class="w-full">
+    {image && (
+      <div class="w-full aspect-[4/3] rounded-xl overflow-hidden mb-4">
+        <img src={image.src} alt={imageAlt} class="w-full h-full object-cover" />
+      </div>
+    )}
+    <TitleTag>{title}</TitleTag>
   </div>
-</div>
+) : (
+  <div class="flex gap-6 items-start">
+    {image && (
+      <div class={`${imageSizeClass} flex-shrink-0 bg-gray-100 rounded-xl overflow-hidden`}>
+        <img src={image.src} alt={imageAlt} class="w-full h-full object-cover" />
+      </div>
+    )}
+    <div class="flex-1">
+      <TitleTag class="mb-3">{title}</TitleTag>
+      {description && <p set:html={description} />}
+    </div>
+  </div>
+)}
 

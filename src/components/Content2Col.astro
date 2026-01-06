@@ -54,13 +54,27 @@ const labelColorStyle = labelColor === 'rose'
   ? `color: ${colors.white} !important;` 
   : `color: ${colors.green} !important;`;
 const alignClass = textAlign === 'top' ? 'items-start' : textAlign === 'bottom' ? 'items-end' : 'items-center';
-const imageOrder = imagePosition === 'right' ? 'order-2' : 'order-1';
-const textOrder = imagePosition === 'right' ? 'order-1' : 'order-2';
+// 모바일: order-1 (타이틀), order-2 (이미지), order-3 (description)
+// 데스크톱: imagePosition에 따라 배치
+const imageOrder = imagePosition === 'right' ? 'order-2 md:order-2' : 'order-2 md:order-1';
+const textOrder = imagePosition === 'right' ? 'order-3 md:order-1' : 'order-3 md:order-2';
 ---
 
 <section class={`py-16 md:py-20 ${bgClass} ${className}`} style={bgStyle}>
   <div class="max-w-6xl mx-auto px-6">
     <div class={`grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16 ${alignClass}`}>
+      {/* 모바일에서만 보이는 타이틀 (order-1) */}
+      {(label || title) && (
+        <div class="w-full order-1 md:hidden" style={textColorStyle}>
+          {label && (
+            <h6 class="mb-3 font-bold uppercase tracking-wider" style={labelColorStyle}>{label}</h6>
+          )}
+          {title && (
+            <h2 class="mb-6" style={titleColorStyle} set:html={title} />
+          )}
+        </div>
+      )}
+      {/* 이미지 (모바일: order-2, 데스크톱: imagePosition에 따라) */}
       {image && (
         <div class={`w-full ${imageOrder}`}>
           <div class="w-full aspect-[4/3] rounded-xl overflow-hidden">
@@ -73,13 +87,18 @@ const textOrder = imagePosition === 'right' ? 'order-1' : 'order-2';
           </div>
         </div>
       )}
-      <div class={`w-full ${image ? textOrder : ''}`} style={textColorStyle}>
-        {label && (
-          <h6 class="mb-3 font-bold uppercase tracking-wider" style={labelColorStyle}>{label}</h6>
-        )}
-        {title && (
-          <h2 class="mb-6" style={titleColorStyle} set:html={title} />
-        )}
+      {/* 텍스트 컨텐츠 (모바일: order-3, 데스크톱: imagePosition에 따라) */}
+      <div class={`w-full ${image ? textOrder : 'order-2 md:order-none'}`} style={textColorStyle}>
+        {/* 데스크톱에서만 보이는 타이틀 */}
+        <div class="hidden md:block">
+          {label && (
+            <h6 class="mb-3 font-bold uppercase tracking-wider" style={labelColorStyle}>{label}</h6>
+          )}
+          {title && (
+            <h2 class="mb-6" style={titleColorStyle} set:html={title} />
+          )}
+        </div>
+        {/* Description (모바일에서만 표시) */}
         {description && (
           <h6 class="mb-3 font-normal" set:html={description} />
         )}

@@ -1,105 +1,85 @@
 ---
 import Layout from '../../layouts/Layout.astro';
-import triageImage from '../../assets/triage.svg';
+import Hero from '../../components/Hero.astro';
+import Content2Col from '../../components/Content2Col.astro';
+import Content1Col from '../../components/Content1Col.astro';
+import CardSection from '../../components/CardSection.astro';
+import space1 from '../../assets/space-1.png';
+import phil1 from '../../assets/phil_triage.svg';
+import space2 from '../../assets/space-2.png';
+import space3 from '../../assets/space-3.png';
 
-const images = {
-  hero: "/images/hero-status.jpg",
-  section1: "/images/triage.svg",
-  section2: "/images/teachers.jpg",
-  section3: "/images/human-image.jpg",
-};
 ---
 
-<Layout title="어린이집 현황">
-	<main class="content-wrapper">
-    
-    <section class="relative overflow-hidden h-[60vh] min-h-[400px] md:h-[50vh] md:min-h-[300px] w-[calc(100%+48px)] -mx-6" style={`background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url(${images.hero});`}>
-      <div class="absolute inset-0 bg-black/40 z-10"></div>
-      <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full px-6 text-center z-20">
-        <h1 class="hero-title">제주 발도르프 어린이집 현황</h1>
-      </div>
-	</section>
-    <section class="py-20 bg-white">
-      <div class="container grid md:grid-cols-2 gap-12 items-center">
-        <div class="order-2 md:order-1">
-          <div class="w-full aspect-[4/3] bg-gray-100 rounded-xl flex items-center justify-center text-gray-500">
-            <p>이미지 placeholder</p>
-          </div>
-        </div>
-        <div class="order-1 md:order-2">
-          <h2 class="text-3xl font-bold mb-6 text-green-800">제주발도르프어린이집은<br />부모와 아이가 함께 행복하고<br />건강하게 성장하기 위한 제주발도르프<br />교육공동체의 일원입니다.</h2>
-        </div>
-      </div>
-    </section>
+<Layout 
+  title="운영 현황 | 제주발도르프어린이집 (제주시 한경·안덕)"
+  description="제주발도르프어린이집의 발자취와 현재 운영 시설 및 교사진을 소개합니다.">
 
-	 <section class="py-20 bg-gray-50">
-      <div class="container grid md:grid-cols-2 gap-12 items-center">
-        <div class="order-2 md:order-1">
-          <img src={images.section3} alt="연혁 이미지" class="rounded-2xl shadow-lg w-full h-80 object-cover" />
-        </div>
-        <div class="order-1 md:order-2">
-          <h2 class="text-4xl font-bold mt-2 mb-6">연혁</h2>
-			<p class="text-lg text-gray-700">2024년 10월16일 준비모임 : 김주아,안경술,용지항(어린이집 인가준비)</p>
-			<p class="text-lg text-gray-700">2024년 12월24일 어린이집 운영위원모임 : 김주아,신지현,유지온,용지항,정윤후</p>
-			<p class="text-lg text-gray-700">2024년 1월11일 어린이집 설명회</p>
-			<p class="text-lg text-gray-700">2025년 2월13일 리모델링 시작</p>
-			<p class="text-lg text-gray-700">2025년 3월10일 어린이집 홍보시작</p>
-			<p class="text-lg text-gray-700">2025년 8월 가정어린이집 인가 (9명출발)</p>
-        </div>
-      </div>
-    </section>
+  <Hero
+    image={space1}
+    title="어린이집 현황"
+    imageAlt="어린이집 현황"
+  />
+  
+  <Content2Col
+    image={phil1}
+    imagePosition="left"
+    imageAlt="슈타이너 이미지"
+    title="제주발도르프 교육 공동체"
+    description="제주 발도르프 어린이집은 <br />부모와 아이가 함께 행복하고 건강하게 성장하기 위한<br />제주발도르프 교육공동체의 일원입니다."
+    titleColor="brown"
+    textAlign="middle"
+  />
 
-    <section class="py-20 bg-white">
-      <div class="container grid md:grid-cols-1 items-center">
-        <div>
-          <h2 class="text-4xl font-bold mt-2 mb-6">시설</h2>
-        </div>
-	</div>
-	<div class="container grid md:grid-cols-2 items-center">
-        <div>
-          <h2 class="text-4xl font-bold mt-2 mb-6">바다반 시설</h2>
-        </div>
-		<div>
-          <h2 class="text-4xl font-bold mt-2 mb-6">오름반 시설</h2>
-        </div>
-	</div>
-</section>
-	
+  <Content2Col
+    image={space1}
+    imagePosition="right"
+    imageAlt="모방이미지"
+    title="연혁"
+    titleColor="brown"
+    textAlign="middle"
+    descriptionList={[
+      "2024년 10월 16일 준비모임 : 김주아, 안경술, 용지향 (어린이집 인가준비)",
+      "2024년 12월 24일 어린이집 운영위원모임 : 김주아, 신지현, 유지온, 용지항, 정윤후",
+      "2025년 1월 11일 어린이집 설명회",
+      "2025년 2월 13일 리모델링 시작",
+      "2025년 3월 10일 어린이집 홍보시작",
+      "2025년 8월 가정어린이집 인가 (9명 출발)"
+    ]}
+  />
 
-    <section class="py-20 bg-gray-50">
-      <div class="container grid md:grid-cols-2 gap-12 items-center">
-        <div>
-          <img src={images.section5} alt="선생님 이미지" class="rounded-2xl shadow-lg w-full h-80 object-cover" />
-        </div>
-        <div>
-          <span class="text-green-600 font-bold uppercase tracking-wider">Vision</span>
-          <h2 class="text-4xl font-bold mt-2 mb-6">교사진</h2>
-          <p class="text-lg text-gray-700 leading-relaxed">
-- 원장: 박형자
-- 교사: 김보라
-- 보조교사: 남인우
-          </p>
-        </div>
-      </div>
-    </section>
+  <CardSection
+    title="어린이집 시설"
+	titleColor="brown"
+    bgColor="bgPink"
+    titleCenter={false}
+    features={[
+      {
+        image: space2,
+        title: "바다반",
+        imageAlt: "바다반 보육실 사진",
+        titleTag: "h5",
+        cardType: "image"
+      },
+      {
+        image: space3,
+        title: "오름반",
+        imageAlt: "오름반 보육실 사진",
+        titleTag: "h5",
+        cardType: "image"
+      }
+    ]}
+  />
+  <Content2Col
+    image={space1}
+    imagePosition="right"
+    imageAlt="모방이미지"
+    title="교직원 현황"
+    titleColor="brown"
+    textAlign="middle"
+    descriptionList={[
+      "원장: 박형자",
+      "교사: 김보라",
+      "보조교사: 남인우"
+    ]}
 </Layout>
-
-
-
-  </main>
-</Layout>
-
-<style>
-  .hero-section {
-    background-size: cover;
-    background-position: center;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .hero-title {
-    @apply text-white drop-shadow-lg;
-    font-size: 3.5rem;
-    font-weight: 800;
-  }
-</style>

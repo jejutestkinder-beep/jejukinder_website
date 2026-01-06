@@ -35,6 +35,9 @@ const getBgClass = (color: ColorName): string => {
     grey: 'bg-custom-grey',
     rose: 'bg-custom-rose',
     green: 'bg-custom-green',
+    bgPink: 'bg-custom-bg-pink',
+    lightPink: 'bg-custom-light-pink',
+    lightYellow: 'bg-custom-light-yellow',
   };
   
   return colorMap[color] || '';
@@ -73,7 +76,7 @@ const paddingClass = noBottomPadding
       <TitleTag style={titleColorStyle} set:html={title} />
     )}
     {description && (
-      <p style={textColorStyle} set:html={description} />
+      <h6 style={textColorStyle} set:html={description} />
     )}
     <slot />
   </div>
