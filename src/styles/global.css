@@ -77,7 +77,8 @@
 
   /* Blockquote */
   blockquote {
-    @apply border-l-4 border-primary-500 pl-4 py-2 mb-4 italic text-gray-600;
+    @apply border-l-4 pl-4 py-2 mb-4 italic text-gray-600;
+    border-color: #10b981;
   }
 
   /* Code */
