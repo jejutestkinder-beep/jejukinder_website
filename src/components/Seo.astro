@@ -1,0 +1,67 @@
+---
+import { Seo } from 'astro-seo';
+
+export interface Props {
+  title: string;
+  description: string;
+  canonical?: string;
+  openGraph?: {
+    title?: string;
+    description?: string;
+    image?: string;
+    url?: string;
+    type?: string;
+  };
+  twitterCard?: {
+    title?: string;
+    description?: string;
+    image?: string;
+    card?: 'summary' | 'summary_large_image';
+  };
+}
+
+const {
+  title,
+  description,
+  canonical,
+  openGraph,
+  twitterCard
+} = Astro.props;
+
+// 기본 사이트 URL (환경 변수나 설정에서 가져올 수 있음)
+const siteUrl = Astro.site?.href || 'https://your-site.com';
+const currentUrl = canonical || new URL(Astro.url.pathname, siteUrl).href;
+
+// Open Graph 기본값 설정
+const ogTitle = openGraph?.title || title;
+const ogDescription = openGraph?.description || description;
+const ogImage = openGraph?.image || `${siteUrl}/og-image.jpg`;
+const ogUrl = openGraph?.url || currentUrl;
+const ogType = openGraph?.type || 'website';
+
+// Twitter Card 기본값 설정
+const twitterTitle = twitterCard?.title || title;
+const twitterDescription = twitterCard?.description || description;
+const twitterImage = twitterCard?.image || ogImage;
+const twitterCardType = twitterCard?.card || 'summary_large_image';
+---
+
+<Seo
+  title={title}
+  description={description}
+  canonical={canonical || currentUrl}
+  openGraph={{
+    title: ogTitle,
+    description: ogDescription,
+    url: ogUrl,
+    type: ogType,
+    images: ogImage ? [{ url: ogImage }] : undefined,
+  }}
+  twitter={{
+    card: twitterCardType,
+    title: twitterTitle,
+    description: twitterDescription,
+    image: twitterImage,
+  }}
+/>
+
