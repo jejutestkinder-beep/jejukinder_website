@@ -1,9 +1,10 @@
 ---
 import Layout from '../../layouts/Layout.astro';
+import triageImage from '../../assets/triage.svg';
 
 const images = {
   hero: "/images/hero-status.jpg",
-  section1: "/images/philosophy.jpg",
+  section1: "/images/triage.svg",
   section2: "/images/teachers.jpg",
   section3: "/images/human-image.jpg",
 };
@@ -17,10 +18,14 @@ const images = {
         <h1 class="hero-title">제주 발도르프 어린이집 현황</h1>
       </div>
 	</section>
-	   <section class="statement-section py-20 bg-white">
-      <div class="container max-w-4xl text-center">
-        <h2 class="text-3xl font-bold mb-6 text-green-800">제주발도르프 어린이집은 한경면 저지리에 자리하여</h2>
-		<h2 class="text-3xl font-bold mb-6 text-green-800">2024년 10월 첫 발걸음을 내딛었습니다.</h2>
+    <section class="py-20 bg-white">
+      <div class="container grid md:grid-cols-2 gap-12 items-center">
+        <div class="order-2 md:order-1">
+          <img src={triageImage.src} alt="제주발도르프 어린이집" class="w-full h-auto" />
+        </div>
+        <div class="order-1 md:order-2">
+          <h2 class="text-3xl font-bold mb-6 text-green-800">제주발도르프어린이집은<br />부모와 아이가 함께 행복하고<br />건강하게 성장하기 위한 제주발도르프<br />교육공동체의 일원입니다.</h2>
+        </div>
       </div>
     </section>
 
@@ -77,13 +82,6 @@ const images = {
 </Layout>
 
 
-
-
-
-
-    
-
-   
 
   </main>
 </Layout>

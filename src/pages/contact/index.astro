@@ -16,9 +16,9 @@ import FormButton from '../../components/FormButton.astro';
 
 		<Card class="p-8">
 			<form
+				id="contact-form"
 				name="contact"
 				method="POST"
-				action="/contact/success/"
 				data-netlify="true"
 				netlify-honeypot="bot-field"
 			>
@@ -73,6 +73,44 @@ import FormButton from '../../components/FormButton.astro';
 			</div>
 			</form>
 		</Card>
+
+		<script>
+			const form = document.getElementById('contact-form');
+			if (form) {
+				form.addEventListener('submit', async (e) => {
+					e.preventDefault();
+					
+					const formData = new FormData(form);
+					const submitButton = form.querySelector('button[type="submit"]');
+					const originalText = submitButton?.textContent;
+					
+					// 버튼 비활성화
+					if (submitButton) {
+						submitButton.disabled = true;
+						submitButton.textContent = '전송 중...';
+					}
+					
+					try {
+						const response = await fetch('/', {
+							method: 'POST',
+							headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+							body: new URLSearchParams(formData).toString(),
+						});
+						
+						if (response.ok) {
+							// 성공 페이지로 리다이렉트
+							window.location.href = '/contact/success/';
+						} else {
+							// 에러 페이지로 리다이렉트
+							window.location.href = '/contact/error/';
+						}
+					} catch (error) {
+						console.error('Form submission error:', error);
+						window.location.href = '/contact/error/';
+					}
+				});
+			}
+		</script>
 
 	</Container>
 </Layout>
