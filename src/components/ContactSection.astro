@@ -1,37 +1,97 @@
 ---
+import { colors } from '../utils/colors';
+
+type ColorName = 'brown' | 'bgPink' | 'lightPink' | 'lightYellow' | 'grey' | 'darkGrey' | 'rose' | 'green' | 'white' | 'black' | string;
+
 interface Props {
   title: string;
-  linkText: string;
+  linkText?: string;
   linkUrl: string;
+  Button?: string;
+  titleColor?: ColorName;
+  bgColor?: ColorName;
+  bgImage?: ImageMetadata;
+  imageAlt?: string;
+  noBottomPadding?: boolean;
 }
 
-const { title, linkText, linkUrl } = Astro.props;
+const { title, linkText, linkUrl, Button, titleColor, bgColor, bgImage, imageAlt, noBottomPadding = false } = Astro.props;
+
+// Button이 있으면 linkText 대신 사용
+const buttonText = Button || linkText || '문의하기';
+
+const getBgClass = (color?: ColorName): string => {
+  if (!color) return '';
+  const colorMap: Record<string, string> = {
+    white: 'bg-white',
+    black: 'bg-black',
+    brown: 'bg-custom-brown',
+    grey: 'bg-custom-grey',
+    rose: 'bg-custom-rose',
+    green: 'bg-custom-green',
+    bgPink: 'bg-custom-bg-pink',
+    lightPink: 'bg-custom-light-pink',
+    lightYellow: 'bg-custom-light-yellow',
+  };
+  return colorMap[color] || '';
+};
+
+const getBgStyle = (color?: ColorName): string => {
+  if (!color) return '';
+  // If it's a predefined color name from our palette, use the color value
+  if (colors[color as keyof typeof colors]) {
+    return `background-color: ${colors[color as keyof typeof colors]};`;
+  }
+  // If it's a custom color code, use inline style
+  return `background-color: ${color};`;
+};
+
+const getTitleColorClass = (color?: ColorName): string => {
+  if (!color) return '';
+  const colorMap: Record<string, string> = {
+    white: 'text-white',
+    black: 'text-black',
+    brown: 'text-custom-brown',
+    grey: 'text-custom-grey',
+    rose: 'text-custom-rose',
+    green: 'text-custom-green',
+    darkGrey: 'text-custom-dark-grey',
+  };
+  return colorMap[color] || '';
+};
+
+const getTitleColorStyle = (color?: ColorName): string => {
+  if (!color) return '';
+  // If it's a predefined color name but not in Tailwind map, use inline style
+  if (colors[color as keyof typeof colors] && !getTitleColorClass(color)) {
+    return `color: ${colors[color as keyof typeof colors]};`;
+  }
+  // If it's a custom color code, use inline style
+  if (!getTitleColorClass(color)) {
+    return `color: ${color};`;
+  }
+  return '';
+};
+
+const bgClass = bgImage ? '' : getBgClass(bgColor);
+const bgStyle = bgImage ? '' : getBgStyle(bgColor);
+const titleColorClass = getTitleColorClass(titleColor);
+const titleColorStyle = getTitleColorStyle(titleColor);
+const paddingClass = noBottomPadding
+  ? 'pt-16 md:pt-20 pb-16 md:pb-20 -mb-4 md:-mb-5 lg:-mb-6 xl:-mb-8'
+  : 'py-16 md:py-20';
 ---
 
-<section class="contact-section">
-  <h1>{title}</h1>
-  <a href={linkUrl}>{linkText}</a>
+<section class={`relative text-center ${bgClass} ${paddingClass} w-[calc(100%+48px)] -mx-6 overflow-hidden`} style={bgStyle}>
+  {bgImage && (
+    <img 
+      src={bgImage.src} 
+      alt={imageAlt || title} 
+      class="absolute inset-0 w-full h-full object-cover"
+    />
+  )}
+  <div class={`relative z-10 max-w-4xl mx-auto px-6 py-12 md:py-16 ${bgImage ? '' : ''}`}>
+    <h2 class={`md:h1 mb-8 ${bgImage ? 'drop-shadow-lg' : ''} ${titleColorClass}`} style={titleColorStyle}>{title}</h2>
+    <a href={linkUrl} class="btn btn-primary">{buttonText}</a>
+  </div>
 </section>
-
-<style>
-  .contact-section {
-    padding: 60px 24px;
-    text-align: center;
-  }
-  .contact-section h1 {
-    margin-bottom: 24px;
-  }
-  .contact-section a {
-    display: inline-block;
-    padding: 14px 32px;
-    background: #222;
-    color: white;
-    text-decoration: none;
-    border-radius: 8px;
-    font-size: 1.1rem;
-    transition: background 0.2s;
-  }
-  .contact-section a:hover {
-    background: #444;
-  }
-</style>

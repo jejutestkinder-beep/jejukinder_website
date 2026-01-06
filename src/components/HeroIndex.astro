@@ -11,7 +11,7 @@ const { imageSrc, subtitle, title, ctaText, ctaLink } = Astro.props;
 ---
 
 <section class="relative w-[calc(100%+48px)] -mx-6 -mt-8 overflow-hidden">
-  <div class="absolute inset-0 bg-black/30 z-[1]" aria-hidden="true"></div>
+  <div class="absolute inset-0 bg-black/40 z-[1]" aria-hidden="true"></div>
   <img
     src={imageSrc}
     alt=""
@@ -19,14 +19,26 @@ const { imageSrc, subtitle, title, ctaText, ctaLink } = Astro.props;
     loading="eager"
   />
   <div class="absolute inset-0 flex flex-col items-center justify-center px-6 text-center text-white z-[2]">
-    <p class="m-0 text-xl md:text-2xl mb-4 drop-shadow-lg font-semibold text-white">
+    <h6 class="m-0 text-xl md:text-2xl mb-4 font-semibold text-white hero-text-shadow">
       {subtitle}
-    </p>
-    <h1 class="m-0 text-4xl md:text-6xl lg:text-7xl mb-8 drop-shadow-lg text-white">
+    </h6>
+    <h1 class="m-0 md:text-6xl lg:text-7xl mb-8 font-semibold text-white hero-text-shadow">
       {title}
     </h1>
-    <a href={ctaLink} class="btn btn-secondary btn-lg" aria-label={ctaText}>
+    <a 
+      href={ctaLink} 
+      class="btn btn-secondary btn-lg" 
+      aria-label={ctaText}
+      target={ctaLink.startsWith('http') ? '_blank' : undefined}
+      rel={ctaLink.startsWith('http') ? 'noopener noreferrer' : undefined}
+    >
       {ctaText}
     </a>
   </div>
 </section>
+
+<style>
+  .hero-text-shadow {
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8), 0 4px 16px rgba(0, 0, 0, 0.6);
+  }
+</style>

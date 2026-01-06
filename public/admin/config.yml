@@ -18,9 +18,9 @@ collections:
     slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
     fields:
       - { label: "제목", name: "title", widget: "string" }
-      - { label: "작성자", name: "author", widget: "string", required: false }
-      - { label: "작성일", name: "date", widget: "datetime", required: false }
-      - { label: "팝업으로 띄우기", name: "popup", widget: "boolean", default: false, hint: "⚠️ 주의: 최대 3개까지만 팝업으로 설정하는 것을 권장합니다. 현재 활성화된 팝업이 3개 이상이면 사용자 경험이 저하될 수 있습니다." }
+      - { label: "작성자", name: "author", widget: "string", required: true }
+      - { label: "작성일", name: "date", widget: "datetime", required: true }
+      - { label: "팝업으로 띄우기", name: "popup", widget: "boolean", default: false, hint: "⚠️ 주의: 최대 3개까지만 팝업으로 설정할 수 있습니다. 현재 활성화된 팝업이 3개 이상이면 선택할 수 없습니다." }
       - { label: "팝업 만료일", name: "popup_until", widget: "datetime", required: false, hint: "팝업을 자동으로 숨길 날짜를 설정하세요. 설정하지 않으면 무기한 표시됩니다." }
       - { label: "본문", name: "body", widget: "markdown" }
 
@@ -31,7 +31,7 @@ collections:
     slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
     fields:
       - { label: "제목", name: "title", widget: "string" }
-      - { label: "작성자", name: "author", widget: "string", required: false }
-      - { label: "카테고리", name: "category", widget: "select", options: ["공지", "가정통신문", "행사"], required: false }
+      - { label: "작성자", name: "author", widget: "string", required: true }
+      - { label: "카테고리", name: "category", widget: "select", options: ["행사 안내", "학교 소식", "기타"], required: true }
       - { label: "작성일", name: "date", widget: "datetime" }
       - { label: "본문", name: "body", widget: "markdown" }

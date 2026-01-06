@@ -1,0 +1,33 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Hero from '../../components/Hero.astro';
+import Accordion from '../../components/Accordion.astro';
+import space1 from '../../assets/space-1.png';
+
+const faqItems = [
+  {
+    question: "Q. 제주발도르프어린이집은 몇 살부터 입소가 가능한가요?",
+    answer: "A. 만 3세부터 가능합니다. 3~4세는 오름반, 4~6세는 바다반이며, 각 반은 혼합연령입니다."
+  },
+  {
+    question: "Q. 혼합 연령을 하는 이유는 무엇인가요?",
+    answer: "A. 입학 상담 신청은 홈페이지의 '입학 상담 신청' 버튼을 통해 온라인으로 신청하실 수 있습니다. 또는 직접 연락 주시면 상담 일정을 안내해드립니다."
+  },
+  {
+    question: "Q. 질문 더 알려주세요.",
+    answer: "평일 오전 8시부터 오후 6시까지 운영됩니다. 자세한 일정은 입학 상담 시 안내해드립니다."
+  }
+];
+---
+
+<Layout 
+  title="자주 묻는 질문 | 제주발도르프어린이집 (제주시 한경·안덕)"
+  description="제주발도르프어린이집에 대하여 많은 분들이 궁금해 하시는 질문을 모았습니다.">
+
+  <Hero
+    image={space1}
+    title="자주 묻는 질문"
+    imageAlt="자주 묻는 질문"
+  />
+
+  <Accordion items={faqItems} />

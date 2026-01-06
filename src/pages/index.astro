@@ -15,6 +15,7 @@ import art3 from '../assets/art-3.png';
 import nature1 from '../assets/nature-1.png';
 import nature2 from '../assets/nature-2.png';
 import nature3 from '../assets/nature-3.png';
+import bgWatercolor from '../assets/bg-watercolor.jpg';
 
 const notices = await getCollection('notices');
 
@@ -53,13 +54,12 @@ if (popupNotice) {
     subtitle="아이들이 꽃처럼 피어나는 곳"
     title="제주 발도르프 어린이집"
     ctaText="입소 상담하기"
-    ctaLink="/admission/"
+    ctaLink="https://docs.google.com/forms/d/e/1FAIpQLSccyRwbI42sdBHoiWLcz7A-BywQAY7I7ce_NVQUo6puvjFsVA/viewform"
   />
 
   <Content3Col
     title="아름다운 공간에서"
     titleColor="brown"
-    titleTag="h1"
     description="교사와 학부모가 꾸민 제주발도르프어린이집에서, 아이들은 매일 영감을 받습니다."
     descriptionColor="black"
     images={[
@@ -71,7 +71,6 @@ if (popupNotice) {
 
   <Content3Col
     title="예술적인 교육을"
-    titleTag="h1"
     titleColor="brown"
     description="발도르프의 교육은 <strong>교육예술</strong>이라 합니다.<br />  제주발도르프어린이집에서는 아이의 발달 단계에 맞는 아름다운 예술 활동을 통해 창의력을 기릅니다."
     bgColor="bgPink"
@@ -84,7 +83,6 @@ if (popupNotice) {
 
   <Content3Col
     title="자연과 더불어"
-    titleTag="h1"
     titleColor="brown"
     description="마을에서, 곶자왈에서, 마당에서, <br/ > 제주발도르프어린이집의 아이들은 매일 매일 자연과 만납니다."
     images={[
@@ -95,8 +93,12 @@ if (popupNotice) {
   />
 
   <ContactSection
-    title="어린이집 입소 문의"
-    linkText="입소 문의"
+    title="제주발도르프어린이집이 궁금하세요?"
+    titleColor="brown"
+    bgImage={bgWatercolor}
+    imageAlt="습식수채화 배경"
+    Button="입소 상담은 여기로"
     linkUrl="https://docs.google.com/forms/d/e/1FAIpQLSccyRwbI42sdBHoiWLcz7A-BywQAY7I7ce_NVQUo6puvjFsVA/viewform"
+    noBottomPadding={true}
   />
 </Layout>
