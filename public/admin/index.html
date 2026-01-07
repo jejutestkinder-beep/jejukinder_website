@@ -56,41 +56,18 @@
 				waitForIdentity();
 			})();
 
-			// 팝업 개수 제한 (최대 3개)
+			// 팝업 개수 제한 (최대 3개) - 경고만 표시
 			(function() {
 				const MAX_POPUPS = 3;
 				
 				function initPopupLimit() {
 					// CMS가 완전히 로드될 때까지 대기
-					if (typeof window.CMS === 'undefined' || !window.CMS.registerEventListener) {
+					if (typeof window.CMS === 'undefined') {
 						setTimeout(initPopupLimit, 200);
 						return;
 					}
 
-					// preSave 이벤트 리스너 등록
-					window.CMS.registerEventListener({
-						name: 'preSave',
-						handler: ({ entry, collection }) => {
-							if (collection === 'notices' && entry.data.popup === true) {
-								// 현재 편집 중인 항목을 제외한 다른 공지사항들 확인
-								const allEntries = window.CMS.getEntries('notices') || [];
-								const activePopups = allEntries.filter(n => {
-									// 현재 편집 중인 항목 제외
-									if (n.slug === entry.slug) return false;
-									const data = n.data || {};
-									return data.popup === true;
-								});
-								
-								if (activePopups.length >= MAX_POPUPS) {
-									alert('최대 팝업 수(3개)를 초과했습니다. 팝업을 원하시면 기존 팝업을 취소해주세요.');
-									return false; // 저장 취소
-								}
-							}
-							return true; // 저장 허용
-						}
-					});
-
-					// 팝업 필드 변경 시 실시간 체크
+					// 팝업 필드 변경 시 경고만 표시
 					setTimeout(function() {
 						const observer = new MutationObserver(function(mutations) {
 							const popupField = document.querySelector('input[name="popup"][type="checkbox"]');
@@ -98,19 +75,10 @@
 								popupField.dataset.listenerAdded = 'true';
 								popupField.addEventListener('change', function(e) {
 									if (e.target.checked) {
-										try {
-											const allEntries = window.CMS.getEntries('notices') || [];
-											const activePopups = allEntries.filter(n => {
-												const data = n.data || {};
-												return data.popup === true;
-											});
-											
-											if (activePopups.length >= MAX_POPUPS) {
-												e.target.checked = false;
-												alert('최대 팝업 수(3개)를 초과했습니다. 팝업을 원하시면 기존 팝업을 취소해주세요.');
-											}
-										} catch (error) {
-											console.error('팝업 개수 확인 중 오류:', error);
+										// 경고 메시지만 표시 (실제 제한은 서버 사이드에서 처리)
+										const confirmed = confirm('팝업은 최대 3개까지만 설정할 수 있습니다. 계속하시겠습니까?');
+										if (!confirmed) {
+											e.target.checked = false;
 										}
 									}
 								});
