@@ -9,7 +9,7 @@ interface Feature {
   imageAlt?: string;
   titleTag?: 'h3' | 'h4' | 'h5';
   imageSize?: 'large' | 'small';
-  cardType?: 'default' | 'image';
+  cardType?: 'default' | 'image' | 'vertical';
 }
 
 type ColorName = 'brown' | 'bgPink' | 'lightPink' | 'lightYellow' | 'grey' | 'darkGrey' | 'rose' | 'green' | 'white' | 'black' | string;
@@ -75,7 +75,7 @@ const paddingClass = noBottomPadding
 ---
 
 <section class={`${paddingClass} ${bgClass} w-[calc(100%+48px)] -mx-6`} style={bgStyle}>
-  <div class="max-w-6xl mx-auto px-6">
+  <div class="max-w-6xl mx-auto px-8 md:px-6">
     {title && (
       <div class={`mb-[1.25rem] ${titleClass}`}>
         <h2 style={titleColorStyle}>{title}</h2>

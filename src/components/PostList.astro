@@ -1,10 +1,13 @@
 ---
 import Pagination from './Pagination.astro';
+import type { ImageMetadata } from 'astro';
 
 interface Props {
   title: string;
   items: any[];
   type: 'board' | 'notice';
+  bgImage?: ImageMetadata;
+  imageAlt?: string;
   page?: {
     currentPage: number;
     lastPage: number;
@@ -16,29 +19,48 @@ interface Props {
   };
 }
 
-const { title, items, type, page } = Astro.props;
+const { title, items, type, bgImage, imageAlt = title, page } = Astro.props;
 
 // Calculate starting index for post numbering
 const totalPosts = page?.total || items.length;
 const startIndex = page ? (page.currentPage - 1) * 15 : 0;
 ---
 
-<div class="max-w-5xl mx-auto">
-  <!-- 헤더 -->
-  <div class="mb-8 text-center">
-    <h1 class="mb-2 text-custom-brown">{title}</h1>
-    <p class="text-gray-600">
-      총 {totalPosts}개의 {type === 'board' ? '글' : '공지'}
-      {page && page.lastPage > 1 && (
-        <span class="text-gray-400 ml-2">
-          (페이지 {page.currentPage} / {page.lastPage})
-        </span>
-      )}
-    </p>
-  </div>
+<div class="w-full">
+  <!-- 헤더 with background image -->
+  {bgImage ? (
+    <div class="relative overflow-hidden h-[40vh] min-h-[250px] md:h-[35vh] md:min-h-[200px] w-[calc(100%+48px)] -mx-6 -mt-[32px] md:-mt-[32px] mb-8">
+      <img src={bgImage.src} alt={imageAlt} class="absolute inset-0 w-full h-full object-cover" />
+      <div class="absolute inset-0 bg-black/40 z-10"></div>
+      <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full px-6 text-center z-20">
+        <h1 class="text-white drop-shadow-lg m-0 mb-2">{title}</h1>
+        <p class="text-white drop-shadow-lg m-0 text-sm md:text-base">
+          총 {totalPosts}개의 {type === 'board' ? '글' : '공지'}
+          {page && page.lastPage > 1 && (
+            <span class="text-white/80 ml-2">
+              (페이지 {page.currentPage} / {page.lastPage})
+            </span>
+          )}
+        </p>
+      </div>
+    </div>
+  ) : (
+    <div class="mb-8 text-center">
+      <h1 class="mb-2 text-custom-brown">{title}</h1>
+      <p class="text-gray-600">
+        총 {totalPosts}개의 {type === 'board' ? '글' : '공지'}
+        {page && page.lastPage > 1 && (
+          <span class="text-gray-400 ml-2">
+            (페이지 {page.currentPage} / {page.lastPage})
+          </span>
+        )}
+      </p>
+    </div>
+  )}
 
   <!-- 테이블 -->
-  <div class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
+  <div class="px-12">
+    <div class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
     <table class="w-full">
       <thead class="bg-gray-50 border-b border-gray-200">
         <tr>
@@ -129,6 +151,7 @@ const startIndex = page ? (page.currentPage - 1) * 15 : 0;
         )}
       </tbody>
     </table>
+    </div>
   </div>
 
   <!-- Pagination -->

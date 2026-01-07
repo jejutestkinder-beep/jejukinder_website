@@ -6,7 +6,7 @@ interface Props {
   imageAlt?: string;
   titleTag?: 'h3' | 'h4' | 'h5';
   imageSize?: 'large' | 'small';
-  cardType?: 'default' | 'image';
+  cardType?: 'default' | 'image' | 'vertical';
 }
 
 const { image, title, description, imageAlt = title, titleTag = 'h5', imageSize = 'large', cardType = 'default' } = Astro.props;
@@ -25,6 +25,18 @@ const imageSizeClass = imageSize === 'small'
       </div>
     )}
     <TitleTag>{title}</TitleTag>
+  </div>
+) : cardType === 'vertical' ? (
+  <div class="w-full">
+    {image && (
+      <div class="w-full aspect-[4/3] md:aspect-[3/2] rounded-xl overflow-hidden mb-6">
+        <img src={image.src} alt={imageAlt} class="w-full h-full object-cover" />
+      </div>
+    )}
+    <div>
+      <TitleTag class="mb-3">{title}</TitleTag>
+      {description && <p set:html={description} />}
+    </div>
   </div>
 ) : (
   <div class="flex gap-6 items-start">

@@ -3,6 +3,7 @@ import Layout from '../../layouts/Layout.astro';
 import PostList from '../../components/PostList.astro';
 import { getCollection } from 'astro:content';
 import type { Page } from 'astro';
+import noticeHeroImage from '../../assets/5notification-1-hero.jpeg';
 
 export async function getStaticPaths({ paginate }) {
   const notices = await getCollection('notices');
@@ -21,5 +22,12 @@ const { page } = Astro.props;
 ---
 
 <Layout title="공지사항 - 제주 발도르프 킨더">
-  <PostList title="공지사항" items={page.data} type="notice" page={page} />
+  <PostList 
+    title="공지사항" 
+    items={page.data} 
+    type="notice" 
+    bgImage={noticeHeroImage}
+    imageAlt="공지사항"
+    page={page} 
+  />
 </Layout>

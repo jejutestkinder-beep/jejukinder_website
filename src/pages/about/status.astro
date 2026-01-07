@@ -4,10 +4,12 @@ import Hero from '../../components/Hero.astro';
 import Content2Col from '../../components/Content2Col.astro';
 import Content1Col from '../../components/Content1Col.astro';
 import CardSection from '../../components/CardSection.astro';
-import space1 from '../../assets/space-1.png';
-import phil1 from '../../assets/phil_triage.svg';
-import space2 from '../../assets/space-2.png';
-import space3 from '../../assets/space-3.png';
+import stat1 from '../../assets/2status-1-hero.jpeg';
+import stat2 from '../../assets/phil_triage.svg';
+import stat3 from '../../assets/2status-3-signage.jpeg';
+import stat4 from '../../assets/2status-4-classroom1.jpeg';
+import stat5 from '../../assets/2status-5-classroom2.jpeg';
+
 
 ---
 
@@ -16,15 +18,15 @@ import space3 from '../../assets/space-3.png';
   description="제주발도르프어린이집의 발자취와 현재 운영 시설 및 교사진을 소개합니다.">
 
   <Hero
-    image={space1}
+    image={stat1}
     title="어린이집 현황"
     imageAlt="어린이집 현황"
   />
   
   <Content2Col
-    image={phil1}
+    image={stat2}
     imagePosition="left"
-    imageAlt="슈타이너 이미지"
+    imageAlt="교육공동체"
     title="제주발도르프 교육 공동체"
     description="제주 발도르프 어린이집은 <br />부모와 아이가 함께 행복하고 건강하게 성장하기 위한<br />제주발도르프 교육공동체의 일원입니다."
     titleColor="brown"
@@ -32,7 +34,7 @@ import space3 from '../../assets/space-3.png';
   />
 
   <Content2Col
-    image={space1}
+    image={stat3}
     imagePosition="right"
     imageAlt="모방이미지"
     title="연혁"
@@ -55,14 +57,14 @@ import space3 from '../../assets/space-3.png';
     titleCenter={false}
     features={[
       {
-        image: space2,
+        image: stat4,
         title: "바다반",
         imageAlt: "바다반 보육실 사진",
         titleTag: "h5",
         cardType: "image"
       },
       {
-        image: space3,
+        image: stat5,
         title: "오름반",
         imageAlt: "오름반 보육실 사진",
         titleTag: "h5",
@@ -71,7 +73,7 @@ import space3 from '../../assets/space-3.png';
     ]}
   />
   <Content2Col
-    image={space1}
+    image={stat5}
     imagePosition="right"
     imageAlt="모방이미지"
     title="교직원 현황"

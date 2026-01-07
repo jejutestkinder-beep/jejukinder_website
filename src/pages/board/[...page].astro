@@ -3,6 +3,7 @@ import Layout from '../../layouts/Layout.astro';
 import PostList from '../../components/PostList.astro';
 import { getCollection } from 'astro:content';
 import type { Page } from 'astro';
+import boardHeroImage from '../../assets/6board-1-hero.jpeg';
 
 export async function getStaticPaths({ paginate }) {
   const posts = await getCollection('board');
@@ -21,5 +22,12 @@ const { page } = Astro.props;
 ---
 
 <Layout title="어린이집 이야기| 제주발도르프어린이집">
-  <PostList title="어린이집 이야기" items={page.data} type="board" page={page} />
+  <PostList 
+    title="어린이집 이야기" 
+    items={page.data} 
+    type="board" 
+    bgImage={boardHeroImage}
+    imageAlt="어린이집 이야기"
+    page={page} 
+  />
 </Layout>
