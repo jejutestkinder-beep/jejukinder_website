@@ -32,95 +32,86 @@ const { notice, Content, index = 0 } = Astro.props;
 </div>
 
 <script is:inline define:vars={{ slug: notice.slug, index: Astro.props.index || 0 }}>
-  document.addEventListener("DOMContentLoaded", () => {
-    const overlay = document.getElementById(`popup-overlay-${slug}`);
-    const modal = overlay?.querySelector('.popup-modal') as HTMLElement;
+  (function() {
+    const initPopup = () => {
+      const overlay = document.getElementById(`popup-overlay-${slug}`);
+      const modal = overlay?.querySelector('.popup-modal');
 
-    if (!overlay || !modal) return;
+      if (!overlay || !modal) return;
 
-    const todayKey = new Date().toISOString().slice(0, 10);
-    const storageKey = `kinder_popup_hide_${slug}`;
+      const todayKey = new Date().toISOString().slice(0, 10);
+      const storageKey = `kinder_popup_hide_${slug}`;
 
-    const hide = () => {
-      overlay.style.display = "none";
-      checkAllPopupsClosed();
+      const hide = () => {
+        overlay.style.display = "none";
+        checkAllPopupsClosed();
+      };
+
+      const show = () => {
+        overlay.removeAttribute("hidden");
+        overlay.style.display = "flex";
+        
+        const allPopups = Array.from(document.querySelectorAll('[id^="popup-overlay-"]'));
+        const currentIndex = allPopups.indexOf(overlay);
+        const totalPopups = allPopups.length;
+        
+        if (totalPopups > 1) {
+          const offsetX = (currentIndex - (totalPopups - 1) / 2) * 40;
+          const offsetY = (currentIndex - (totalPopups - 1) / 2) * 30;
+          modal.style.transform = `translate(${offsetX}px, ${offsetY}px)`;
+        }
+        
+        if (currentIndex === 0) {
+          document.body.style.overflow = "hidden";
+        }
+      };
+
+      const checkAllPopupsClosed = () => {
+        const allPopups = Array.from(document.querySelectorAll('[id^="popup-overlay-"]'));
+        const visiblePopups = allPopups.filter(p => p.style.display === 'flex');
+        
+        if (visiblePopups.length === 0) {
+          document.body.style.overflow = "";
+        }
+      };
+
+      const stored = localStorage.getItem(storageKey);
+      if (stored === todayKey) {
+        hide();
+        return;
+      }
+
+      show();
+
+      const closeBtn1 = document.getElementById(`popup-close-${slug}`);
+      const closeBtn2 = document.getElementById(`popup-close-2-${slug}`);
+      const hideTodayBtn = document.getElementById(`popup-hide-today-${slug}`);
+
+      if (closeBtn1) closeBtn1.onclick = hide;
+      if (closeBtn2) closeBtn2.onclick = hide;
+      if (hideTodayBtn) {
+        hideTodayBtn.onclick = () => {
+          localStorage.setItem(storageKey, todayKey);
+          hide();
+        };
+      }
+
+      overlay.onclick = (e) => {
+        if (e.target === overlay) hide();
+      };
+
+      const handleEsc = (e) => {
+        if (e.key === "Escape" && overlay.style.display === "flex") hide();
+      };
+      document.addEventListener("keydown", handleEsc);
     };
 
-    const show = () => {
-      overlay.removeAttribute("hidden");
-      overlay.style.display = "flex";
-      
-      // 팝업 위치 조정 (여러 개일 때 겹치지 않도록)
-      const allPopups = Array.from(document.querySelectorAll('[id^="popup-overlay-"]')) as HTMLElement[];
-      const currentIndex = allPopups.indexOf(overlay);
-      const totalPopups = allPopups.length;
-      
-      if (totalPopups > 1) {
-        // 여러 팝업일 때 약간씩 오프셋 적용
-        const offsetX = (currentIndex - (totalPopups - 1) / 2) * 40;
-        const offsetY = (currentIndex - (totalPopups - 1) / 2) * 30;
-        modal.style.transform = `translate(${offsetX}px, ${offsetY}px)`;
-      }
-      
-      // body overflow는 첫 번째 팝업만 설정
-      if (currentIndex === 0) {
-        document.body.style.overflow = "hidden";
-      }
-    };
-
-    const checkAllPopupsClosed = () => {
-      const allPopups = Array.from(document.querySelectorAll('[id^="popup-overlay-"]')) as HTMLElement[];
-      const visiblePopups = allPopups.filter(p => p.style.display === 'flex');
-      
-      if (visiblePopups.length === 0) {
-        document.body.style.overflow = "";
-      }
-    };
-
-    const stored = localStorage.getItem(storageKey);
-    if (stored === todayKey) {
-      hide();
-      return;
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", initPopup);
+    } else {
+      initPopup();
     }
-
-    // 모든 팝업을 동시에 표시
-    show();
-
-    const closeBtn1 = document.getElementById(`popup-close-${slug}`);
-    const closeBtn2 = document.getElementById(`popup-close-2-${slug}`);
-    const hideTodayBtn = document.getElementById(`popup-hide-today-${slug}`);
-
-    if (closeBtn1) {
-      closeBtn1.addEventListener("click", () => {
-        hide();
-      });
-    }
-
-    if (closeBtn2) {
-      closeBtn2.addEventListener("click", () => {
-        hide();
-      });
-    }
-
-    if (hideTodayBtn) {
-      hideTodayBtn.addEventListener("click", () => {
-        localStorage.setItem(storageKey, todayKey);
-        hide();
-      });
-    }
-
-    overlay.addEventListener("click", (e) => {
-      if (e.target === overlay) {
-        hide();
-      }
-    });
-
-    document.addEventListener("keydown", (e) => {
-      if (e.key === "Escape" && overlay.style.display === "flex") {
-        hide();
-      }
-    });
-  });
+  })();
 </script>
 
 <style>
