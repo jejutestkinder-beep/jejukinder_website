@@ -45,8 +45,6 @@ const {
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 		<link href="https://fonts.googleapis.com/css2?family=Gaegu:wght@400;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet" />
 
-		<script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
-
 		<Seo
 			title={title}
 			description={description}
@@ -66,44 +64,15 @@ const {
 		<Footer />
 		<script is:inline>
 			(function () {
-				// Netlify Identity 위젯이 로드될 때까지 대기
-				function waitForIdentity() {
-					if (!window.netlifyIdentity) {
-						setTimeout(waitForIdentity, 50);
-						return;
-					}
+				const hash = window.location.hash || "";
+				const hasToken =
+					hash.includes("invite_token=") ||
+					hash.includes("recovery_token=") ||
+					hash.includes("confirmation_token=");
 
-					const hash = window.location.hash || "";
-					const hasToken =
-						hash.includes("invite_token=") ||
-						hash.includes("recovery_token=") ||
-						hash.includes("confirmation_token=");
-
-					if (!hasToken) return;
-
-					// admin 페이지가 아니면 admin으로 리다이렉트
-					if (!window.location.pathname.startsWith("/admin/")) {
-						window.location.href = "/admin/" + hash;
-						return;
-					}
-
-					// admin 페이지에서 토큰 처리
-					function handleToken() {
-						if (hash.includes("invite_token=") || hash.includes("recovery_token=")) {
-							window.netlifyIdentity.open("signup");
-						} else {
-							window.netlifyIdentity.open();
-						}
-					}
-
-					window.netlifyIdentity.on("init", handleToken);
-					window.netlifyIdentity.init();
-
-					// init이 이미 완료되었을 수 있으므로 한 번 더 확인
-					setTimeout(handleToken, 100);
+				if (hasToken && !window.location.pathname.startsWith("/admin/")) {
+					window.location.href = "/admin/" + hash;
 				}
-
-				waitForIdentity();
 			})();
 		</script>
 	</body>

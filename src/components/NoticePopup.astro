@@ -51,19 +51,38 @@ const { notice, Content, index = 0 } = Astro.props;
         overlay.removeAttribute("hidden");
         overlay.style.display = "flex";
         
-        const allPopups = Array.from(document.querySelectorAll('[id^="popup-overlay-"]'));
-        const currentIndex = allPopups.indexOf(overlay);
-        const totalPopups = allPopups.length;
+        // 팝업 위치 및 배경색 조정
+        setTimeout(() => {
+          const allPopups = Array.from(document.querySelectorAll('.popup-overlay')).filter(p => p.style.display === 'flex');
+          const currentIndex = allPopups.indexOf(overlay);
+          const totalPopups = allPopups.length;
+          
+          if (currentIndex !== -1) {
+            // 1. 배경색 처리: 첫 번째(가장 아래) 팝업만 어두운 배경을 가짐
+            if (currentIndex > 0) {
+              overlay.style.background = "transparent";
+              overlay.style.pointerEvents = "none"; // 뒤의 팝업 클릭 가능하게
+              modal.style.pointerEvents = "auto";   // 모달 자체는 클릭 가능하게
+            }
+
+            // 2. 위치 처리
+            const isDesktop = window.innerWidth > 768;
+            if (isDesktop && totalPopups > 1) {
+              // 데스크탑: 좌우 배치
+              const offsetSide = (currentIndex - (totalPopups - 1) / 2) * 45; // 45%씩 좌우 이동
+              modal.style.transform = `translateX(${offsetSide}%)`;
+            } else if (totalPopups > 1) {
+              // 모바일: 현재처럼 약간 어긋나게 겹침
+              const offsetX = (currentIndex - (totalPopups - 1) / 2) * 20;
+              const offsetY = (currentIndex - (totalPopups - 1) / 2) * 20;
+              modal.style.transform = `translate(${offsetX}px, ${offsetY}px)`;
+            }
+            
+            overlay.style.zIndex = (9999 + currentIndex).toString();
+          }
+        }, 50);
         
-        if (totalPopups > 1) {
-          const offsetX = (currentIndex - (totalPopups - 1) / 2) * 40;
-          const offsetY = (currentIndex - (totalPopups - 1) / 2) * 30;
-          modal.style.transform = `translate(${offsetX}px, ${offsetY}px)`;
-        }
-        
-        if (currentIndex === 0) {
-          document.body.style.overflow = "hidden";
-        }
+        document.body.style.overflow = "hidden";
       };
 
       const checkAllPopupsClosed = () => {
@@ -126,7 +145,7 @@ const { notice, Content, index = 0 } = Astro.props;
     pointer-events: auto;
   }
   .popup-modal {
-    width: min(720px, 100%);
+    width: min(450px, 90%); /* 팝업 너비를 약간 줄여서 좌우 배치가 잘 보이게 함 */
     max-width: 90vw;
     background: white;
     border-radius: 16px;
