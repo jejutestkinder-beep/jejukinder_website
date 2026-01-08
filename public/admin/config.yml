@@ -5,7 +5,7 @@ backend:
 
 locale: 'ko'
 
-publish_mode: editorial_workflow
+publish_mode: simple
 
 media_folder: "public/uploads"
 public_folder: "/uploads"
