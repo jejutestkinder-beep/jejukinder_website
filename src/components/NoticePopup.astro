@@ -7,16 +7,17 @@ interface Props {
     };
   };
   Content: any;
+  index?: number;
 }
 
-const { notice, Content } = Astro.props;
+const { notice, Content, index = 0 } = Astro.props;
 ---
 
-<div id="popup-overlay" class="popup-overlay" style="display: none;">
+<div id={`popup-overlay-${notice.slug}`} class="popup-overlay" style={`display: none; z-index: ${9999 + index};`}>
   <div class="popup-modal" role="dialog" aria-modal="true" aria-label="공지 팝업">
     <div class="popup-header">
       <strong class="popup-title">{notice.data.title}</strong>
-      <button id="popup-close" class="popup-close" type="button" aria-label="닫기">✕</button>
+      <button id={`popup-close-${notice.slug}`} class="popup-close" type="button" aria-label="닫기">✕</button>
     </div>
 
     <div class="popup-body">
@@ -24,30 +25,56 @@ const { notice, Content } = Astro.props;
     </div>
 
     <div class="popup-actions">
-      <button id="popup-hide-today" class="popup-btn" type="button">오늘 하루 보지 않기</button>
-      <button id="popup-close-2" class="popup-btn primary" type="button">닫기</button>
+      <button id={`popup-hide-today-${notice.slug}`} class="popup-btn" type="button">오늘 하루 보지 않기</button>
+      <button id={`popup-close-2-${notice.slug}`} class="popup-btn primary" type="button">닫기</button>
     </div>
   </div>
 </div>
 
-<script is:inline define:vars={{ slug: notice.slug }}>
+<script is:inline define:vars={{ slug: notice.slug, index: Astro.props.index || 0 }}>
   document.addEventListener("DOMContentLoaded", () => {
-    const overlay = document.getElementById("popup-overlay");
+    const overlay = document.getElementById(`popup-overlay-${slug}`);
+    const modal = overlay?.querySelector('.popup-modal') as HTMLElement;
 
-    if (!overlay) return;
+    if (!overlay || !modal) return;
 
     const todayKey = new Date().toISOString().slice(0, 10);
     const storageKey = `kinder_popup_hide_${slug}`;
 
     const hide = () => {
       overlay.style.display = "none";
-      document.body.style.overflow = "";
+      checkAllPopupsClosed();
     };
 
     const show = () => {
       overlay.removeAttribute("hidden");
       overlay.style.display = "flex";
-      document.body.style.overflow = "hidden";
+      
+      // 팝업 위치 조정 (여러 개일 때 겹치지 않도록)
+      const allPopups = Array.from(document.querySelectorAll('[id^="popup-overlay-"]')) as HTMLElement[];
+      const currentIndex = allPopups.indexOf(overlay);
+      const totalPopups = allPopups.length;
+      
+      if (totalPopups > 1) {
+        // 여러 팝업일 때 약간씩 오프셋 적용
+        const offsetX = (currentIndex - (totalPopups - 1) / 2) * 40;
+        const offsetY = (currentIndex - (totalPopups - 1) / 2) * 30;
+        modal.style.transform = `translate(${offsetX}px, ${offsetY}px)`;
+      }
+      
+      // body overflow는 첫 번째 팝업만 설정
+      if (currentIndex === 0) {
+        document.body.style.overflow = "hidden";
+      }
+    };
+
+    const checkAllPopupsClosed = () => {
+      const allPopups = Array.from(document.querySelectorAll('[id^="popup-overlay-"]')) as HTMLElement[];
+      const visiblePopups = allPopups.filter(p => p.style.display === 'flex');
+      
+      if (visiblePopups.length === 0) {
+        document.body.style.overflow = "";
+      }
     };
 
     const stored = localStorage.getItem(storageKey);
@@ -56,11 +83,12 @@ const { notice, Content } = Astro.props;
       return;
     }
 
+    // 모든 팝업을 동시에 표시
     show();
 
-    const closeBtn1 = document.getElementById("popup-close");
-    const closeBtn2 = document.getElementById("popup-close-2");
-    const hideTodayBtn = document.getElementById("popup-hide-today");
+    const closeBtn1 = document.getElementById(`popup-close-${slug}`);
+    const closeBtn2 = document.getElementById(`popup-close-2-${slug}`);
+    const hideTodayBtn = document.getElementById(`popup-hide-today-${slug}`);
 
     if (closeBtn1) {
       closeBtn1.addEventListener("click", () => {
@@ -88,7 +116,9 @@ const { notice, Content } = Astro.props;
     });
 
     document.addEventListener("keydown", (e) => {
-      if (e.key === "Escape") hide();
+      if (e.key === "Escape" && overlay.style.display === "flex") {
+        hide();
+      }
     });
   });
 </script>
@@ -102,14 +132,18 @@ const { notice, Content } = Astro.props;
     align-items: center;
     justify-content: center;
     padding: 20px;
-    z-index: 9999;
+    pointer-events: auto;
   }
   .popup-modal {
     width: min(720px, 100%);
+    max-width: 90vw;
     background: white;
     border-radius: 16px;
     overflow: hidden;
     box-shadow: 0 20px 60px rgba(0,0,0,0.25);
+    position: relative;
+    margin: 20px;
+    transition: transform 0.2s ease;
   }
   .popup-header {
     display: flex;

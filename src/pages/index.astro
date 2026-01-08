@@ -35,19 +35,24 @@ const popupCandidates = notices
 
 popupCandidates.sort((a, b) => (a.slug < b.slug ? 1 : a.slug > b.slug ? -1 : 0));
 
-const popupNotice = popupCandidates[0] ?? null;
+// 최대 2개까지만 표시
+const limitedCandidates = popupCandidates.slice(0, 2);
 
-let PopupContent: any = null;
-if (popupNotice) {
-  const rendered = await popupNotice.render();
-  PopupContent = rendered.Content;
-}
+const popupNotices = await Promise.all(
+  limitedCandidates.map(async (notice) => {
+    const rendered = await notice.render();
+    return {
+      notice,
+      Content: rendered.Content
+    };
+  })
+);
 ---
 
 <Layout title="제주 발도르프 어린이집">
-  {popupNotice && PopupContent && (
-    <NoticePopup notice={popupNotice} Content={PopupContent} />
-  )}
+  {popupNotices.map(({ notice, Content }, index) => (
+    <NoticePopup notice={notice} Content={Content} index={index} />
+  ))}
 
   <HeroIndex
     imageSrc={mainImage.src}
