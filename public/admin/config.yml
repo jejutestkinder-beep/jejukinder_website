@@ -1,5 +1,5 @@
 backend:
-  name: github
+  name: git-gateway
   repo: jejutestkinder-beep/jejukinder_website
   branch: main
 
