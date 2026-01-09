@@ -1,9 +1,11 @@
 ---
 import FeatureCard from './FeatureCard.astro';
 import { colors } from '../utils/colors';
+import { Icon } from 'astro-icon/components'
 
 interface Feature {
   image?: ImageMetadata;
+  icon?: string;
   title: string;
   description?: string;
   imageAlt?: string;
@@ -85,6 +87,7 @@ const paddingClass = noBottomPadding
       {features.map((feature) => (
         <FeatureCard
           image={feature.image}
+          icon={feature.icon}
           title={feature.title}
           description={feature.description}
           imageAlt={feature.imageAlt}

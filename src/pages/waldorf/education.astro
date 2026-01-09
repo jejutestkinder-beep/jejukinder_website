@@ -4,6 +4,7 @@ import Hero from '../../components/Hero.astro';
 import Content2Col from '../../components/Content2Col.astro';
 import Content1Col from '../../components/Content1Col.astro';
 import CardSection from '../../components/CardSection.astro';
+import { Icon } from 'astro-icon/components'
 import edu1 from '../../assets/5edu-1-hero.png';
 import edu2 from '../../assets/5edu-2-steiner.png';
 import edu3 from '../../assets/5edu-3-copy.jpeg';
@@ -49,7 +50,7 @@ import edu3 from '../../assets/5edu-3-copy.jpeg';
     titleCenter={false}
     features={[
       {
-        image: edu3,
+        icon: "eye", 
         imageSize: "small",
         title: "감각을 통해 배우기",
         description: "영유아기 아이들은 감각 기관을 통해 세상을 체험하면서 능동적으로 이해합니다. <br /> 어린이집은 건강한 자극을 통해 감각이 잘 발달해 갈 수 있도록 환경과 하루리듬을 구성합니다.",
@@ -57,7 +58,7 @@ import edu3 from '../../assets/5edu-3-copy.jpeg';
         titleTag: "h5"
       },
       {
-        image: edu3,
+        icon: "clock",
         imageSize: "small",
         title: "리듬 생활과 질서",
         description: "반복되는 일상의 리듬은 <br />아이에게 안정감과 삶의 질서를 자연스럽게 길러줍니다.",
@@ -65,7 +66,7 @@ import edu3 from '../../assets/5edu-3-copy.jpeg';
         titleTag: "h5"
       },
       {
-        image: edu3,
+        icon: "cloud",
         imageSize: "small",
         title: "상상력의 발달",
         description: "영·유아는 상상력을 통해 행동하고 상상력으로 가득 차 있는 존재입니다. 구조화되지 않은 놀잇감, 단순한 형태의 인형들, 솔방울, 조개껍데기, 나무토막 같은 자연물과 천 등을 이용한 상상놀이, 교사의 이야기 들려주기 등은 영유아들의 상상력을 풍부하게 발전시킬 내적, 외적 양분을 제공해줍니다.",
@@ -73,15 +74,15 @@ import edu3 from '../../assets/5edu-3-copy.jpeg';
         titleTag: "h5"
       },
       {
-        image: edu3,
+        icon: "palette",
         imageSize: "small",
         title: "예술로서의 교육",
-        description: "생활공간의 색, 형태, 벽의 장식이나 소리, 놀잇감 등을 통해 삶에서 느낄 수 있는 예술적인 아름다움, 따뜻함, 부드러움, 차가움, 고요함과 풍요로움, 역동성 등 그 계절과 상황에 적절한 감성을 돕도록 환경을 가꿔갑니다.",
+        description: "생활공간의 색, 형태, 벽의 장식이나 소리, 놀잇감 등을 통해 삶에서 느낄 수 있는 예술적인 아름다움, 따뜻함, 부드움, 차가움, 고요함과 풍요로움, 역동성 등 그 계절과 상황에 적절한 감성을 돕도록 환경을 가꿔갑니다.",
         imageAlt: "예술교육",
         titleTag: "h5"
       },
       {
-        image: edu3,
+        icon: "tool",
         imageSize: "small",
         title: "교사의 생활 작업",
         description: "교사는 자신의 모든 말과 행동, 태도가 아이들에게 모방의 대상이 됨을 늘 의식합니다. 모방할 만한 의미 있는 활동으로 자유놀이를 동반하며 절기와 축제를 지내기 위한 작업, 혹은 놀잇감이나 교실에 필요한 것들을 가꾸고 만드는 생활작업을 합니다.",
@@ -89,7 +90,7 @@ import edu3 from '../../assets/5edu-3-copy.jpeg';
         titleTag: "h5"
       },
       {
-        image: edu3,
+        icon: "leaf",
         imageSize: "small",
         title: "자연과 함께하는 교육",
         description: "인간은 자연 속에서 살아가는 존재이기 때문에 자연의 흐름에 조화를 이루며 살아가는 것이 자연스러운 삶의 과정입니다.",
@@ -97,7 +98,7 @@ import edu3 from '../../assets/5edu-3-copy.jpeg';
         titleTag: "h5"
       },
       {
-        image: edu3,
+        icon: "door",
         imageSize: "small",
         title: "열린 교육의 장",
         description: "하루 중 많은 시간을 어린이집에서 생활하는 영유아들을 위해 교사와 부모, 보호자가 서로 협력하고 노력하는 열린 교육의 현장을 만들어갑니다.",
