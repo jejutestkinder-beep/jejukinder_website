@@ -47,21 +47,21 @@ function getPageUrl(pageNum: number): string {
 }
 ---
 
-<nav class="pagination-container" aria-label="페이지네이션">
-  <div class="pagination-info">
+<nav class="mt-8 flex flex-col gap-4 items-center" aria-label="페이지네이션">
+  <div class="text-center">
     <p class="text-sm text-gray-600">
       페이지 {page.currentPage} / {page.lastPage}
     </p>
   </div>
 
-  <ul class="pagination-list">
+  <ul class="flex flex-wrap gap-2 list-none p-0 m-0 justify-center">
     <!-- Previous button (only show if more than 1 page) -->
     {page.lastPage > 1 && (
       <li>
         {page.url.prev ? (
           <a
             href={page.url.prev}
-            class="pagination-btn pagination-arrow"
+            class="inline-flex items-center gap-1 px-3 py-2 border border-gray-200 rounded-md bg-white text-gray-700 text-sm font-medium no-underline transition-all hover:bg-gray-50 hover:border-gray-300 hover:text-gray-900 min-w-[2.5rem] justify-center sm:px-4"
             aria-label="이전 페이지"
           >
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -70,7 +70,7 @@ function getPageUrl(pageNum: number): string {
             <span class="hidden sm:inline">이전</span>
           </a>
         ) : (
-          <span class="pagination-btn pagination-arrow pagination-disabled">
+          <span class="inline-flex items-center gap-1 px-3 py-2 border border-gray-200 rounded-md bg-white text-gray-700 text-sm font-medium opacity-50 cursor-not-allowed min-w-[2.5rem] justify-center sm:px-4">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
             </svg>
@@ -84,15 +84,15 @@ function getPageUrl(pageNum: number): string {
     {pageNumbers.map((pageNum) => (
       <li>
         {pageNum === 'ellipsis' ? (
-          <span class="pagination-ellipsis">...</span>
+          <span class="inline-flex items-center justify-center p-2 text-gray-400 font-medium">...</span>
         ) : pageNum === page.currentPage ? (
-          <span class="pagination-btn pagination-current" aria-current="page">
+          <span class="inline-flex items-center justify-center min-w-[2.5rem] px-3 py-2 rounded-md bg-custom-green text-white border border-custom-green font-medium text-sm sm:px-4" aria-current="page">
             {pageNum}
           </span>
         ) : (
           <a
             href={getPageUrl(pageNum)}
-            class="pagination-btn pagination-number"
+            class="inline-flex items-center justify-center min-w-[2.5rem] px-3 py-2 border border-gray-200 rounded-md bg-white text-gray-700 text-sm font-medium no-underline transition-all hover:bg-gray-50 hover:border-gray-300 hover:text-gray-900 sm:px-4"
           >
             {pageNum}
           </a>
@@ -106,7 +106,7 @@ function getPageUrl(pageNum: number): string {
         {page.url.next ? (
           <a
             href={page.url.next}
-            class="pagination-btn pagination-arrow"
+            class="inline-flex items-center gap-1 px-3 py-2 border border-gray-200 rounded-md bg-white text-gray-700 text-sm font-medium no-underline transition-all hover:bg-gray-50 hover:border-gray-300 hover:text-gray-900 min-w-[2.5rem] justify-center sm:px-4"
             aria-label="다음 페이지"
           >
             <span class="hidden sm:inline">다음</span>
@@ -115,7 +115,7 @@ function getPageUrl(pageNum: number): string {
             </svg>
           </a>
         ) : (
-          <span class="pagination-btn pagination-arrow pagination-disabled">
+          <span class="inline-flex items-center gap-1 px-3 py-2 border border-gray-200 rounded-md bg-white text-gray-700 text-sm font-medium opacity-50 cursor-not-allowed min-w-[2.5rem] justify-center sm:px-4">
             <span class="hidden sm:inline">다음</span>
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
@@ -128,91 +128,13 @@ function getPageUrl(pageNum: number): string {
 </nav>
 
 <style>
-  .pagination-container {
-    margin-top: 2rem;
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    align-items: center;
-  }
-
-  .pagination-info {
-    text-align: center;
-  }
-
-  .pagination-list {
-    display: flex;
-    gap: 0.5rem;
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    flex-wrap: wrap;
-    justify-content: center;
-  }
-
-  .pagination-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.25rem;
-    padding: 0.5rem 0.75rem;
-    border: 1px solid #e5e7eb;
-    border-radius: 0.375rem;
-    background-color: white;
-    color: #374151;
-    font-size: 0.875rem;
-    font-weight: 500;
-    text-decoration: none;
-    transition: all 0.2s;
-    min-width: 2.5rem;
-    justify-content: center;
-  }
-
-  .pagination-btn:not(.pagination-disabled):hover {
-    background-color: #f9fafb;
-    border-color: #d1d5db;
-    color: #111827;
-  }
-
-  .pagination-current {
-    background-color: #10b981; /* green-500 */
-    color: white;
-    border-color: #10b981;
-  }
-
-  .pagination-current:hover {
-    background-color: #059669; /* green-600 */
-    border-color: #059669;
-  }
-
-  .pagination-disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-    pointer-events: none;
-  }
-
-  .pagination-ellipsis {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0.5rem;
-    color: #9ca3af;
-    font-weight: 500;
-  }
-
-  .pagination-arrow {
-    min-width: auto;
-  }
-
-  /* Mobile responsive */
+  /* Mobile responsive adjustments */
   @media (max-width: 480px) {
-    .pagination-btn {
-      padding: 0.375rem 0.5rem;
-      font-size: 0.8125rem;
-      min-width: 2rem;
-    }
-
-    .pagination-list {
-      gap: 0.25rem;
+    li a, li span {
+      padding-left: 0.5rem !important;
+      padding-right: 0.5rem !important;
+      min-width: 2rem !important;
+      font-size: 0.8125rem !important;
     }
   }
 </style>

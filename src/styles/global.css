@@ -42,12 +42,11 @@
   }
 
   a {
-    @apply hover:opacity-80 transition-colors underline-offset-2;
-    color: #C64444;
+    @apply hover:opacity-80 transition-colors underline-offset-2 text-custom-rose;
   }
 
   footer a {
-    color: #6C6C6C !important;
+    @apply text-custom-darkGrey !important;
   }
 
   strong {
@@ -77,8 +76,7 @@
 
   /* Blockquote */
   blockquote {
-    @apply border-l-4 pl-4 py-2 mb-4 italic text-gray-600;
-    border-color: #10b981;
+    @apply border-l-4 border-custom-green pl-4 py-2 mb-4 italic text-gray-600;
   }
 
   /* Code */

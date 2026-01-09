@@ -19,9 +19,7 @@ const imageSizeClass = imageSize === 'small'
   ? 'w-16 h-16 md:w-20 md:h-20' 
   : 'w-32 h-32 md:w-40 md:h-40';
 
-const iconSizeClass = imageSize === 'small'
-  ? 'w-6 h-6 md:w-8 md:h-8'
-  : 'w-12 h-12 md:w-14 md:h-14';
+const iconSizeClass = 'w-8 h-8';
 ---
 
 {cardType === 'image' ? (
@@ -31,8 +29,8 @@ const iconSizeClass = imageSize === 'small'
         <img src={image.src} alt={imageAlt} class="w-full h-full object-cover" />
       </div>
     ) : icon && (
-      <div class="w-full aspect-[4/3] rounded-xl bg-white flex items-center justify-center mb-4 text-custom-rose">
-        <Icon name={icon} class="w-16 h-16 md:w-20 md:h-20" />
+      <div class="w-full aspect-[4/3] rounded-xl bg-custom-lightPink flex items-center justify-center mb-4 text-custom-rose">
+        <Icon name={icon} class="w-5 h-5" />
       </div>
     )}
     <TitleTag>{title}</TitleTag>
@@ -44,8 +42,8 @@ const iconSizeClass = imageSize === 'small'
         <img src={image.src} alt={imageAlt} class="w-full h-full object-cover" />
       </div>
     ) : icon && (
-      <div class="w-full aspect-[4/3] md:aspect-[3/2] rounded-xl bg-white flex items-center justify-center mb-6 text-custom-rose">
-        <Icon name={icon} class="w-16 h-16 md:w-20 md:h-20" />
+      <div class="w-full aspect-[4/3] md:aspect-[3/2] rounded-xl bg-custom-lightPink flex items-center justify-center mb-6 text-custom-rose">
+        <Icon name={icon} class="w-5 h-5" />
       </div>
     )}
     <div>
@@ -60,7 +58,7 @@ const iconSizeClass = imageSize === 'small'
         <img src={image.src} alt={imageAlt} class="w-full h-full object-cover" />
       </div>
     ) : icon && (
-      <div class={`${imageSizeClass} flex-shrink-0 bg-white rounded-xl flex items-center justify-center text-custom-rose`}>
+      <div class={`${imageSizeClass} flex-shrink-0 bg-custom-lightPink rounded-xl flex items-center justify-center text-custom-rose`}>
         <Icon name={icon} class={iconSizeClass} />
       </div>
     )}

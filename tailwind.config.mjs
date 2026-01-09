@@ -15,6 +15,7 @@ export default {
 					green: '#227A71',
 					white: '#FFFFFF',
 					black: '#2B1111',
+					footerBg: '#F6F5F5',
 				},
 			},
 			fontFamily: {

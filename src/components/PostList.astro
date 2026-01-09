@@ -93,7 +93,7 @@ const startIndex = page ? (page.currentPage - 1) * 15 : 0;
             {type === 'board' && (
               <td class="px-6 py-4 text-sm hidden md:table-cell">
                 {item.data.category ? (
-                  <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                  <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-custom-lightPink text-custom-green">
                     {item.data.category}
                   </span>
                 ) : (
@@ -105,19 +105,19 @@ const startIndex = page ? (page.currentPage - 1) * 15 : 0;
             <td class="px-6 py-4">
               <a
                 href={type === 'board' ? `/board/${item.slug}/` : `/notices/${item.slug}/`}
-                class={`hover:text-green-600 transition-colors ${type === 'notice' ? 'font-medium' : ''} text-gray-900`}
+                class={`hover:text-custom-green transition-colors ${type === 'notice' ? 'font-medium' : ''} text-gray-900`}
               >
                 {item.data.title}
               </a>
 
               {type === 'board' && item.data.category && (
-                <span class="md:hidden ml-2 inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-green-100 text-green-800">
+                <span class="md:hidden ml-2 inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-custom-lightPink text-custom-green">
                   {item.data.category}
                 </span>
               )}
 
               {type === 'notice' && item.data.popup && (
-                <span class="ml-2 inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-red-100 text-red-800">
+                <span class="ml-2 inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-custom-lightPink text-custom-rose">
                   중요
                 </span>
               )}

@@ -1,12 +1,10 @@
 ---
 import Layout from '../../layouts/Layout.astro';
-import Container from '../../components/Container.astro';
-import Card from '../../components/Card.astro';
 ---
 
 <Layout title="문의 실패 - 제주 발도르프 킨더">
-	<Container size="sm">
-		<Card class="p-12 text-center">
+	<div class="max-w-2xl mx-auto px-4">
+		<div class="bg-white rounded-lg shadow-sm border border-gray-200 p-12 text-center">
 			<!-- 에러 아이콘 -->
 			<div class="mb-6 flex justify-center">
 				<div class="w-20 h-20 bg-red-100 rounded-full flex items-center justify-center">
@@ -29,7 +27,7 @@ import Card from '../../components/Card.astro';
 			<div class="flex gap-4 justify-center">
 				<a
 					href="/contact/"
-					class="px-6 py-3 bg-green-500 text-white font-semibold rounded-lg hover:bg-green-600 transition-colors"
+					class="px-6 py-3 bg-custom-green text-white font-semibold rounded-lg hover:bg-custom-green/90 transition-colors"
 				>
 					다시 시도하기
 				</a>
@@ -40,6 +38,6 @@ import Card from '../../components/Card.astro';
 					홈으로 돌아가기
 				</a>
 			</div>
-		</Card>
-	</Container>
+		</div>
+	</div>
 </Layout>
