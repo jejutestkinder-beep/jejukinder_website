@@ -3,7 +3,7 @@ import Layout from '../../layouts/Layout.astro';
 import PostList from '../../components/PostList.astro';
 import { getCollection, type CollectionEntry } from 'astro:content';
 import type { Page } from 'astro';
-import boardHeroImage from '../../assets/6board-1-hero.jpeg';
+import boardHeroImage from '../../assets/hero-board-stories.jpeg';
 
 export async function getStaticPaths({ paginate }: { paginate: any }) {
   const posts = await getCollection('board');

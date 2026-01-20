@@ -12,7 +12,11 @@ export const colors = {
   rose: '#C64444',
   green: '#227A71',
   white: '#FFFFFF',
-  black: '#000000',
+  black: '#2B1111',
+  footerBg: '#FEC6B1',
+  category: '#B82045',
+  footerLink: '#472A2A',
+  ivory: '#FFFBF0',
 } as const;
 
 export type ColorName = keyof typeof colors;

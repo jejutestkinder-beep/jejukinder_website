@@ -72,11 +72,11 @@ const bgStyle = getBgStyle(bgColor);
 const titleClass = titleCenter ? 'text-center' : '';
 const titleColorStyle = getTitleColorStyle(titleColor);
 const paddingClass = noBottomPadding 
-  ? 'pt-16 md:pt-20 pb-16 md:pb-20 -mb-4 md:-mb-5 lg:-mb-6 xl:-mb-8' 
+  ? 'pt-16 md:pt-20 pb-16 md:pb-20' 
   : 'py-16 md:py-20';
 ---
 
-<section class={`${paddingClass} ${bgClass} w-[calc(100%+48px)] -mx-6`} style={bgStyle}>
+<section class={`${paddingClass} ${bgClass} w-full`} style={bgStyle}>
   <div class="max-w-6xl mx-auto px-8 md:px-6">
     {title && (
       <div class={`mb-[1.25rem] ${titleClass}`}>

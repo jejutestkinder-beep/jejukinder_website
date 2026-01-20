@@ -2,21 +2,22 @@
 import Layout from '../layouts/Layout.astro';
 import { getCollection } from 'astro:content';
 import HeroIndex from '../components/HeroIndex.astro';
+import Content2Col from '../components/Content2Col.astro';
 import Content3Col from '../components/Content3Col.astro';
 import ContactSection from '../components/ContactSection.astro';
 import NoticePopup from '../components/NoticePopup.astro';
-import mainImage from '../assets/0index-1-hero.jpeg';
-import philHero from '../assets/1phil-1-hero.jpeg';
-import space1 from '../assets/space-1.png';
-import space2 from '../assets/space-2.png';
-import space3 from '../assets/space-3.png';
-import art1 from '../assets/art-1.png';
-import art2 from '../assets/art-2.png';
-import art3 from '../assets/art-3.png';
-import nature1 from '../assets/nature-1.png';
-import nature2 from '../assets/nature-2.png';
-import nature3 from '../assets/nature-3.png';
-import bgWatercolor from '../assets/bg-watercolor.jpg';
+import mainImage from '../assets/hero-main-jeju-waldorf.jpeg';
+import philHero from '../assets/hero-philosophy-waldorf.jpeg';
+import space1 from '../assets/space-interior-classroom-1.png';
+import space2 from '../assets/space-interior-classroom-2.png';
+import space3 from '../assets/space-interior-classroom-3.png';
+import art1 from '../assets/art-activity-watercolor-1.png';
+import art2 from '../assets/art-activity-watercolor-2.png';
+import art3 from '../assets/art-activity-watercolor-3.png';
+import nature1 from '../assets/nature-forest-activity-1.png';
+import nature2 from '../assets/nature-forest-activity-2.png';
+import nature3 from '../assets/nature-forest-activity-3.png';
+import bgWatercolor from '../assets/background-watercolor-texture.jpg';
 
 const notices = await getCollection('notices');
 
@@ -80,22 +81,21 @@ const popupNotices = await Promise.all(
     ]}
   />
 
-  <Content3Col
+  <Content2Col
     title="예술적인 교육을"
     titleColor="brown"
-    description="발도르프의 교육은 <strong>교육예술</strong>이라 합니다.<br />  제주발도르프어린이집에서는 아이의 발달 단계에 맞는 아름다운 예술 활동을 통해 창의력을 기릅니다."
-    bgColor="bgPink"
-    images={[
-      { src: art1, alt: "예술 교육 1" },
-      { src: art2, alt: "예술 교육 2" },
-      { src: art3, alt: "예술 교육 3" }
-    ]}
+    description="아이의 발달 단계에 맞는 아름다운 예술 활동을 통해 창의력을 기릅니다."
+    image={art1}
+    imageAlt="예술 교육"
+    imageShape="organic"
+    bgColor="ivory"
+    imagePosition="left"
   />
 
   <Content3Col
     title="자연과 더불어"
     titleColor="brown"
-    description="마을에서, 곶자왈에서, 마당에서, <br/ > 제주발도르프어린이집의 아이들은 매일 매일 자연과 만납니다."
+    description="교사와 학부모가 꾸민 제주발도르프어린이집에서, 아이들은 매일 영감을 받습니다."
     images={[
       { src: nature1, alt: "자연 1" },
       { src: nature2, alt: "자연 2" },
@@ -106,8 +106,7 @@ const popupNotices = await Promise.all(
   <ContactSection
     title="제주발도르프어린이집이 궁금하세요?"
     titleColor="brown"
-    bgImage={bgWatercolor}
-    imageAlt="습식수채화 배경"
+    bgColor="ivory"
     Button="입소 상담은 여기로"
     linkUrl="https://docs.google.com/forms/d/e/1FAIpQLSccyRwbI42sdBHoiWLcz7A-BywQAY7I7ce_NVQUo6puvjFsVA/viewform"
     noBottomPadding={true}

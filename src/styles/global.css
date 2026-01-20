@@ -10,43 +10,34 @@
 
   /* Headings with Gaegu font */
   h1 {
-    @apply font-heading text-5xl md:text-5xl font-bold text-gray-900 mb-8 leading-tight;
-    letter-spacing: -0.1em;
+    @apply font-heading text-5xl md:text-7xl font-bold text-custom-black mb-8 leading-tight;
+    letter-spacing: -0.05em;
   }
 
   h2 {
-    @apply font-heading text-3xl md:text-4xl font-bold text-gray-800 mb-8 leading-tight;
-    letter-spacing: -0.1em;
+    @apply font-heading text-4xl md:text-5xl font-bold text-custom-brown mb-8 leading-tight;
+    letter-spacing: -0.05em;
   }
 
-  /* Body text with Nanum Gothic */
-  /* h3: h2 text with Nanum Gothic */
   h3 {
-    @apply font-body text-3xl md:text-4xl font-bold text-gray-800 mb-6;
+    @apply font-heading text-3xl md:text-4xl font-bold text-custom-brown mb-6;
   }
 
-  h4 {
-    @apply font-body text-2xl md:text-3xl font-bold text-gray-800 mb-6;
-  }
-  
-  h5 {
-    @apply font-body text-xl md:text-2xl font-bold text-gray-800 mb-4;
-  }
-
-  h6 {
-    @apply font-body text-lg md:text-lg font-normal text-gray-800 mb-4;
-  }
-  
   p {
-    @apply font-body text-base text-gray-700 leading-relaxed mb-4;
+    @apply font-body text-base md:text-lg text-custom-black/80 leading-relaxed mb-4;
   }
 
   a {
-    @apply hover:opacity-80 transition-colors underline-offset-2 text-custom-rose;
+    @apply transition-all text-custom-rose no-underline;
+  }
+
+  a:hover {
+    color: #186F67 !important;
+    text-decoration: none !important;
   }
 
   strong {
-    @apply font-bold text-gray-900;
+    @apply font-bold text-custom-black;
   }
 
   em {
@@ -130,13 +121,13 @@
   }
 
   .btn-primary {
-    @apply bg-custom-rose text-white hover:bg-custom-rose/90
-           focus:ring-custom-rose/30;
+    @apply bg-[#1F9B8F] text-white hover:bg-[#2BCDBD] active:bg-[#186F67]
+           focus:ring-[#1F9B8F]/30;
   }
 
   .btn-secondary {
-    @apply bg-custom-green text-white hover:bg-custom-green/90
-           focus:ring-custom-green/30;
+    @apply bg-[#1F9B8F] text-white hover:bg-[#2BCDBD] active:bg-[#186F67]
+           focus:ring-[#1F9B8F]/30;
   }
 
   .btn-lg {

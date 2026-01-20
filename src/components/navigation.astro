@@ -1,12 +1,13 @@
 ---
-import waldorfLogo from '../assets/waldorf-logo.png';
+import waldorfLogo from '../assets/jeju-waldorf-kinder-logo.png';
 import { Image } from 'astro:assets';
 ---
 
 <header class="sticky top-0 left-0 right-0 w-full max-w-full bg-white border-b border-gray-200 z-[1000] py-4 px-0 md:px-6 md:py-4 lg:px-6 lg:py-4">
 	<nav class="flex items-center justify-start px-6">
 		<div class="relative mr-5">
-			<a href="/" class="block p-1">
+			<a href="/" class="flex items-center gap-2 p-1 no-underline">
+				<img src="/favicon.svg" alt="" class="h-6 w-auto" />
 				<Image src={waldorfLogo} alt="제주 발도르프 어린이집" class="h-5 w-auto transition-opacity hover:opacity-80 md:h-[18px] lg:h-5" />
 			</a>
 		</div>
@@ -43,6 +44,12 @@ import { Image } from 'astro:assets';
 					<a href="/contact/" class="block px-4 py-3 text-gray-800 no-underline border-b border-gray-100 last:border-b-0 hover:bg-gray-50">문의하기</a>
 				</div>
 			</div>
+		</div>
+		<div class="hidden lg:flex items-center ml-auto">
+			<a href="https://jejuwaldorf-kinder.com/contact/" class="btn btn-secondary !py-3 !px-7 !text-base flex items-center gap-2 whitespace-nowrap shadow-sm hover:shadow-md transition-all">
+				<img src="/favicon.svg" alt="" class="w-5 h-5 brightness-0 invert" />
+				입소 상담하기
+			</a>
 		</div>
 		<button class="relative flex lg:hidden w-8 h-8 bg-transparent border-0 cursor-pointer p-2 ml-auto items-center justify-center mobile-menu-toggle" aria-label="메뉴">
 			<span class="absolute left-1/2 top-2.5 w-[25px] h-0.5 bg-gray-800 rounded transition-all origin-center -translate-x-1/2 mobile-menu-line"></span>

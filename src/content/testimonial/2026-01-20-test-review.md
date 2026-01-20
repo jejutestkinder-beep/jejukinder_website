@@ -4,7 +4,7 @@ author: "관리자"
 date: 2026-01-20
 url_slug: "test-review"
 image:
-  url: "/uploads/nature-1.png"
+  url: "/uploads/nature-forest-activity-1.png"
   alt: "테스트 이미지"
 ---
 

@@ -67,13 +67,17 @@ const titleClasses = description ? 'mb-4' : 'mb-10';
   {description && (
     <DescriptionTag class="mb-10 mt-0" style={descriptionColorStyle} set:html={description} />
   )}
-  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
-    {images.map((img, index) => (
-      typeof img.src === 'string' ? (
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-10 max-w-6xl mx-auto">
+    {images.map((img, index) => {
+      // 인덱스에 따라 다른 각도 적용
+      const rotations = ['-rotate-2', 'rotate-2', 'rotate-1'];
+      const rotation = rotations[index % 3];
+      
+      return typeof img.src === 'string' ? (
         <img
           src={img.src}
           alt={img.alt}
-          class="w-full aspect-[4/3] object-cover rounded-xl block opacity-0 translate-y-5 transition-all duration-[600ms] ease-out"
+          class={`w-full aspect-square object-cover rounded-[2.5rem] shadow-sm block opacity-0 translate-y-5 transition-all duration-[600ms] ease-out ${rotation} hover:rotate-0 hover:scale-105 transition-all`}
           data-delay={index * 200}
           data-fade="true"
         />
@@ -81,12 +85,12 @@ const titleClasses = description ? 'mb-4' : 'mb-10';
         <Image
           src={img.src}
           alt={img.alt}
-          class="w-full aspect-[4/3] object-cover rounded-xl block opacity-0 translate-y-5 transition-all duration-[600ms] ease-out"
+          class={`w-full aspect-square object-cover rounded-[2.5rem] shadow-sm block opacity-0 translate-y-5 transition-all duration-[600ms] ease-out ${rotation} hover:rotate-0 hover:scale-105 transition-all`}
           data-delay={index * 200}
           data-fade="true"
         />
-      )
-    ))}
+      );
+    })}
   </div>
 </section>
 

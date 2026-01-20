@@ -8,6 +8,7 @@ interface Props {
   image?: any;
   imagePosition?: 'left' | 'right';
   imageAlt?: string;
+  imageShape?: 'rect' | 'organic';
   label?: string;
   labelColor?: 'rose' | 'white' | 'green';
   title?: string;
@@ -24,6 +25,7 @@ const {
   image,
   imagePosition = 'left',
   imageAlt = '',
+  imageShape = 'rect',
   label,
   labelColor = 'rose',
   title,
@@ -39,7 +41,10 @@ const {
 const bgClass = bgColor === 'white' ? 'bg-white' : bgColor === 'gray' ? 'bg-gray-50' : '';
 const bgStyle = bgColor !== 'white' && bgColor !== 'gray' ? `background-color: ${bgColor};` : '';
 
+// ... existing helper functions ...
+
 const getTextColorStyle = (color?: ColorName): string => {
+// ... existing helper functions ...
   if (!color) return '';
   if (colors[color as keyof typeof colors]) {
     return `color: ${colors[color as keyof typeof colors]} !important;`;
@@ -55,10 +60,13 @@ const labelColorStyle = labelColor === 'rose'
   ? `color: ${colors.white} !important;` 
   : `color: ${colors.green} !important;`;
 const alignClass = textAlign === 'top' ? 'items-start' : textAlign === 'bottom' ? 'items-end' : 'items-center';
-// 모바일: order-1 (타이틀), order-2 (이미지), order-3 (description)
-// 데스크톱: imagePosition에 따라 배치
+
 const imageOrder = imagePosition === 'right' ? 'order-2 md:order-2' : 'order-2 md:order-1';
 const textOrder = imagePosition === 'right' ? 'order-3 md:order-1' : 'order-3 md:order-2';
+
+const imageShapeClass = imageShape === 'organic' 
+  ? 'rounded-[60%_40%_30%_70%/60%_30%_70%_40%]' 
+  : 'rounded-xl';
 ---
 
 <section class={`py-16 md:py-20 ${bgClass} ${className}`} style={bgStyle}>
@@ -66,7 +74,7 @@ const textOrder = imagePosition === 'right' ? 'order-3 md:order-1' : 'order-3 md
     <div class={`grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16 ${alignClass}`}>
       {/* 모바일에서만 보이는 타이틀 (order-1) */}
       {(label || title) && (
-        <div class="w-full order-1 md:hidden" style={textColorStyle}>
+        <div class="w-full order-1 md:hidden text-center" style={textColorStyle}>
           {label && (
             <h6 class="mb-3 font-bold uppercase tracking-wider" style={labelColorStyle}>{label}</h6>
           )}
@@ -78,27 +86,29 @@ const textOrder = imagePosition === 'right' ? 'order-3 md:order-1' : 'order-3 md
       {/* 이미지 (모바일: order-2, 데스크톱: imagePosition에 따라) */}
       {image && (
         <div class={`w-full ${imageOrder}`}>
-          <div class="w-full aspect-[4/3] rounded-xl overflow-hidden">
+          <div class={`w-full aspect-square overflow-hidden ${imageShapeClass}`}>
             {typeof image === 'string' ? (
               <img 
                 src={image} 
                 alt={imageAlt} 
-                class="w-full h-full object-cover rounded-xl animate-fade-in parallax-image" 
-                data-parallax="true"
+                class="w-full h-full object-cover opacity-0 translate-y-5 transition-all duration-[800ms] ease-out" 
+                data-fade="true"
+                data-delay="400"
               />
             ) : (
               <Image 
                 src={image} 
                 alt={imageAlt} 
-                class="w-full h-full object-cover rounded-xl animate-fade-in parallax-image" 
-                data-parallax="true"
+                class="w-full h-full object-cover opacity-0 translate-y-5 transition-all duration-[800ms] ease-out" 
+                data-fade="true"
+                data-delay="400"
               />
             )}
           </div>
         </div>
       )}
       {/* 텍스트 컨텐츠 (모바일: order-3, 데스크톱: imagePosition에 따라) */}
-      <div class={`w-full ${image ? textOrder : 'order-2 md:order-none'}`} style={textColorStyle}>
+      <div class={`w-full text-center md:text-left ${image ? textOrder : 'order-2 md:order-none'}`} style={textColorStyle}>
         {/* 데스크톱에서만 보이는 타이틀 */}
         <div class="hidden md:block">
           {label && (
@@ -108,9 +118,9 @@ const textOrder = imagePosition === 'right' ? 'order-3 md:order-1' : 'order-3 md
             <h2 class="mb-6" style={titleColorStyle} set:html={title} />
           )}
         </div>
-        {/* Description (모바일에서만 표시) */}
+        {/* Description */}
         {description && (
-          <h6 class="mb-3 font-normal" set:html={description} />
+          <h6 class="mb-3 font-normal leading-relaxed" set:html={description} />
         )}
         {descriptionList && descriptionList.length > 0 && (
           <ul class="mb-3 font-normal list-disc list-inside space-y-2" style={textColorStyle}>
@@ -126,53 +136,29 @@ const textOrder = imagePosition === 'right' ? 'order-3 md:order-1' : 'order-3 md
 </section>
 
 <script>
-  function initParallax() {
-    const parallaxImages = document.querySelectorAll('.parallax-image[data-parallax="true"]');
-    
-    if (parallaxImages.length === 0) return;
+  document.addEventListener('DOMContentLoaded', () => {
+    const fadeElements = document.querySelectorAll('[data-fade="true"]');
 
-    let ticking = false;
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        const el = entry.target as HTMLElement;
+        const delay = el.dataset.delay || '0';
 
-    function updateParallax() {
-      parallaxImages.forEach((img) => {
-        const htmlImg = img as HTMLElement;
-        const rect = htmlImg.getBoundingClientRect();
-        const windowHeight = window.innerHeight;
-        
-        // 이미지가 뷰포트에 보일 때만 parallax 효과 적용
-        if (rect.bottom >= 0 && rect.top <= windowHeight) {
-          // 이미지의 중앙점이 뷰포트의 어디에 있는지 계산
-          const imageCenter = rect.top + rect.height / 2;
-          const viewportCenter = windowHeight / 2;
-          const offset = (imageCenter - viewportCenter) * 0.15; // 0.15는 움직임 강도
-          
-          htmlImg.style.transform = `translateY(${offset}px)`;
-          htmlImg.style.transition = 'transform 0.1s ease-out';
+        if (entry.isIntersecting) {
+          setTimeout(() => {
+            el.classList.remove('opacity-0', 'translate-y-5');
+            el.classList.add('opacity-100', 'translate-y-0');
+          }, parseInt(delay));
+        } else {
+          el.classList.remove('opacity-100', 'translate-y-0');
+          el.classList.add('opacity-0', 'translate-y-5');
         }
       });
-      
-      ticking = false;
-    }
+    }, {
+      threshold: 0.1
+    });
 
-    function requestTick() {
-      if (!ticking) {
-        requestAnimationFrame(updateParallax);
-        ticking = true;
-      }
-    }
-
-    window.addEventListener('scroll', requestTick, { passive: true });
-    window.addEventListener('resize', requestTick, { passive: true });
-    
-    // 초기 실행
-    updateParallax();
-  }
-
-  // DOM이 로드된 후 실행
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initParallax);
-  } else {
-    initParallax();
-  }
+    fadeElements.forEach((el) => observer.observe(el));
+  });
 </script>
 
