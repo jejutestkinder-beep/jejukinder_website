@@ -15,9 +15,11 @@ interface Props {
   imageAlt?: string;
   noBottomPadding?: boolean;
   titleTag?: 'h2' | 'h3';
+  patternLeft?: any;
+  patternRight?: any;
 }
 
-const { title, linkText, linkUrl, Button, titleColor, bgColor, bgImage, imageAlt, noBottomPadding = false, titleTag = 'h2' } = Astro.props;
+const { title, linkText, linkUrl, Button, titleColor, bgColor, bgImage, imageAlt, noBottomPadding = false, titleTag = 'h2', patternLeft, patternRight } = Astro.props;
 const TitleTag = titleTag;
 
 // Button이 있으면 linkText 대신 사용
@@ -101,6 +103,19 @@ const paddingClass = noBottomPadding
       />
     )
   )}
+  
+  {patternLeft && (
+    <div class="absolute bottom-[-5%] left-[-5%] w-48 md:w-64 h-48 md:h-64 opacity-100 pointer-events-none z-0">
+      <Image src={patternLeft} alt="" class="w-full h-full object-contain" />
+    </div>
+  )}
+  
+  {patternRight && (
+    <div class="absolute top-[-20%] right-[-10%] w-[450px] md:w-[600px] h-[450px] md:h-[600px] opacity-100 pointer-events-none z-0 scale-x-[-1] scale-y-[-1]">
+      <Image src={patternRight} alt="" class="w-full h-full object-contain" />
+    </div>
+  )}
+
   <div class={`relative z-10 max-w-4xl mx-auto px-6 py-12 md:py-16 ${bgImage ? '' : ''}`}>
     <TitleTag class={`md:h1 mb-8 ${bgImage ? 'drop-shadow-lg' : ''} ${titleColorClass}`} style={titleColorStyle}>{title}</TitleTag>
     <a href={linkUrl} class="btn btn-primary inline-flex">

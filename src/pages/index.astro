@@ -1,6 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import { getCollection } from 'astro:content';
+import { Image } from 'astro:assets';
 import HeroIndex from '../components/HeroIndex.astro';
 import Content2Col from '../components/Content2Col.astro';
 import Content3Col from '../components/Content3Col.astro';
@@ -24,6 +25,14 @@ import nature02 from '../assets/nature-main-02.avif';
 import nature03 from '../assets/nature-main-03.avif';
 
 import art01 from '../assets/art-main-01.avif';
+
+// Patterns
+import pattern01 from '../assets/pattern-01.avif';
+import pattern02 from '../assets/pattern-02.avif';
+import pattern03 from '../assets/pattern-03.avif';
+import pattern04 from '../assets/pattern-04.avif';
+import pattern05 from '../assets/pattern-05.avif';
+import pattern06 from '../assets/pattern-06.avif';
 
 const notices = await getCollection('notices');
 
@@ -58,9 +67,9 @@ const popupNotices = await Promise.all(
 ---
 
 <Layout 
-  title="제주발도르프어린이집"
-  description="아이들이 꽃처럼 피어나는 곳, 아이의 발달 과정에 맞추어 섬세하게 아이를 키우는 제주 발도르프 어린이집입니다."
-  keywords="제주 발도르프, 발도르프 유치원, 제주 숲유치원, 한경면 어린이집, 제주 어린이집, 숲체험, 제주 발도르프 킨더"
+  title="제주 발도르프 어린이집 - 자연과 함께하는 발도르프 교육"
+  description="아이들이 꽃처럼 피어나는 곳, 아이의 발달 과정에 맞추어 섬세하게 아이를 키우는 제주 발도르프 어린이집입니다. 오름으로, 곶자왈로 자연과 만나는 숲유치원 형태의 발도르프 교육 공동체입니다."
+  keywords="제주 발도르프 어린이집, 제주 발도르프, 제주 숲유치원, 한경면 어린이집, 제주 어린이집, 숲체험, 제주 발도르프 킨더"
   naverVerification="bb450b666d48a8f3962cb3ad50aa34a6d4ca0c29"
 >
   {popupNotices.map(({ notice, Content }, index) => (
@@ -75,17 +84,28 @@ const popupNotices = await Promise.all(
     ctaLink="https://docs.google.com/forms/d/e/1FAIpQLSccyRwbI42sdBHoiWLcz7A-BywQAY7I7ce_NVQUo6puvjFsVA/viewform"
   />
 
-  <Content3Col
-    title="아름다운 공간에서"
-    titleColor="brown"
-    description="교사와 학부모와 아이들이 꾸민 아름다움 속에서,<br />아이들은 매일 영감을 받습니다."
-    descriptionColor="black"
-    images={[
-      { src: space01, alt: "공간 1" },
-      { src: space02, alt: "공간 2" },
-      { src: space03, alt: "공간 3" }
-    ]}
-  />
+  <div class="relative overflow-hidden">
+    <div class="absolute top-[10%] left-[-5%] w-40 md:w-64 h-40 md:h-64 opacity-100 pointer-events-none z-0">
+      <Image src={pattern01} alt="" class="w-full h-full object-contain" />
+    </div>
+    <div class="absolute top-0 right-[-2%] w-48 md:w-64 h-48 md:h-64 opacity-100 pointer-events-none z-0 -rotate-[20deg]">
+      <Image src={pattern02} alt="" class="w-full h-full object-contain" />
+    </div>
+    <div class="absolute bottom-[5%] right-[-5%] w-48 md:w-72 h-48 md:h-72 opacity-100 pointer-events-none z-0">
+      <Image src={pattern06} alt="" class="w-full h-full object-contain" />
+    </div>
+    <Content3Col
+      title="아름다운 공간에서"
+      titleColor="brown"
+      description="교사와 학부모와 아이들이 꾸민 아름다움 속에서,<br />아이들은 매일 영감을 받습니다."
+      descriptionColor="black"
+      images={[
+        { src: space01, alt: "공간 1" },
+        { src: space02, alt: "공간 2" },
+        { src: space03, alt: "공간 3" }
+      ]}
+    />
+  </div>
 
   <Content2Col
     title="예술적인 교육을"
@@ -96,18 +116,28 @@ const popupNotices = await Promise.all(
     imageShape="organic"
     bgColor="ivory"
     imagePosition="left"
+    pattern={pattern03}
+    pattern2={pattern06}
   />
 
-  <Content3Col
-    title="자연과 더불어"
-    titleColor="brown"
-    description="제주의 아름다운 자연 안에서,<br />아이들은 매일 자라납니다."
-    images={[
-      { src: nature01, alt: "자연 1" },
-      { src: nature02, alt: "자연 2" },
-      { src: nature03, alt: "자연 3" }
-    ]}
-  />
+  <div class="relative overflow-hidden">
+    <div class="absolute top-[5%] left-[-5%] w-40 md:w-64 h-40 md:h-64 opacity-100 pointer-events-none z-0">
+      <Image src={pattern03} alt="" class="w-full h-full object-contain" />
+    </div>
+    <div class="absolute bottom-[5%] right-[-5%] w-56 md:w-80 h-56 md:h-80 opacity-100 pointer-events-none z-0">
+      <Image src={pattern04} alt="" class="w-full h-full object-contain" />
+    </div>
+    <Content3Col
+      title="자연과 더불어"
+      titleColor="brown"
+      description="제주의 너른 자연 안에서,<br />아이들은 매일 배우고 자랍니다."
+      images={[
+        { src: nature01, alt: "자연 1" },
+        { src: nature02, alt: "자연 2" },
+        { src: nature03, alt: "자연 3" }
+      ]}
+    />
+  </div>
 
   <ContactSection
     title="제주발도르프어린이집이 궁금하세요?"
@@ -116,5 +146,7 @@ const popupNotices = await Promise.all(
     Button="입소 상담은 여기로"
     linkUrl="https://docs.google.com/forms/d/e/1FAIpQLSccyRwbI42sdBHoiWLcz7A-BywQAY7I7ce_NVQUo6puvjFsVA/viewform"
     noBottomPadding={true}
+    patternLeft={pattern05}
+    patternRight={pattern04}
   />
 </Layout>

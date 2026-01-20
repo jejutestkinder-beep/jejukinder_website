@@ -19,6 +19,8 @@ interface Props {
   textAlign?: 'top' | 'middle' | 'bottom';
   bgColor?: 'white' | 'gray' | string;
   titleTag?: 'h2' | 'h3';
+  pattern?: any;
+  pattern2?: any;
   class?: string;
 }
 
@@ -37,6 +39,8 @@ const {
   textAlign = 'middle',
   bgColor = 'white',
   titleTag = 'h2',
+  pattern,
+  pattern2,
   class: className = ''
 } = Astro.props;
 
@@ -73,12 +77,22 @@ const imageShapeClass = imageShape === 'organic'
   : 'rounded-xl';
 ---
 
-<section class={`py-16 md:py-20 ${bgClass} ${className}`} style={bgStyle}>
-  <div class="max-w-6xl mx-auto px-6">
+<section class={`relative py-16 md:py-20 overflow-hidden ${bgClass} ${className}`} style={bgStyle}>
+  {pattern2 && (
+    <div class="absolute bottom-[-10%] right-[-5%] w-48 md:w-64 h-48 md:h-64 opacity-100 pointer-events-none z-0 -rotate-[60deg]">
+      <Image src={pattern2} alt="" class="w-full h-full object-contain" />
+    </div>
+  )}
+  <div class="max-w-6xl mx-auto px-6 relative z-10">
     <div class={`grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16 ${alignClass}`}>
       {/* 이미지 */}
       {image && (
-        <div class={`w-full ${imageOrder}`}>
+        <div class={`w-full ${imageOrder} relative`}>
+          {pattern && (
+            <div class={`absolute -z-10 w-[100%] h-[100%] -top-[10%] -right-[35%] opacity-100 rotate-90`}>
+              <Image src={pattern} alt="" class="w-full h-full object-contain" />
+            </div>
+          )}
           <div class={`w-full aspect-square overflow-hidden ${imageShapeClass}`}>
             {typeof image === 'string' ? (
               <img 
