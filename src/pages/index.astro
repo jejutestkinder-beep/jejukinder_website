@@ -6,6 +6,7 @@ import Content3Col from '../components/Content3Col.astro';
 import ContactSection from '../components/ContactSection.astro';
 import NoticePopup from '../components/NoticePopup.astro';
 import mainImage from '../assets/0index-1-hero.jpeg';
+import philHero from '../assets/1phil-1-hero.jpeg';
 import space1 from '../assets/space-1.png';
 import space2 from '../assets/space-2.png';
 import space3 from '../assets/space-3.png';
@@ -49,13 +50,17 @@ const popupNotices = await Promise.all(
 );
 ---
 
-<Layout title="제주 발도르프 어린이집">
+<Layout 
+  title="제주 발도르프 어린이집"
+  description="제주의 자연 속에서 아이들이 꽃처럼 피어나는 곳, 제주 발도르프 어린이집입니다. 매일 숲 나들이를 실천하는 제주 숲유치원 형태의 발도르프 교육 공동체입니다."
+  keywords="제주 발도르프, 제주 숲유치원, 한경면 어린이집, 제주도 어린이집 추천, 숲체험, 제주 발도르프 킨더"
+>
   {popupNotices.map(({ notice, Content }, index) => (
     <NoticePopup notice={notice} Content={Content} index={index} />
   ))}
 
   <HeroIndex
-    imageSrc={mainImage.src}
+    images={[mainImage, philHero, mainImage, philHero]}
     subtitle="아이들이 꽃처럼 피어나는 곳"
     title="제주 발도르프 어린이집"
     ctaText="입소 상담하기"
@@ -68,9 +73,9 @@ const popupNotices = await Promise.all(
     description="교사와 학부모가 꾸민 제주발도르프어린이집에서, 아이들은 매일 영감을 받습니다."
     descriptionColor="black"
     images={[
-      { src: space1.src, alt: "공간 1" },
-      { src: space2.src, alt: "공간 2" },
-      { src: space3.src, alt: "공간 3" }
+      { src: space1, alt: "공간 1" },
+      { src: space2, alt: "공간 2" },
+      { src: space3, alt: "공간 3" }
     ]}
   />
 
@@ -80,9 +85,9 @@ const popupNotices = await Promise.all(
     description="발도르프의 교육은 <strong>교육예술</strong>이라 합니다.<br />  제주발도르프어린이집에서는 아이의 발달 단계에 맞는 아름다운 예술 활동을 통해 창의력을 기릅니다."
     bgColor="bgPink"
     images={[
-      { src: art1.src, alt: "예술 교육 1" },
-      { src: art2.src, alt: "예술 교육 2" },
-      { src: art3.src, alt: "예술 교육 3" }
+      { src: art1, alt: "예술 교육 1" },
+      { src: art2, alt: "예술 교육 2" },
+      { src: art3, alt: "예술 교육 3" }
     ]}
   />
 
@@ -91,9 +96,9 @@ const popupNotices = await Promise.all(
     titleColor="brown"
     description="마을에서, 곶자왈에서, 마당에서, <br/ > 제주발도르프어린이집의 아이들은 매일 매일 자연과 만납니다."
     images={[
-      { src: nature1.src, alt: "자연 1" },
-      { src: nature2.src, alt: "자연 2" },
-      { src: nature3.src, alt: "자연 3" }
+      { src: nature1, alt: "자연 1" },
+      { src: nature2, alt: "자연 2" },
+      { src: nature3, alt: "자연 3" }
     ]}
   />
 

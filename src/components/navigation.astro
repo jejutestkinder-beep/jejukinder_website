@@ -1,12 +1,13 @@
 ---
 import waldorfLogo from '../assets/waldorf-logo.png';
+import { Image } from 'astro:assets';
 ---
 
 <header class="sticky top-0 left-0 right-0 w-full max-w-full bg-white border-b border-gray-200 z-[1000] py-4 px-0 md:px-6 md:py-4 lg:px-6 lg:py-4">
 	<nav class="flex items-center justify-start px-6">
 		<div class="relative mr-5">
 			<a href="/" class="block p-1">
-				<img src={waldorfLogo.src} alt="제주 발도르프 어린이집" class="h-5 w-auto transition-opacity hover:opacity-80 md:h-[18px] lg:h-5">
+				<Image src={waldorfLogo} alt="제주 발도르프 어린이집" class="h-5 w-auto transition-opacity hover:opacity-80 md:h-[18px] lg:h-5" />
 			</a>
 		</div>
 		<div class="hidden lg:flex lg:items-center lg:gap-6 lg:flex-1">

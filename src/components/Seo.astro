@@ -4,6 +4,7 @@ import { SEO } from 'astro-seo';
 export interface Props {
   title: string;
   description: string;
+  keywords?: string;
   canonical?: string;
   openGraph?: {
     title?: string;
@@ -23,6 +24,7 @@ export interface Props {
 const {
   title,
   description,
+  keywords = "제주 발도르프, 제주 어린이집, 숲유치원, 제주 숲나들이, 한경면 어린이집, 제주 대안 교육",
   canonical,
   openGraph,
   twitterCard
@@ -50,6 +52,11 @@ const twitterCardType = twitterCard?.card || 'summary_large_image';
   title={title}
   description={description}
   canonical={canonical || currentUrl}
+  extend={{
+    meta: [
+      { name: 'keywords', content: keywords },
+    ],
+  }}
   openGraph={{
     basic: {
       title: ogTitle,

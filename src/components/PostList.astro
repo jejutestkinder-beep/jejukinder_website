@@ -1,12 +1,12 @@
 ---
 import Pagination from './Pagination.astro';
-import type { ImageMetadata } from 'astro';
+import { Image } from 'astro:assets';
 
 interface Props {
   title: string;
   items: any[];
   type: 'board' | 'notice';
-  bgImage?: ImageMetadata;
+  bgImage?: any;
   imageAlt?: string;
   page?: {
     currentPage: number;
@@ -30,7 +30,11 @@ const startIndex = page ? (page.currentPage - 1) * 15 : 0;
   <!-- 헤더 with background image -->
   {bgImage ? (
     <div class="relative overflow-hidden h-[40vh] min-h-[250px] md:h-[35vh] md:min-h-[200px] w-[calc(100%+48px)] -mx-6 -mt-[32px] md:-mt-[32px] mb-8">
-      <img src={bgImage.src} alt={imageAlt} class="absolute inset-0 w-full h-full object-cover" />
+      {typeof bgImage === 'string' ? (
+        <img src={bgImage} alt={imageAlt} class="absolute inset-0 w-full h-full object-cover" />
+      ) : (
+        <Image src={bgImage} alt={imageAlt} class="absolute inset-0 w-full h-full object-cover" />
+      )}
       <div class="absolute inset-0 bg-black/40 z-10"></div>
       <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full px-6 text-center z-20">
         <h1 class="text-white drop-shadow-lg m-0 mb-2">{title}</h1>

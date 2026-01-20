@@ -1,44 +1,161 @@
 ---
+import { Image } from 'astro:assets';
+
 interface Props {
-  imageSrc: string;
+  images: any[];
   subtitle: string;
   title: string;
   ctaText: string;
   ctaLink: string;
 }
 
-const { imageSrc, subtitle, title, ctaText, ctaLink } = Astro.props;
+const { images, subtitle, title, ctaText, ctaLink } = Astro.props;
 ---
 
-<section class="relative w-[calc(100%+48px)] -mx-6 -mt-8 overflow-hidden">
-  <div class="absolute inset-0 bg-black/40 z-[1]" aria-hidden="true"></div>
-  <img
-    src={imageSrc}
-    alt=""
-    class="w-full h-screen min-h-[600px] md:min-h-[600px] object-cover block"
-    loading="eager"
-  />
-  <div class="absolute inset-0 flex flex-col items-center justify-center px-6 text-center text-white z-[2]">
-    <h6 class="m-0 text-xl md:text-2xl mb-4 font-semibold text-white hero-text-shadow">
+<section class="relative w-[calc(100%+48px)] -mx-6 -mt-8 overflow-hidden group hero-carousel">
+  <!-- Static Text Content Overlay (Fixed) -->
+  <div class="absolute inset-0 flex flex-col items-center justify-center px-6 text-center text-white z-[20]">
+    <h6 class="m-0 text-xl md:text-2xl mb-4 font-semibold text-white hero-text-shadow animate-fade-up">
       {subtitle}
     </h6>
-    <h1 class="m-0 md:text-6xl lg:text-7xl mb-8 font-semibold text-white hero-text-shadow">
+    <h1 class="m-0 text-4xl md:text-6xl lg:text-7xl mb-8 font-semibold text-white hero-text-shadow animate-fade-up delay-200">
       {title}
     </h1>
-    <a 
-      href={ctaLink} 
-      class="btn btn-secondary btn-lg" 
-      aria-label={ctaText}
-      target={ctaLink.startsWith('http') ? '_blank' : undefined}
-      rel={ctaLink.startsWith('http') ? 'noopener noreferrer' : undefined}
-    >
-      {ctaText}
-    </a>
+    <div class="animate-fade-up delay-500">
+      <a 
+        href={ctaLink} 
+        class="btn btn-secondary btn-lg" 
+        aria-label={ctaText}
+        target={ctaLink.startsWith('http') ? '_blank' : undefined}
+        rel={ctaLink.startsWith('http') ? 'noopener noreferrer' : undefined}
+      >
+        {ctaText}
+      </a>
+    </div>
   </div>
+
+  <!-- Sliding Images Track -->
+  <div class="flex transition-transform duration-1000 ease-in-out carousel-track h-screen min-h-[600px]">
+    {images.map((imgSrc, index) => (
+      <div class="relative flex-none w-full h-full">
+        <div class="absolute inset-0 bg-black/40 z-[10]" aria-hidden="true"></div>
+        {typeof imgSrc === 'string' ? (
+          <img
+            src={imgSrc}
+            alt=""
+            class="w-full h-full object-cover block"
+            loading={index === 0 ? "eager" : "lazy"}
+          />
+        ) : (
+          <Image
+            src={imgSrc}
+            alt=""
+            class="w-full h-full object-cover block"
+            loading={index === 0 ? "eager" : "lazy"}
+          />
+        )}
+      </div>
+    ))}
+  </div>
+
+  <!-- Navigation Arrows -->
+  {images.length > 1 && (
+    <>
+      <button 
+        class="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 z-30 p-2 md:p-3 rounded-full bg-white/10 hover:bg-white/20 text-white border border-white/30 backdrop-blur-sm transition-all opacity-0 group-hover:opacity-100 prev-btn"
+        aria-label="Previous slide"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+      </button>
+      <button 
+        class="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 z-30 p-2 md:p-3 rounded-full bg-white/10 hover:bg-white/20 text-white border border-white/30 backdrop-blur-sm transition-all opacity-0 group-hover:opacity-100 next-btn"
+        aria-label="Next slide"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+      </button>
+
+      <!-- Indicators -->
+      <div class="absolute bottom-10 left-1/2 -translate-x-1/2 z-30 flex gap-3">
+        {images.map((_, i) => (
+          <button 
+            class={`w-2 h-2 rounded-full transition-all indicator-btn ${i === 0 ? 'bg-white w-6' : 'bg-white/40'}`}
+            data-index={i}
+            aria-label={`Go to image ${i + 1}`}
+          />
+        ))}
+      </div>
+    </>
+  )}
 </section>
 
 <style>
   .hero-text-shadow {
     text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8), 0 4px 16px rgba(0, 0, 0, 0.6);
   }
+
+  .animate-fade-up {
+    animation: fadeUp 1s ease-out forwards;
+  }
+
+  .delay-200 { animation-delay: 0.2s; }
+  .delay-500 { animation-delay: 0.5s; }
+
+  @keyframes fadeUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
 </style>
+
+<script>
+  function initCarousel() {
+    const carousel = document.querySelector('.hero-carousel');
+    if (!carousel) return;
+
+    const track = carousel.querySelector('.carousel-track') as HTMLElement;
+    const slides = Array.from(track.children);
+    const nextBtn = carousel.querySelector('.next-btn');
+    const prevBtn = carousel.querySelector('.prev-btn');
+    const indicators = carousel.querySelectorAll('.indicator-btn');
+    
+    let currentIndex = 0;
+
+    function updateCarousel(index: number) {
+      if (index < 0) index = slides.length - 1;
+      if (index >= slides.length) index = 0;
+      
+      currentIndex = index;
+      track.style.transform = `translateX(-${currentIndex * 100}%)`;
+      
+      // Update indicators
+      indicators.forEach((btn, i) => {
+        if (i === currentIndex) {
+          btn.classList.add('bg-white', 'w-6');
+          btn.classList.remove('bg-white/40');
+        } else {
+          btn.classList.remove('bg-white', 'w-6');
+          btn.classList.add('bg-white/40');
+        }
+      });
+    }
+
+    nextBtn?.addEventListener('click', () => updateCarousel(currentIndex + 1));
+    prevBtn?.addEventListener('click', () => updateCarousel(currentIndex - 1));
+
+    indicators.forEach((btn, i) => {
+      btn.addEventListener('click', () => updateCarousel(i));
+    });
+
+    // Auto-update indicators initial state
+    updateCarousel(0);
+  }
+
+  // Run on page load and on Astro swap
+  initCarousel();
+  document.addEventListener('astro:after-swap', initCarousel);
+</script>

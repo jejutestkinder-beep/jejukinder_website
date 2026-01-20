@@ -45,10 +45,6 @@
     @apply hover:opacity-80 transition-colors underline-offset-2 text-custom-rose;
   }
 
-  footer a {
-    @apply text-custom-darkGrey !important;
-  }
-
   strong {
     @apply font-bold text-gray-900;
   }

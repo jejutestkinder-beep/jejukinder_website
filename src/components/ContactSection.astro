@@ -1,5 +1,6 @@
 ---
 import { colors } from '../utils/colors';
+import { Image } from 'astro:assets';
 
 type ColorName = 'brown' | 'bgPink' | 'lightPink' | 'lightYellow' | 'grey' | 'darkGrey' | 'rose' | 'green' | 'white' | 'black' | string;
 
@@ -10,7 +11,7 @@ interface Props {
   Button?: string;
   titleColor?: ColorName;
   bgColor?: ColorName;
-  bgImage?: ImageMetadata;
+  bgImage?: any;
   imageAlt?: string;
   noBottomPadding?: boolean;
 }
@@ -84,11 +85,19 @@ const paddingClass = noBottomPadding
 
 <section class={`relative text-center ${bgClass} ${paddingClass} w-[calc(100%+48px)] -mx-6 overflow-hidden`} style={bgStyle}>
   {bgImage && (
-    <img 
-      src={bgImage.src} 
-      alt={imageAlt || title} 
-      class="absolute inset-0 w-full h-full object-cover"
-    />
+    typeof bgImage === 'string' ? (
+      <img 
+        src={bgImage} 
+        alt={imageAlt || title} 
+        class="absolute inset-0 w-full h-full object-cover"
+      />
+    ) : (
+      <Image 
+        src={bgImage} 
+        alt={imageAlt || title} 
+        class="absolute inset-0 w-full h-full object-cover"
+      />
+    )
   )}
   <div class={`relative z-10 max-w-4xl mx-auto px-6 py-12 md:py-16 ${bgImage ? '' : ''}`}>
     <h2 class={`md:h1 mb-8 ${bgImage ? 'drop-shadow-lg' : ''} ${titleColorClass}`} style={titleColorStyle}>{title}</h2>

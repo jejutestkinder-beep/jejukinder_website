@@ -1,10 +1,11 @@
 ---
 import { colors } from '../utils/colors';
+import { Image } from 'astro:assets';
 
 type ColorName = 'brown' | 'bgPink' | 'lightPink' | 'lightYellow' | 'grey' | 'darkGrey' | 'rose' | 'green' | 'white' | 'black' | string;
 
 interface Props {
-  image?: ImageMetadata;
+  image?: any;
   imagePosition?: 'left' | 'right';
   imageAlt?: string;
   label?: string;
@@ -78,12 +79,21 @@ const textOrder = imagePosition === 'right' ? 'order-3 md:order-1' : 'order-3 md
       {image && (
         <div class={`w-full ${imageOrder}`}>
           <div class="w-full aspect-[4/3] rounded-xl overflow-hidden">
-            <img 
-              src={image.src} 
-              alt={imageAlt} 
-              class="w-full h-full object-cover rounded-xl animate-fade-in parallax-image" 
-              data-parallax="true"
-            />
+            {typeof image === 'string' ? (
+              <img 
+                src={image} 
+                alt={imageAlt} 
+                class="w-full h-full object-cover rounded-xl animate-fade-in parallax-image" 
+                data-parallax="true"
+              />
+            ) : (
+              <Image 
+                src={image} 
+                alt={imageAlt} 
+                class="w-full h-full object-cover rounded-xl animate-fade-in parallax-image" 
+                data-parallax="true"
+              />
+            )}
           </div>
         </div>
       )}
@@ -125,7 +135,8 @@ const textOrder = imagePosition === 'right' ? 'order-3 md:order-1' : 'order-3 md
 
     function updateParallax() {
       parallaxImages.forEach((img) => {
-        const rect = img.getBoundingClientRect();
+        const htmlImg = img as HTMLElement;
+        const rect = htmlImg.getBoundingClientRect();
         const windowHeight = window.innerHeight;
         
         // 이미지가 뷰포트에 보일 때만 parallax 효과 적용
@@ -135,8 +146,8 @@ const textOrder = imagePosition === 'right' ? 'order-3 md:order-1' : 'order-3 md
           const viewportCenter = windowHeight / 2;
           const offset = (imageCenter - viewportCenter) * 0.15; // 0.15는 움직임 강도
           
-          img.style.transform = `translateY(${offset}px)`;
-          img.style.transition = 'transform 0.1s ease-out';
+          htmlImg.style.transform = `translateY(${offset}px)`;
+          htmlImg.style.transition = 'transform 0.1s ease-out';
         }
       });
       
