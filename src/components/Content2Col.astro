@@ -18,6 +18,7 @@ interface Props {
   textColor?: ColorName;
   textAlign?: 'top' | 'middle' | 'bottom';
   bgColor?: 'white' | 'gray' | string;
+  titleTag?: 'h2' | 'h3';
   class?: string;
 }
 
@@ -35,8 +36,11 @@ const {
   textColor,
   textAlign = 'middle',
   bgColor = 'white',
+  titleTag = 'h2',
   class: className = ''
 } = Astro.props;
+
+const TitleTag = titleTag;
 
 const bgClass = bgColor === 'white' ? 'bg-white' : bgColor === 'gray' ? 'bg-gray-50' : '';
 const bgStyle = bgColor !== 'white' && bgColor !== 'gray' ? `background-color: ${bgColor};` : '';
@@ -79,7 +83,7 @@ const imageShapeClass = imageShape === 'organic'
             <h6 class="mb-3 font-bold uppercase tracking-wider" style={labelColorStyle}>{label}</h6>
           )}
           {title && (
-            <h2 class="mb-6" style={titleColorStyle} set:html={title} />
+            <TitleTag class="mb-6" style={titleColorStyle} set:html={title} />
           )}
         </div>
       )}
@@ -115,7 +119,7 @@ const imageShapeClass = imageShape === 'organic'
             <h6 class="mb-3 font-bold uppercase tracking-wider" style={labelColorStyle}>{label}</h6>
           )}
           {title && (
-            <h2 class="mb-6" style={titleColorStyle} set:html={title} />
+            <TitleTag class="mb-6" style={titleColorStyle} set:html={title} />
           )}
         </div>
         {/* Description */}

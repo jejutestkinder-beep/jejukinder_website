@@ -100,6 +100,8 @@ import { Image } from 'astro:assets';
 	const mobileNavItems = document.querySelectorAll('.mobile-nav-item:not(.no-submenu)');
 
 	function toggleMobileMenu() {
+		if (!mobileToggle || !mobileNav || !mobileBackdrop) return;
+		
 		mobileToggle.classList.toggle('active');
 		mobileNav.classList.toggle('active');
 		mobileBackdrop.classList.toggle('active');
@@ -107,22 +109,26 @@ import { Image } from 'astro:assets';
 	}
 
 	function closeMobileMenu() {
+		if (!mobileToggle || !mobileNav || !mobileBackdrop) return;
+
 		mobileToggle.classList.remove('active');
 		mobileNav.classList.remove('active');
 		mobileBackdrop.classList.remove('active');
 		document.body.style.overflow = '';
 	}
 
-	mobileToggle.addEventListener('click', toggleMobileMenu);
-	mobileBackdrop.addEventListener('click', closeMobileMenu);
+	if (mobileToggle) mobileToggle.addEventListener('click', toggleMobileMenu);
+	if (mobileBackdrop) mobileBackdrop.addEventListener('click', closeMobileMenu);
 
 	// Handle submenu toggles
 	mobileNavItems.forEach(item => {
 		const link = item.querySelector('a');
-		link.addEventListener('click', (e) => {
-			e.preventDefault();
-			item.classList.toggle('active');
-		});
+		if (link) {
+			link.addEventListener('click', (e) => {
+				e.preventDefault();
+				item.classList.toggle('active');
+			});
+		}
 	});
 
 	// Close menu when clicking on submenu links

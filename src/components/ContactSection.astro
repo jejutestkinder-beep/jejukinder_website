@@ -14,9 +14,11 @@ interface Props {
   bgImage?: any;
   imageAlt?: string;
   noBottomPadding?: boolean;
+  titleTag?: 'h2' | 'h3';
 }
 
-const { title, linkText, linkUrl, Button, titleColor, bgColor, bgImage, imageAlt, noBottomPadding = false } = Astro.props;
+const { title, linkText, linkUrl, Button, titleColor, bgColor, bgImage, imageAlt, noBottomPadding = false, titleTag = 'h2' } = Astro.props;
+const TitleTag = titleTag;
 
 // Button이 있으면 linkText 대신 사용
 const buttonText = Button || linkText || '문의하기';
@@ -100,7 +102,7 @@ const paddingClass = noBottomPadding
     )
   )}
   <div class={`relative z-10 max-w-4xl mx-auto px-6 py-12 md:py-16 ${bgImage ? '' : ''}`}>
-    <h2 class={`md:h1 mb-8 ${bgImage ? 'drop-shadow-lg' : ''} ${titleColorClass}`} style={titleColorStyle}>{title}</h2>
+    <TitleTag class={`md:h1 mb-8 ${bgImage ? 'drop-shadow-lg' : ''} ${titleColorClass}`} style={titleColorStyle}>{title}</TitleTag>
     <a href={linkUrl} class="btn btn-primary">{buttonText}</a>
   </div>
 </section>

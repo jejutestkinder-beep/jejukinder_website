@@ -18,6 +18,7 @@ type ColorName = 'brown' | 'bgPink' | 'lightPink' | 'lightYellow' | 'grey' | 'da
 
 interface Props {
   title?: string;
+  titleTag?: 'h2' | 'h3';
   features: Feature[];
   bgColor?: ColorName;
   titleCenter?: boolean;
@@ -27,12 +28,15 @@ interface Props {
 
 const { 
   title, 
+  titleTag = 'h2',
   features, 
   bgColor = 'bgPink',
   titleCenter = true,
   titleColor,
   noBottomPadding = false
 } = Astro.props;
+
+const TitleTag = titleTag;
 
 // Map color names to Tailwind classes or use custom colors
 const getBgClass = (color: ColorName): string => {
@@ -80,7 +84,7 @@ const paddingClass = noBottomPadding
   <div class="max-w-6xl mx-auto px-8 md:px-6">
     {title && (
       <div class={`mb-[1.25rem] ${titleClass}`}>
-        <h2 style={titleColorStyle}>{title}</h2>
+        <TitleTag style={titleColorStyle}>{title}</TitleTag>
       </div>
     )}
     <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">

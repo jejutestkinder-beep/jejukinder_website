@@ -24,7 +24,7 @@
   }
 
   p {
-    @apply font-body text-base md:text-lg text-custom-black/80 leading-relaxed mb-4;
+    @apply font-body text-lg md:text-xl text-custom-black/80 leading-relaxed mb-4;
   }
 
   a {

@@ -12,13 +12,15 @@ interface Props {
     alt: string;
   }[];
   descriptionTag?: 'h6' | 'p';
+  titleTag?: 'h2' | 'h3';
   titleColor?: ColorName;
   descriptionColor?: ColorName;
   bgColor?: ColorName;
 }
 
-const { title, description, images, descriptionTag = 'h6', titleColor, descriptionColor, bgColor } = Astro.props;
+const { title, description, images, descriptionTag = 'h6', titleTag = 'h2', titleColor, descriptionColor, bgColor } = Astro.props;
 const DescriptionTag = descriptionTag;
+const TitleTag = titleTag;
 
 const getBgClass = (color?: ColorName): string => {
   if (!color) return '';
@@ -63,7 +65,7 @@ const titleClasses = description ? 'mb-4' : 'mb-10';
 ---
 
 <section class:list={["mt-16 md:mt-20 py-16 md:py-[60px] px-6 text-center", bgClass]} style={bgStyle}>
-  <h2 class={`md:h1 ${titleClasses}`} style={titleColorStyle}>{title}</h2>
+  <TitleTag class={`md:h1 ${titleClasses}`} style={titleColorStyle}>{title}</TitleTag>
   {description && (
     <DescriptionTag class="mb-10 mt-0" style={descriptionColorStyle} set:html={description} />
   )}
