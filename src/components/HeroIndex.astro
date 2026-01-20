@@ -24,7 +24,7 @@ const { images, subtitle, title, ctaText, ctaLink } = Astro.props;
     <div class="animate-fade-up delay-500">
       <a 
         href={ctaLink} 
-        class="btn btn-secondary !py-5 !px-10 !text-xl flex items-center gap-3 whitespace-nowrap shadow-lg hover:shadow-xl transition-all" 
+        class="btn btn-secondary !py-5 !px-10 !text-xl whitespace-nowrap shadow-lg hover:shadow-xl" 
         aria-label={ctaText}
         target={ctaLink.startsWith('http') ? '_blank' : undefined}
         rel={ctaLink.startsWith('http') ? 'noopener noreferrer' : undefined}
@@ -39,7 +39,7 @@ const { images, subtitle, title, ctaText, ctaLink } = Astro.props;
   <div class="flex transition-transform duration-1000 ease-in-out carousel-track h-[calc(100vh-72px)] min-h-[500px]">
     {images.map((imgSrc, index) => (
       <div class="relative flex-none w-full h-full">
-        <div class="absolute inset-0 bg-black/40 z-[10]" aria-hidden="true"></div>
+        <div class="absolute inset-0 bg-gradient-to-r from-black/60 via-black/20 to-transparent z-[10]" aria-hidden="true"></div>
         {typeof imgSrc === 'string' ? (
           <img
             src={imgSrc}

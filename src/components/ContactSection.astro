@@ -81,7 +81,7 @@ const bgStyle = bgImage ? '' : getBgStyle(bgColor);
 const titleColorClass = getTitleColorClass(titleColor);
 const titleColorStyle = getTitleColorStyle(titleColor);
 const paddingClass = noBottomPadding
-  ? 'pt-16 md:pt-20 pb-16 md:pb-20'
+  ? 'pt-16 md:pt-20 pb-12 md:pb-16'
   : 'py-16 md:py-20';
 ---
 
@@ -103,6 +103,9 @@ const paddingClass = noBottomPadding
   )}
   <div class={`relative z-10 max-w-4xl mx-auto px-6 py-12 md:py-16 ${bgImage ? '' : ''}`}>
     <TitleTag class={`md:h1 mb-8 ${bgImage ? 'drop-shadow-lg' : ''} ${titleColorClass}`} style={titleColorStyle}>{title}</TitleTag>
-    <a href={linkUrl} class="btn btn-primary">{buttonText}</a>
+    <a href={linkUrl} class="btn btn-primary inline-flex">
+      <img src="/favicon.svg" alt="" class="w-5 h-5 brightness-0 invert" />
+      {buttonText}
+    </a>
   </div>
 </section>

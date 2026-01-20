@@ -76,21 +76,25 @@ const titleClasses = description ? 'mb-4' : 'mb-10';
       const rotation = rotations[index % 3];
       
       return typeof img.src === 'string' ? (
-        <img
-          src={img.src}
-          alt={img.alt}
-          class={`w-full aspect-square object-cover rounded-[2.5rem] shadow-sm block opacity-0 translate-y-5 transition-all duration-[600ms] ease-out ${rotation} hover:rotate-0 hover:scale-105 transition-all`}
-          data-delay={index * 200}
-          data-fade="true"
-        />
+        <div class="w-full flex justify-center">
+          <img
+            src={img.src}
+            alt={img.alt}
+            class={`w-[90%] aspect-square object-cover rounded-[2.5rem] shadow-sm block opacity-0 translate-y-5 transition-all duration-[600ms] ease-out ${rotation} hover:rotate-0 hover:scale-105 transition-all`}
+            data-delay={index * 200}
+            data-fade="true"
+          />
+        </div>
       ) : (
-        <Image
-          src={img.src}
-          alt={img.alt}
-          class={`w-full aspect-square object-cover rounded-[2.5rem] shadow-sm block opacity-0 translate-y-5 transition-all duration-[600ms] ease-out ${rotation} hover:rotate-0 hover:scale-105 transition-all`}
-          data-delay={index * 200}
-          data-fade="true"
-        />
+        <div class="w-full flex justify-center">
+          <Image
+            src={img.src}
+            alt={img.alt}
+            class={`w-[90%] aspect-square object-cover rounded-[2.5rem] shadow-sm block opacity-0 translate-y-5 transition-all duration-[600ms] ease-out ${rotation} hover:rotate-0 hover:scale-105 transition-all`}
+            data-delay={index * 200}
+            data-fade="true"
+          />
+        </div>
       );
     })}
   </div>
