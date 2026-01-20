@@ -1,11 +1,11 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import PostList from '../../components/PostList.astro';
-import { getCollection } from 'astro:content';
+import { getCollection, type CollectionEntry } from 'astro:content';
 import type { Page } from 'astro';
 import boardHeroImage from '../../assets/6board-1-hero.jpeg';
 
-export async function getStaticPaths({ paginate }) {
+export async function getStaticPaths({ paginate }: { paginate: any }) {
   const posts = await getCollection('board');
 
   // 최신순 정렬
@@ -16,6 +16,10 @@ export async function getStaticPaths({ paginate }) {
   });
 
   return paginate(posts, { pageSize: 15 });
+}
+
+interface Props {
+  page: Page<CollectionEntry<'board'>>;
 }
 
 const { page } = Astro.props;

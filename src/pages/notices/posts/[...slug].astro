@@ -1,12 +1,12 @@
 ---
 import { getCollection } from 'astro:content';
-import Layout from '../../layouts/Layout.astro';
+import Layout from '../../../layouts/Layout.astro';
 
 export async function getStaticPaths() {
-  const posts = await getCollection('board');
-  return posts.map((p) => ({
-    params: { slug: p.slug },
-    props: { entry: p },
+  const notices = await getCollection('notices');
+  return notices.map((n) => ({
+    params: { slug: n.slug },
+    props: { entry: n },
   }));
 }
 
@@ -27,20 +27,11 @@ const seoData = {
 
 <Layout {...seoData} schemaType="Article">
   <div class="max-w-4xl mx-auto py-12 px-6">
-    <div class="mb-4">
-      <span class="inline-block px-3 py-1 rounded-full text-sm font-medium bg-custom-lightPink text-custom-green">
-        {entry.data.category}
-      </span>
-    </div>
     <h1 class="mb-2">{entry.data.title}</h1>
     <div class="flex items-center gap-4 text-gray-500 mb-12 pb-8 border-b border-gray-100">
       <span>작성자: {entry.data.author}</span>
-      {entry.data.date && (
-        <>
-          <span>·</span>
-          <span>{new Date(entry.data.date).toLocaleDateString('ko-KR')}</span>
-        </>
-      )}
+      <span>·</span>
+      <span>{new Date(entry.data.date).toLocaleDateString('ko-KR')}</span>
     </div>
 
     <article class="prose prose-lg max-w-none mb-16">
@@ -48,7 +39,7 @@ const seoData = {
     </article>
 
     <div class="text-center">
-      <a href="/board/" class="btn btn-secondary">목록으로 돌아가기</a>
+      <a href="/notices/" class="btn btn-secondary">목록으로 돌아가기</a>
     </div>
   </div>
 </Layout>
