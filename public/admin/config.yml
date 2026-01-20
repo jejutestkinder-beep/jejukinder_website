@@ -1,7 +1,9 @@
 backend:
-  name: git-gateway
+  name: github
   repo: jejutestkinder-beep/jejukinder_website
   branch: main
+  base_url: https://auth.jejutestkinder.workers.dev
+  auth_endpoint: auth
 
 locale: 'ko'
 
