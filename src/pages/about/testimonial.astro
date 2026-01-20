@@ -5,9 +5,16 @@ import { getCollection } from 'astro:content';
 import { Image } from 'astro:assets';
 import test1 from '../../assets/4review-1-hero.jpeg';
 
-const testimonials = await getCollection('testimonial');
-// 최신순 정렬
-testimonials.sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime());
+const testimonialsRaw = await getCollection('testimonial');
+
+// 데이터 가공을 미리 해서 템플릿을 깨끗하게 만듭니다.
+const testimonials = testimonialsRaw
+  .sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime())
+  .map(post => ({
+    ...post,
+    formattedDate: (post.data.date ? new Date(post.data.date) : new Date()).toLocaleDateString('ko-KR'),
+    previewText: post.body.replace(/[#*`]/g, '').substring(0, 200)
+  }));
 ---
 
 <Layout 
@@ -49,15 +56,24 @@ testimonials.sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.da
                 {post.data.title}
               </h3>
               <p class="text-gray-600 line-clamp-4 text-sm leading-relaxed mb-6 flex-grow">
-                {post.body.replace(/[#*`]/g, '').substring(0, 200)}
+                {post.previewText}
               </p>
               <div class="text-xs text-gray-400">
-                {new Date(post.data.date).toLocaleDateString('ko-KR')}
+                {post.formattedDate}
               </div>
             </div>
           </a>
         ))}
       </div>
+
+      {testimonials.length === 0 && (
+        <div class="text-center py-20">
+          <p class="text-gray-500">아직 등록된 후기가 없습니다.</p>
+        </div>
+      )}
+    </div>
+  </section>
+</Layout>
 
       {testimonials.length === 0 && (
         <div class="text-center py-20">
