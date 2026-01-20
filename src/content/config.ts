@@ -34,4 +34,14 @@ export const collections = {
       seo: seoSchema,
     }),
   }),
+
+  testimonial: defineCollection({
+    schema: z.object({
+      title: z.string(),
+      author: z.string(),
+      date: z.coerce.date(),
+      image: imageSchema,
+      seo: seoSchema,
+    }),
+  }),
 };

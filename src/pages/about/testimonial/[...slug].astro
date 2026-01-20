@@ -1,0 +1,65 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../../layouts/Layout.astro';
+import Hero from '../../../components/Hero.astro';
+import test1 from '../../../assets/4review-1-hero.jpeg';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('testimonial');
+  return posts.map((p) => ({
+    params: { slug: p.slug },
+    props: { entry: p },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await entry.render();
+
+const seoData = {
+  title: entry.data.seo?.seo_title || `${entry.data.title} | 제주발도르프어린이집 후기`,
+  description: entry.data.seo?.seo_description || entry.body.substring(0, 160),
+  keywords: entry.data.seo?.keywords,
+  openGraph: {
+    title: entry.data.seo?.seo_title || entry.data.title,
+    description: entry.data.seo?.seo_description || entry.body.substring(0, 160),
+    image: entry.data.image?.url
+  }
+};
+---
+
+<Layout {...seoData} schemaType="Article">
+  <Hero
+    image={test1}
+    title="어린이집 후기"
+    imageAlt="어린이집 후기"
+    description="어린이집을 졸업한 아이와 학부모님들의 이야기입니다."
+  />
+
+  <div class="max-w-4xl mx-auto py-20 px-6">
+    <div class="mb-12 text-center">
+      <div class="text-custom-rose font-medium mb-4">{entry.data.author}</div>
+      <h1 class="text-3xl md:text-4xl font-bold mb-6">{entry.data.title}</h1>
+      <div class="text-gray-400 text-sm">
+        {new Date(entry.data.date).toLocaleDateString('ko-KR')}
+      </div>
+    </div>
+
+    {entry.data.image?.url && (
+      <div class="mb-12 rounded-2xl overflow-hidden shadow-sm">
+        <img 
+          src={entry.data.image.url} 
+          alt={entry.data.image.alt}
+          class="w-full h-auto"
+        />
+      </div>
+    )}
+
+    <article class="prose prose-lg max-w-none mb-20 prose-headings:text-custom-brown prose-p:text-gray-700 prose-a:text-custom-rose">
+      <Content />
+    </article>
+
+    <div class="text-center pt-10 border-t border-gray-100">
+      <a href="/about/testimonial/" class="btn btn-secondary">목록으로 돌아가기</a>
+    </div>
+  </div>
+</Layout>

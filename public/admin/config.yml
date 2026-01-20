@@ -57,3 +57,24 @@ collections:
           { label: "검색 키워드", name: "keywords", widget: "string", required: false, hint: "쉼표(,)로 구분하여 입력하세요. 예: 제주, 발도르프, 어린이집" }
         ]}
       - { label: "본문", name: "body", widget: "markdown" }
+
+  - name: "testimonial"
+    label: "어린이집 후기"
+    folder: "src/content/testimonial"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{url_slug}}"
+    fields:
+      - { label: "제목", name: "title", widget: "string" }
+      - { label: "URL 슬러그 (영어)", name: "url_slug", widget: "string", hint: "영문과 대시(-)만 사용하세요. 예: graduation-review", required: true }
+      - { label: "작성자", name: "author", widget: "string", required: true, hint: "예: OOO 어머니, OOO 졸업생" }
+      - { label: "작성일", name: "date", widget: "datetime", required: true }
+      - { label: "대표 이미지", name: "image", widget: "object", fields: [
+          { label: "이미지 선택", name: "url", widget: "image", required: false },
+          { label: "이미지 설명 (SEO/접근성용)", name: "alt", widget: "string", required: true, hint: "이미지에 대한 설명을 입력하세요 (필수)" }
+        ]}
+      - { label: "SEO 설정", name: "seo", widget: "object", collapsed: true, fields: [
+          { label: "SEO 제목", name: "seo_title", widget: "string", required: false, hint: "검색 결과에 표시될 제목입니다. 미입력 시 본문 제목이 사용됩니다." },
+          { label: "SEO 설명", name: "seo_description", widget: "text", required: false, hint: "검색 결과에 표시될 짧은 요약문입니다." },
+          { label: "검색 키워드", name: "keywords", widget: "string", required: false, hint: "쉼표(,)로 구분하여 입력하세요. 예: 제주, 발도르프, 어린이집" }
+        ]}
+      - { label: "본문", name: "body", widget: "markdown" }

@@ -1,16 +1,69 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import Hero from '../../components/Hero.astro';
+import { getCollection } from 'astro:content';
+import { Image } from 'astro:assets';
 import test1 from '../../assets/4review-1-hero.jpeg';
 
+const testimonials = await getCollection('testimonial');
+// 최신순 정렬
+testimonials.sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime());
 ---
+
 <Layout 
   title="어린이집 후기 | 제주발도르프어린이집 (제주시 한경·안덕)"
-  description="제주발도르프어린이집을 졸업한 아이와 학부모님들의 이야기 입니다.">
+  description="제주발도르프어린이집을 다니고 있거나 졸업한 아이와 학부모님들의 생생한 이야기 입니다.">
 
   <Hero
     image={test1}
     title="어린이집 후기"
     imageAlt="어린이집 후기"
-    description="어린이집을 졸업한 아이와 학부모님들의 이야기입니다."
+    description="어린이집 재학생과 졸업생 아이와 학부모님들의 이야기입니다."
   />
+
+  <section class="py-20 px-6">
+    <div class="max-w-7xl mx-auto">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {testimonials.map((post) => (
+          <a href={`/about/testimonial/${post.slug}`} class="group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow border border-gray-100 flex flex-col">
+            <div class="aspect-[16/10] overflow-hidden relative bg-gray-100">
+              {post.data.image?.url ? (
+                <img 
+                  src={post.data.image.url} 
+                  alt={post.data.image.alt}
+                  class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                />
+              ) : (
+                <div class="w-full h-full flex items-center justify-center text-gray-400">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="w-12 h-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                  </svg>
+                </div>
+              )}
+            </div>
+            <div class="p-8 flex flex-col flex-grow">
+              <div class="text-sm text-custom-rose font-medium mb-3">
+                {post.data.author}
+              </div>
+              <h3 class="text-xl font-bold mb-4 line-clamp-1 group-hover:text-custom-rose transition-colors">
+                {post.data.title}
+              </h3>
+              <p class="text-gray-600 line-clamp-4 text-sm leading-relaxed mb-6 flex-grow">
+                {post.body.replace(/[#*`]/g, '').substring(0, 200)}
+              </p>
+              <div class="text-xs text-gray-400">
+                {new Date(post.data.date).toLocaleDateString('ko-KR')}
+              </div>
+            </div>
+          </a>
+        ))}
+      </div>
+
+      {testimonials.length === 0 && (
+        <div class="text-center py-20">
+          <p class="text-gray-500">아직 등록된 후기가 없습니다.</p>
+        </div>
+      )}
+    </div>
+  </section>
+</Layout>
