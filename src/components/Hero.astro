@@ -12,7 +12,7 @@ interface Props {
 const { image, title, description, imageAlt = title, gradient } = Astro.props;
 ---
 
-<section class="relative overflow-hidden h-[60vh] min-h-[400px] md:h-[50vh] md:min-h-[300px] w-[calc(100%+48px)] -mx-6 -mt-[32px] md:-mt-[32px]">
+<section class="relative overflow-hidden h-[60vh] min-h-[400px] md:h-[50vh] md:min-h-[300px] w-full">
   {image && (
     typeof image === 'string' ? (
       <img src={image} alt={imageAlt} class="absolute inset-0 w-full h-full object-cover" />
