@@ -69,7 +69,7 @@ const titleClasses = description ? 'mb-4' : 'mb-10';
   {description && (
     <DescriptionTag class="mb-10 mt-0" style={descriptionColorStyle} set:html={description} />
   )}
-  <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 max-w-6xl mx-auto">
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 max-w-6xl mx-auto">
     {images.map((img, index) => {
       // 인덱스에 따라 다른 각도 적용
       const rotations = ['-rotate-2', 'rotate-2', 'rotate-1'];

@@ -65,8 +65,8 @@ const labelColorStyle = labelColor === 'rose'
   : `color: ${colors.green} !important;`;
 const alignClass = textAlign === 'top' ? 'items-start' : textAlign === 'bottom' ? 'items-end' : 'items-center';
 
-const imageOrder = imagePosition === 'right' ? 'order-2 md:order-2' : 'order-2 md:order-1';
-const textOrder = imagePosition === 'right' ? 'order-3 md:order-1' : 'order-3 md:order-2';
+const imageOrder = imagePosition === 'left' ? 'order-2 md:order-1' : 'order-2 md:order-2';
+const textOrder = imagePosition === 'left' ? 'order-1 md:order-2' : 'order-1 md:order-1';
 
 const imageShapeClass = imageShape === 'organic' 
   ? 'rounded-[60%_40%_30%_70%/60%_30%_70%_40%]' 
@@ -76,9 +76,9 @@ const imageShapeClass = imageShape === 'organic'
 <section class={`py-16 md:py-20 ${bgClass} ${className}`} style={bgStyle}>
   <div class="max-w-6xl mx-auto px-6">
     <div class={`grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16 ${alignClass}`}>
-      {/* 이미지 (모바일: order-2, 데스크톱: imagePosition에 따라) */}
+      {/* 이미지 */}
       {image && (
-        <div class={`w-full ${imageOrder} order-2 md:${imagePosition === 'right' ? 'order-2' : 'order-1'}`}>
+        <div class={`w-full ${imageOrder}`}>
           <div class={`w-full aspect-square overflow-hidden ${imageShapeClass}`}>
             {typeof image === 'string' ? (
               <img 
@@ -100,8 +100,8 @@ const imageShapeClass = imageShape === 'organic'
           </div>
         </div>
       )}
-      {/* 텍스트 컨텐츠 (모바일: order-1, 데스크톱: imagePosition에 따라) */}
-      <div class={`w-full text-center md:text-left ${image ? textOrder : 'order-1 md:order-none'} order-1 md:${imagePosition === 'right' ? 'order-1' : 'order-2'}`} style={textColorStyle}>
+      {/* 텍스트 컨텐츠 */}
+      <div class={`w-full text-center md:text-left ${textOrder}`} style={textColorStyle}>
         {/* Label & Title */}
         {label && (
           <h6 class="mb-3 font-bold uppercase tracking-wider" style={labelColorStyle}>{label}</h6>
