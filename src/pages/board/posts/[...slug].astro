@@ -43,7 +43,17 @@ const seoData = {
       )}
     </div>
 
-    <article class="prose prose-lg max-w-none mb-16">
+    {entry.data.image?.url && (
+      <div class="mb-12 rounded-2xl overflow-hidden shadow-sm">
+        <img 
+          src={entry.data.image.url} 
+          alt={entry.data.image.alt || ""} 
+          class="w-full h-auto object-cover max-h-[500px]"
+        />
+      </div>
+    )}
+
+    <article class="prose max-w-none mb-16">
       <Content />
     </article>
 

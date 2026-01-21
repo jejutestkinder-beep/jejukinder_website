@@ -23,9 +23,9 @@ collections:
       - { label: "URL 슬러그 (영어)", name: "url_slug", widget: "string", hint: "영문과 대시(-)만 사용하세요. 예: school-event-2026", required: true }
       - { label: "작성자", name: "author", widget: "string", required: true }
       - { label: "작성일", name: "date", widget: "datetime", required: true }
-      - { label: "대표 이미지", name: "image", widget: "object", fields: [
+      - { label: "대표 이미지", name: "image", widget: "object", required: false, fields: [
           { label: "이미지 선택", name: "url", widget: "image", required: false },
-          { label: "이미지 설명 (SEO/접근성용)", name: "alt", widget: "string", required: true, hint: "이미지에 대한 설명을 입력하세요 (필수)" }
+          { label: "이미지 설명 (SEO/접근성용)", name: "alt", widget: "string", required: false, hint: "이미지를 넣는 경우 반드시 설명을 입력하세요." }
         ]}
       - { label: "SEO 설정", name: "seo", widget: "object", collapsed: true, fields: [
           { label: "SEO 제목", name: "seo_title", widget: "string", required: false, hint: "검색 결과에 표시될 제목입니다. 미입력 시 본문 제목이 사용됩니다." },
@@ -47,9 +47,9 @@ collections:
       - { label: "작성자", name: "author", widget: "string", required: true }
       - { label: "카테고리", name: "category", widget: "select", options: ["행사 안내", "학교 소식", "기타"], required: true }
       - { label: "작성일", name: "date", widget: "datetime" }
-      - { label: "대표 이미지", name: "image", widget: "object", fields: [
+      - { label: "대표 이미지", name: "image", widget: "object", required: false, fields: [
           { label: "이미지 선택", name: "url", widget: "image", required: false },
-          { label: "이미지 설명 (SEO/접근성용)", name: "alt", widget: "string", required: true, hint: "이미지에 대한 설명을 입력하세요 (필수)" }
+          { label: "이미지 설명 (SEO/접근성용)", name: "alt", widget: "string", required: false, hint: "이미지를 넣는 경우 반드시 설명을 입력하세요." }
         ]}
       - { label: "SEO 설정", name: "seo", widget: "object", collapsed: true, fields: [
           { label: "SEO 제목", name: "seo_title", widget: "string", required: false, hint: "검색 결과에 표시될 제목입니다. 미입력 시 본문 제목이 사용됩니다." },
@@ -68,9 +68,9 @@ collections:
       - { label: "URL 슬러그 (영어)", name: "url_slug", widget: "string", hint: "영문과 대시(-)만 사용하세요. 예: graduation-review", required: true }
       - { label: "작성자", name: "author", widget: "string", required: true, hint: "예: OOO 어머니, OOO 졸업생" }
       - { label: "작성일", name: "date", widget: "datetime", required: true }
-      - { label: "대표 이미지", name: "image", widget: "object", fields: [
+      - { label: "대표 이미지", name: "image", widget: "object", required: false, fields: [
           { label: "이미지 선택", name: "url", widget: "image", required: false },
-          { label: "이미지 설명 (SEO/접근성용)", name: "alt", widget: "string", required: true, hint: "이미지에 대한 설명을 입력하세요 (필수)" }
+          { label: "이미지 설명 (SEO/접근성용)", name: "alt", widget: "string", required: false, hint: "이미지를 넣는 경우 반드시 설명을 입력하세요." }
         ]}
       - { label: "SEO 설정", name: "seo", widget: "object", collapsed: true, fields: [
           { label: "SEO 제목", name: "seo_title", widget: "string", required: false, hint: "검색 결과에 표시될 제목입니다. 미입력 시 본문 제목이 사용됩니다." },
