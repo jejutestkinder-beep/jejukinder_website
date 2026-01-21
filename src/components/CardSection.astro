@@ -12,6 +12,7 @@ interface Feature {
   titleTag?: 'h3' | 'h4' | 'h5';
   imageSize?: 'large' | 'small';
   cardType?: 'default' | 'image' | 'vertical';
+  descriptionSize?: 'default' | 'small';
 }
 
 type ColorName = 'brown' | 'bgPink' | 'lightPink' | 'lightYellow' | 'grey' | 'darkGrey' | 'rose' | 'green' | 'white' | 'black' | string;
@@ -98,6 +99,7 @@ const paddingClass = noBottomPadding
           titleTag={feature.titleTag || 'h5'}
           imageSize={feature.imageSize || 'large'}
           cardType={feature.cardType || 'default'}
+          descriptionSize={feature.descriptionSize || 'default'}
         />
       ))}
     </div>

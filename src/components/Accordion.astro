@@ -11,7 +11,7 @@ interface Props {
 const { items } = Astro.props;
 ---
 
-<div class="w-full max-w-4xl mx-auto px-6 py-8">
+<div class="w-full max-w-4xl mx-auto px-6 py-8 pb-16 md:pb-24">
   {items.map((item, index) => (
     <div class="border-b border-gray-200 accordion-item" data-index={index}>
       <button

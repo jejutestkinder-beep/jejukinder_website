@@ -7,17 +7,18 @@ interface Props {
   description?: string;
   imageAlt?: string;
   gradient?: string;
+  objectPosition?: string;
 }
 
-const { image, title, description, imageAlt = title, gradient } = Astro.props;
+const { image, title, description, imageAlt = title, gradient, objectPosition = 'center' } = Astro.props;
 ---
 
 <section class="relative overflow-hidden h-[60vh] min-h-[400px] md:h-[50vh] md:min-h-[300px] w-full">
   {image && (
     typeof image === 'string' ? (
-      <img src={image} alt={imageAlt} class="absolute inset-0 w-full h-full object-cover" />
+      <img src={image} alt={imageAlt} class="absolute inset-0 w-full h-full object-cover" style={`object-position: ${objectPosition};`} />
     ) : (
-      <Image src={image} alt={imageAlt} class="absolute inset-0 w-full h-full object-cover" />
+      <Image src={image} alt={imageAlt} class="absolute inset-0 w-full h-full object-cover" style={`object-position: ${objectPosition};`} />
     )
   )}
   {gradient && (

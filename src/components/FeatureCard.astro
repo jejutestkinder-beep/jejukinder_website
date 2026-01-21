@@ -11,9 +11,10 @@ interface Props {
   titleTag?: 'h3' | 'h4' | 'h5';
   imageSize?: 'large' | 'small';
   cardType?: 'default' | 'image' | 'vertical';
+  descriptionSize?: 'default' | 'small';
 }
 
-const { image, icon, title, description, imageAlt = title, titleTag = 'h5', imageSize = 'large', cardType = 'default' } = Astro.props;
+const { image, icon, title, description, imageAlt = title, titleTag = 'h5', imageSize = 'large', cardType = 'default', descriptionSize = 'default' } = Astro.props;
 const TitleTag = titleTag;
 
 const imageSizeClass = imageSize === 'small' 
@@ -38,7 +39,7 @@ const iconSizeClass = 'w-8 h-8';
         <Icon name={icon} class="w-5 h-5" />
       </div>
     )}
-    <TitleTag>{title}</TitleTag>
+    <TitleTag class="font-body">{title}</TitleTag>
   </div>
 ) : cardType === 'vertical' ? (
   <div class="w-full">
@@ -56,8 +57,8 @@ const iconSizeClass = 'w-8 h-8';
       </div>
     )}
     <div>
-      <TitleTag class="mb-3">{title}</TitleTag>
-      {description && <p set:html={description} />}
+      <TitleTag class="mb-3 font-body">{title}</TitleTag>
+      {description && <p class={descriptionSize === 'small' ? 'text-lg md:text-xl' : ''} set:html={description} />}
     </div>
   </div>
 ) : (
@@ -76,8 +77,8 @@ const iconSizeClass = 'w-8 h-8';
       </div>
     )}
     <div class="flex-1">
-      <TitleTag class="mb-3">{title}</TitleTag>
-      {description && <p set:html={description} />}
+      <TitleTag class="mb-3 font-body">{title}</TitleTag>
+      {description && <p class={descriptionSize === 'small' ? 'text-lg md:text-xl' : ''} set:html={description} />}
     </div>
   </div>
 )}
