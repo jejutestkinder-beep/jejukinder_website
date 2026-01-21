@@ -8,7 +8,7 @@ const seoSchema = z.object({
 
 const imageSchema = z.object({
   url: z.string().optional(),
-  alt: z.string(),
+  alt: z.string().optional(),
 }).optional();
 
 export const collections = {

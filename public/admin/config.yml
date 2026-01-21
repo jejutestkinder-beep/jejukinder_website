@@ -25,7 +25,7 @@ collections:
       - { label: "작성일", name: "date", widget: "datetime", required: true }
       - { label: "대표 이미지", name: "image", widget: "object", required: false, fields: [
           { label: "이미지 선택", name: "url", widget: "image", required: false },
-          { label: "이미지 설명 (SEO/접근성용)", name: "alt", widget: "string", required: false, hint: "이미지를 넣는 경우 반드시 설명을 입력하세요." }
+          { label: "이미지 설명 (SEO/접근성용)", name: "alt", widget: "string", required: false, hint: "이미지가 있는 경우에만 입력하세요. 없으면 비워두셔도 됩니다." }
         ]}
       - { label: "SEO 설정", name: "seo", widget: "object", collapsed: true, fields: [
           { label: "SEO 제목", name: "seo_title", widget: "string", required: false, hint: "검색 결과에 표시될 제목입니다. 미입력 시 본문 제목이 사용됩니다." },
@@ -49,7 +49,7 @@ collections:
       - { label: "작성일", name: "date", widget: "datetime" }
       - { label: "대표 이미지", name: "image", widget: "object", required: false, fields: [
           { label: "이미지 선택", name: "url", widget: "image", required: false },
-          { label: "이미지 설명 (SEO/접근성용)", name: "alt", widget: "string", required: false, hint: "이미지를 넣는 경우 반드시 설명을 입력하세요." }
+          { label: "이미지 설명 (SEO/접근성용)", name: "alt", widget: "string", required: false, hint: "이미지가 있는 경우에만 입력하세요. 없으면 비워두셔도 됩니다." }
         ]}
       - { label: "SEO 설정", name: "seo", widget: "object", collapsed: true, fields: [
           { label: "SEO 제목", name: "seo_title", widget: "string", required: false, hint: "검색 결과에 표시될 제목입니다. 미입력 시 본문 제목이 사용됩니다." },
@@ -70,7 +70,7 @@ collections:
       - { label: "작성일", name: "date", widget: "datetime", required: true }
       - { label: "대표 이미지", name: "image", widget: "object", required: false, fields: [
           { label: "이미지 선택", name: "url", widget: "image", required: false },
-          { label: "이미지 설명 (SEO/접근성용)", name: "alt", widget: "string", required: false, hint: "이미지를 넣는 경우 반드시 설명을 입력하세요." }
+          { label: "이미지 설명 (SEO/접근성용)", name: "alt", widget: "string", required: false, hint: "이미지가 있는 경우에만 입력하세요. 없으면 비워두셔도 됩니다." }
         ]}
       - { label: "SEO 설정", name: "seo", widget: "object", collapsed: true, fields: [
           { label: "SEO 제목", name: "seo_title", widget: "string", required: false, hint: "검색 결과에 표시될 제목입니다. 미입력 시 본문 제목이 사용됩니다." },
