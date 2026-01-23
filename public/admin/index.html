@@ -169,8 +169,8 @@
 							h('div', { className: 'preview-content' },
 								imageUrl && h('img', { 
 									src: imageUrl, 
-									className: 'w-full h-64 object-cover rounded-lg mb-8 shadow-sm',
-									style: { maxHeight: '400px' }
+									className: 'rounded-lg mb-8 shadow-sm',
+									style: { maxWidth: '100%', height: 'auto', display: 'block' }
 								}),
 								h('h1', {}, title || '제목 없음'),
 								h('div', { 
