@@ -1,0 +1,129 @@
+---
+import { Icon } from 'astro-icon/components';
+import { Image } from 'astro:assets';
+import waldorfLogo from '../assets/jeju-waldorf-kinder-logo.png';
+
+const socialLinks = [
+  {
+    platform: 'instagram',
+    href: 'https://www.instagram.com/jeju_waldorf_kinder',
+    displayName: '제주 발도르프 어린이집',
+    iconName: 'instagram'
+  },
+  {
+    platform: '제주자유발도르프학교',
+    href: 'https://blog.naver.com/jeju_waldorf',
+    displayName: '제주자유발도르프학교',
+    iconName: 'link'
+  },
+  {
+    platform: 'youtube',
+    href: 'https://www.youtube.com/@제주발도르프',
+    displayName: '제주자유발도르프유튜브',
+    iconName: 'youtube'
+  }
+];
+
+const footerNav = [
+  {
+    title: '어린이집 소개',
+    links: [
+      { name: '운영 철학', href: '/about/philosophy/' },
+      { name: '현황', href: '/about/status/' },
+      { name: '자주 묻는 질문', href: '/about/faq/' },
+      { name: '어린이집 후기', href: '/about/testimonial/' }
+    ]
+  },
+  {
+    title: '발도르프 교육',
+    links: [
+      { name: '발도르프 유아 교육', href: '/waldorf/education/' },
+      { name: '어린이집 리듬 생활', href: '/waldorf/rhythm/' }
+    ]
+  },
+  {
+    title: '어린이집 소식',
+    links: [
+      { name: '공지 사항', href: '/notices/' },
+      { name: '어린이집 이야기', href: '/board/' }
+    ]
+  },
+  {
+    title: '문의 및 지원',
+    links: [
+      { name: '입학 상담 신청', href: 'https://docs.google.com/forms/d/e/1FAIpQLSccyRwbI42sdBHoiWLcz7A-BywQAY7I7ce_NVQUo6puvjFsVA/viewform?usp=header' },
+      { name: '문의하기', href: '/contact/' }
+    ]
+  }
+];
+---
+
+<footer class="pt-20 pb-12 px-6 w-full mt-auto" style="background-color: #FEC6B1 !important; display: block !important; visibility: visible !important; min-height: 300px;">
+  <div class="max-w-[1200px] mx-auto">
+    <!-- Mega Footer Grid -->
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-12 mb-20">
+      {footerNav.map((section) => (
+        <div class="flex flex-col gap-5">
+          <h6 class="font-bold text-lg mb-2" style="color: #B82045 !important; margin: 0 0 0.5rem 0;">{section.title}</h6>
+          <ul class="flex flex-col gap-4 list-none ml-0 p-0" style="margin: 0;">
+            {section.links.map((link) => (
+              <li class="mb-0">
+                <a 
+                  href={link.href} 
+                  class="footer-link transition-colors text-sm sm:text-base no-underline"
+                  target={link.href.startsWith('http') ? '_blank' : undefined}
+                  rel={link.href.startsWith('http') ? 'noopener noreferrer' : undefined}
+                >
+                  {link.name}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </div>
+
+    <!-- Divider -->
+    <div class="w-full h-px bg-black/5 mb-12"></div>
+
+    <!-- Bottom Section: Logo, Contact, Socials -->
+    <div class="flex flex-col md:flex-row justify-between items-center md:items-start gap-12">
+      <div class="flex flex-col items-center md:items-start gap-5">
+        <a href="/" class="block mb-2">
+          <Image src={waldorfLogo} alt="제주 발도르프 어린이집" class="h-8 w-auto opacity-80" />
+        </a>
+        <div class="text-center md:text-left info-text">
+          <p class="text-sm my-1 opacity-70">제주특별자치도 제주시 한경면 청수로 218</p>
+          <p class="text-sm my-1 opacity-70">T. 064.803.3050 | © {new Date().getFullYear()} 제주발도르프어린이집</p>
+        </div>
+      </div>
+
+      <div class="flex flex-col items-center md:items-end gap-8">
+        <div class="flex gap-6">
+          {socialLinks.map((link) => (
+            <a href={link.href} target="_blank" rel="noopener noreferrer" class="group flex items-center justify-center transition-all">
+              <Icon 
+                name={link.iconName} 
+                class="w-7 h-7 opacity-70 group-hover:opacity-100 group-hover:scale-110 transition-all duration-300" 
+                style="color: #472A2A;" 
+              />
+            </a>
+          ))}
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .footer-link {
+    color: #472A2A !important;
+    text-decoration: none !important;
+  }
+  .footer-link:hover {
+    color: #186F67 !important;
+  }
+  .info-text {
+    color: #472A2A !important;
+  }
+</style>

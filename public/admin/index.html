@@ -4,6 +4,10 @@
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+		<!-- Google Fonts for CMS Preview -->
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link href="https://fonts.googleapis.com/css2?family=Gaegu:wght@400;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet" />
 		<title>Admin</title>
     <style>
       /* Netlify Identity 위젯 내의 이메일/비밀번호 입력 폼을 숨깁니다 */
@@ -15,6 +19,23 @@
       #netlify-identity-widget .netlify-identity-providers {
         display: block !important;
         border: none !important;
+      }
+
+      /* 불필요한 게시 옵션 숨기기 */
+      button[data-testid="publish-and-create-new-button"],
+      button[data-testid="publish-and-duplicate-button"] {
+        display: none !important;
+      }
+      
+      /* 드롭다운 메뉴 아이템 숨기기 */
+      ul[class*="DropdownButton-list"] li:not(:first-child) {
+        display: none !important;
+      }
+      
+      /* 프리뷰 컨테이너 스타일 */
+      .preview-body {
+        padding: 20px;
+        font-family: sans-serif;
       }
     </style>
 	</head>
@@ -105,6 +126,71 @@
 				}
 
 				initPopupLimit();
+			})();
+
+			// CMS 프리뷰 설정
+			(function() {
+				function initPreview() {
+					if (typeof window.CMS === 'undefined') {
+						setTimeout(initPreview, 200);
+						return;
+					}
+
+					// 프리뷰 스타일 추가 (Tailwind CDN)
+					window.CMS.registerPreviewStyle("https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css");
+
+					// 공통 프리뷰 컴포넌트
+					const Preview = ({ entry, widgetFor }) => {
+						const data = entry.get('data').toJS();
+						const title = data.title;
+						const author = data.author;
+						const date = data.date;
+						const body = widgetFor('body');
+						const imageUrl = data.image ? data.image.url : null;
+
+						return h('div', { 
+							className: 'p-8 max-w-4xl mx-auto bg-[#FFFAF8]',
+							style: { fontFamily: "'Roboto', sans-serif", color: '#2B1111' }
+						},
+							// 실제 사이트 스타일을 적용하기 위한 스타일 태그
+							h('style', {}, `
+								.preview-content h1 { font-family: 'Gaegu', cursive; font-size: 3.5rem; color: #2B1111; font-weight: 700; margin-bottom: 2rem; line-height: 1.2; letter-spacing: -0.05em; }
+								.preview-content h2 { font-family: 'Gaegu', cursive; font-size: 2.5rem; color: #674949; font-weight: 700; margin-bottom: 1.5rem; line-height: 1.2; letter-spacing: -0.05em; }
+								.preview-content h3 { font-family: 'Gaegu', cursive; font-size: 2rem; color: #674949; font-weight: 700; margin-bottom: 1rem; }
+								.preview-content p { font-family: 'Roboto', sans-serif; font-size: 1.25rem; color: rgba(43, 17, 17, 0.8); line-height: 1.7; margin-bottom: 1.5rem; }
+								.preview-content strong { color: #2B1111; font-weight: 700; }
+								.preview-content a { color: #C64444; text-decoration: none; }
+								.preview-content ul { list-style-type: disc; margin-left: 1.5rem; margin-bottom: 1rem; }
+								.preview-content ol { list-style-type: decimal; margin-left: 1.5rem; margin-bottom: 1rem; }
+								.preview-content li { margin-bottom: 0.5rem; color: #4B5563; }
+								.preview-content blockquote { border-left: 4px solid #227A71; padding-left: 1rem; font-style: italic; color: #4B5563; margin-bottom: 1.5rem; }
+								.preview-content img { border-radius: 0.5rem; margin-bottom: 1.5rem; }
+							`),
+							h('div', { className: 'preview-content' },
+								imageUrl && h('img', { 
+									src: imageUrl, 
+									className: 'w-full h-64 object-cover rounded-lg mb-8 shadow-sm',
+									style: { maxHeight: '400px' }
+								}),
+								h('h1', {}, title || '제목 없음'),
+								h('div', { 
+									className: 'mb-8 flex gap-6 pb-6 border-b border-[#D0CECE]',
+									style: { color: '#6C6C6C', fontSize: '0.9rem' }
+								},
+									h('span', {}, `작성자: ${author || '미지정'}`),
+									h('span', {}, `날짜: ${date ? new Date(date).toLocaleDateString('ko-KR') : '미지정'}`)
+								),
+								h('div', { className: 'prose-container' }, body)
+							)
+						);
+					};
+
+					window.CMS.registerPreviewTemplate("notices", Preview);
+					window.CMS.registerPreviewTemplate("board", Preview);
+					window.CMS.registerPreviewTemplate("testimonial", Preview);
+				}
+
+				initPreview();
 			})();
 		</script>
 	</body>
