@@ -103,22 +103,25 @@ const footerNav = [
 
       <div class="flex flex-col items-center md:items-end gap-8">
         <div class="flex gap-6">
-          {socialLinks.map((link) => (
-            <a 
-              href={link.href} 
-              target="_blank" 
-              rel="noopener noreferrer" 
-              class="social-link group relative flex items-center justify-center hover:opacity-80 transition-opacity"
-              aria-label={link.tooltip}
-            >
-              <Icon 
-                name={link.iconName} 
-                class="w-7 h-7 transition-all duration-300 group-hover:scale-110" 
-                style="color: #472A2A;" 
-              />
-              <span class="social-tooltip">{link.tooltip}</span>
-            </a>
-          ))}
+          {socialLinks.map((link) => {
+            const tooltipText = String(link.tooltip || '');
+            return (
+              <a 
+                href={link.href} 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                class="social-link group relative flex items-center justify-center hover:opacity-80 transition-opacity"
+                aria-label={tooltipText}
+              >
+                <Icon 
+                  name={link.iconName} 
+                  class="w-7 h-7 transition-all duration-300 group-hover:scale-110" 
+                  style="color: #472A2A;" 
+                />
+                <span class="social-tooltip">{tooltipText}</span>
+              </a>
+            );
+          })}
         </div>
       </div>
     </div>
