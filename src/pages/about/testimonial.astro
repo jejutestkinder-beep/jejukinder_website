@@ -15,17 +15,24 @@ const testimonials = testimonialsRaw
     const dateB = b.data.date ? new Date(b.data.date).getTime() : 0;
     return dateB - dateA;
   })
-  .map(post => ({
-    ...post,
-    formattedDate: (post.data.date ? new Date(post.data.date) : new Date()).toLocaleDateString('ko-KR'),
-    previewText: post.body
+  .map(post => {
+    // post.body를 안전하게 문자열로 변환
+    const bodyText = typeof post.body === 'string' ? post.body : String(post.body || '');
+    const previewText = bodyText
       .replace(/!\[.*?\]\(.*?\)/g, '') // 이미지 마크다운 제거
       .replace(/\[([^\]]+)\]\([^\)]+\)/g, '$1') // 링크 마크다운 제거 (텍스트만 남김)
       .replace(/[#*`]/g, '') // 기타 마크다운 제거
       .replace(/\n+/g, ' ') // 줄바꿈을 공백으로
       .trim()
-      .substring(0, 200)
-  }));
+      .substring(0, 200);
+    
+    return {
+      slug: post.slug,
+      data: post.data,
+      formattedDate: (post.data.date ? new Date(post.data.date) : new Date()).toLocaleDateString('ko-KR'),
+      previewText: previewText
+    };
+  });
 ---
 
 <Layout 
