@@ -3,24 +3,12 @@
 	<head>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
 		<!-- Google Fonts for CMS Preview -->
 		<link rel="preconnect" href="https://fonts.googleapis.com" />
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 		<link href="https://fonts.googleapis.com/css2?family=Gaegu:wght@400;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet" />
 		<title>Admin</title>
     <style>
-      /* Netlify Identity 위젯 내의 이메일/비밀번호 입력 폼을 숨깁니다 */
-      #netlify-identity-widget .netlify-identity-menu,
-      #netlify-identity-widget .netlify-identity-form {
-        display: none !important;
-      }
-      /* 대신 소셜 로그인(GitHub) 버튼 영역만 보이게 합니다 */
-      #netlify-identity-widget .netlify-identity-providers {
-        display: block !important;
-        border: none !important;
-      }
-
       /* 불필요한 게시 옵션 숨기기 */
       button[data-testid="publish-and-create-new-button"],
       button[data-testid="publish-and-duplicate-button"] {
@@ -45,50 +33,6 @@
 		<script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
 
 		<script>
-			(function () {
-				// GitHub OAuth code가 URL에 있으면 서버 사이드로 리다이렉트 (보안: 즉시 리다이렉트)
-				const urlParams = new URLSearchParams(window.location.search);
-				const code = urlParams.get('code');
-				if (code && /^[a-zA-Z0-9_-]+$/.test(code) && code.length <= 200) {
-					// 서버 사이드로 즉시 리다이렉트 (클라이언트에서 code 처리하지 않음)
-					window.location.replace(`/.netlify/functions/auth?code=${encodeURIComponent(code)}`);
-					return;
-				}
-
-				// Netlify Identity 위젯이 로드될 때까지 대기
-				function waitForIdentity() {
-					if (!window.netlifyIdentity) {
-						setTimeout(waitForIdentity, 50);
-						return;
-					}
-
-					const hash = window.location.hash || "";
-					const hasToken =
-						hash.includes("invite_token=") ||
-						hash.includes("recovery_token=") ||
-						hash.includes("confirmation_token=");
-
-					if (!hasToken) return;
-
-					// 토큰 처리
-					function handleToken() {
-						if (hash.includes("invite_token=") || hash.includes("recovery_token=")) {
-							window.netlifyIdentity.open("signup");
-						} else {
-							window.netlifyIdentity.open();
-						}
-					}
-
-					window.netlifyIdentity.on("init", handleToken);
-					window.netlifyIdentity.init();
-
-					// init이 이미 완료되었을 수 있으므로 한 번 더 확인
-					setTimeout(handleToken, 100);
-				}
-
-				waitForIdentity();
-			})();
-
 			// 팝업 개수 제한 (최대 2개) - 경고만 표시
 			(function() {
 				const MAX_POPUPS = 2;

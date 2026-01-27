@@ -86,19 +86,6 @@ const {
 		</main>
 
 		<Footer />
-		<script is:inline>
-			(function () {
-				const hash = window.location.hash || "";
-				const hasToken =
-					hash.includes("invite_token=") ||
-					hash.includes("recovery_token=") ||
-					hash.includes("confirmation_token=");
-
-				if (hasToken && !window.location.pathname.startsWith("/admin/")) {
-					window.location.href = "/admin/" + hash;
-				}
-			})();
-		</script>
 	</body>
 </html>
 
