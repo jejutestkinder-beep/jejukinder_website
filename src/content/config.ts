@@ -1,22 +1,15 @@
 import { defineCollection, z } from 'astro:content';
 
-const seoSchema = z.object({
-  seo_title: z.string().optional(),
-  seo_description: z.string().optional(),
-  keywords: z.string().optional(),
-}).optional();
-
-const imageSchema = z.object({
-  url: z.string().optional(),
-  alt: z.string().optional(),
-}).optional();
-
 export const collections = {
   notices: defineCollection({
     schema: z.object({
       title: z.string(),
       author: z.string(),
-      date: z.coerce.date(),
+      date: z.preprocess((val) => {
+        if (!val || val === '') return new Date();
+        if (val instanceof Date) return val;
+        return new Date(val as string);
+      }, z.date()),
       image: z.string().optional(),
       seo_description: z.string().optional(),
       keywords: z.string().optional(),
@@ -29,7 +22,11 @@ export const collections = {
       title: z.string(),
       author: z.string(),
       category: z.enum(['행사 안내', '학교 소식', '기타']),
-      date: z.coerce.date().optional(),
+      date: z.preprocess((val) => {
+        if (!val || val === '') return new Date();
+        if (val instanceof Date) return val;
+        return new Date(val as string);
+      }, z.date()).optional(),
       image: z.string().optional(),
       seo_description: z.string().optional(),
       keywords: z.string().optional(),
@@ -40,7 +37,11 @@ export const collections = {
     schema: z.object({
       title: z.string(),
       author: z.string(),
-      date: z.coerce.date().optional(),
+      date: z.preprocess((val) => {
+        if (!val || val === '') return new Date();
+        if (val instanceof Date) return val;
+        return new Date(val as string);
+      }, z.date()).optional(),
       image: z.string().optional(),
       seo_description: z.string().optional(),
       keywords: z.string().optional(),
