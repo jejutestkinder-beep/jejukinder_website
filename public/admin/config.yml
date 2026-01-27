@@ -35,8 +35,8 @@ collections:
     slug: "{{year}}-{{month}}-{{day}}-{{hour}}{{minute}}"
     fields:
       - { label: "제목", name: "title", widget: "string" }
-      - { label: "작성자", name: "author", widget: "string", required: true }
       - { label: "카테고리", name: "category", widget: "select", options: ["행사 안내", "학교 소식", "기타"], required: true }
+      - { label: "작성자", name: "author", widget: "hidden", default: "제주 발도르프 어린이집" }
       - { label: "작성일", name: "date", widget: "hidden", default: "{{now}}" }
       - { label: "본문", name: "body", widget: "markdown" }
       - { label: "SEO 설명", name: "seo_description", widget: "text", required: false, hint: "검색 결과에 표시될 짧은 요약문입니다." }
