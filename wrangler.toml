@@ -1,0 +1,10 @@
+name = "school-site"
+compatibility_date = "2026-01-20"
+compatibility_flags = ["nodejs_compat"]
+
+# Cloudflare Pages 설정
+pages_build_output_dir = "./dist"
+
+[[kv_namespaces]]
+binding = "SESSION"
+id = "xxxx" # 실제 KV ID가 있다면 넣으시고, 없으면 이 줄은 삭제해도 됩니다.
