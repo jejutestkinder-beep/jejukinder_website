@@ -9,7 +9,7 @@ export const collections = {
         if (!val || val === '') return new Date();
         if (val instanceof Date) return val;
         return new Date(val as string);
-      }, z.date()),
+      }, z.date()).optional(),
       image: z.string().optional(),
       seo_description: z.string().optional(),
       keywords: z.string().optional(),
