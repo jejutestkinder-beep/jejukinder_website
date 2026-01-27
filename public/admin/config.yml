@@ -13,28 +13,20 @@ media_folder: "public/uploads"
 public_folder: "/uploads"
 
 collections:
-  - name: "notices"
+    - name: "notices"
     label: "공지사항"
     folder: "src/content/notices"
     create: true
     slug: "{{year}}-{{month}}-{{day}}-{{hour}}{{minute}}"
     fields:
       - { label: "제목", name: "title", widget: "string" }
-      - { label: "작성자", name: "author", widget: "string", required: true }
-      - { label: "작성일", name: "date", widget: "datetime", required: true }
-      - { label: "대표 이미지", name: "image", widget: "object", required: false, fields: [
-          { label: "이미지 선택", name: "url", widget: "image", required: false },
-          { label: "이미지 설명 (SEO/접근성용)", name: "alt", widget: "string", required: false, hint: "이미지가 있는 경우에만 입력하세요. 없으면 비워두셔도 됩니다." }
-        ]}
-      - { label: "SEO 설정", name: "seo", widget: "object", collapsed: true, fields: [
-          { label: "SEO 제목", name: "seo_title", widget: "string", required: false, hint: "검색 결과에 표시될 제목입니다. 미입력 시 본문 제목이 사용됩니다." },
-          { label: "SEO 설명", name: "seo_description", widget: "text", required: false, hint: "검색 결과에 표시될 짧은 요약문입니다." },
-          { label: "검색 키워드", name: "keywords", widget: "string", required: false, hint: "쉼표(,)로 구분하여 입력하세요. 예: 제주, 발도르프, 어린이집" }
-        ]}
-      - { label: "팝업으로 띄우기", name: "popup", widget: "boolean", default: false, hint: "⚠️ 주의: 최대 2개까지만 팝업으로 설정할 수 있습니다. 현재 활성화된 팝업이 2개 이상이면 선택할 수 없습니다." }
-      - { label: "팝업 만료일", name: "popup_until", widget: "datetime", required: false, hint: "팝업을 자동으로 숨길 날짜를 설정하세요. 설정하지 않으면 무기한 표시됩니다." }
+      - { label: "작성자", name: "author", widget: "hidden", default: "제주 발도르프 어린이집" }
+      - { label: "작성일", name: "date", widget: "hidden", default: "{{now}}" }
+      - { label: "팝업으로 띄우기", name: "popup", widget: "boolean", default: false }
       - { label: "본문", name: "body", widget: "markdown" }
-
+      - { label: "SEO 설명", name: "seo_description", widget: "text", required: false, hint: "검색 결과에 표시될 짧은 요약문입니다." }
+      - { label: "검색 키워드", name: "keywords", widget: "string", required: false, hint: "쉼표(,)로 구분하여 입력하세요." }
+      - { label: "대표 이미지", name: "image", widget: "image", required: false, hint: "목록에 보여질 이미지를 선택하세요." }
   - name: "board"
     label: "게시판"
     folder: "src/content/board"

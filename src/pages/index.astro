@@ -37,18 +37,7 @@ import pattern06 from '../assets/index-pattern-06.avif';
 const notices = await getCollection('notices');
 
 const popupCandidates = notices
-  .filter((n) => n.data.popup === true)
-  .filter((n) => {
-    const anyData = n.data as any;
-    const until = anyData.popup_until;
-    if (!until) return true;
-    try {
-      const untilMs = until instanceof Date ? until.getTime() : new Date(until).getTime();
-      return Date.now() <= untilMs;
-    } catch {
-      return true;
-    }
-  });
+  .filter((n) => n.data.popup === true);
 
 popupCandidates.sort((a, b) => (a.slug < b.slug ? 1 : a.slug > b.slug ? -1 : 0));
 
