@@ -9,7 +9,11 @@ const testimonialsRaw = await getCollection('testimonial');
 
 // 데이터 가공을 미리 해서 템플릿을 깨끗하게 만듭니다.
 const testimonials = testimonialsRaw
-  .sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime())
+  .sort((a, b) => {
+    const dateA = a.data.date ? new Date(a.data.date).getTime() : 0;
+    const dateB = b.data.date ? new Date(b.data.date).getTime() : 0;
+    return dateB - dateA;
+  })
   .map(post => ({
     ...post,
     formattedDate: (post.data.date ? new Date(post.data.date) : new Date()).toLocaleDateString('ko-KR'),
@@ -34,10 +38,10 @@ const testimonials = testimonialsRaw
         {testimonials.map((post) => (
           <a href={`/about/testimonial/${post.slug}`} class="group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow border border-gray-100 flex flex-col">
             <div class="aspect-[16/10] overflow-hidden relative bg-gray-100">
-              {post.data.image?.url ? (
+              {post.data.image ? (
                 <img 
-                  src={post.data.image.url} 
-                  alt={post.data.image.alt}
+                  src={post.data.image} 
+                  alt={post.data.title}
                   class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 />
               ) : (
@@ -65,15 +69,6 @@ const testimonials = testimonialsRaw
           </a>
         ))}
       </div>
-
-      {testimonials.length === 0 && (
-        <div class="text-center py-20">
-          <p class="text-gray-500">아직 등록된 후기가 없습니다.</p>
-        </div>
-      )}
-    </div>
-  </section>
-</Layout>
 
       {testimonials.length === 0 && (
         <div class="text-center py-20">
