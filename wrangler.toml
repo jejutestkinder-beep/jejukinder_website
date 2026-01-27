@@ -5,6 +5,8 @@ compatibility_flags = ["nodejs_compat"]
 # Cloudflare Pages 설정
 pages_build_output_dir = "./dist"
 
-[[kv_namespaces]]
-binding = "SESSION"
-id = "xxxx" # 실제 KV ID가 있다면 넣으시고, 없으면 이 줄은 삭제해도 됩니다.
+# KV namespace는 사용하지 않는 경우 주석 처리하거나 삭제하세요
+# 실제 KV namespace를 사용하는 경우에만 아래 주석을 해제하고 실제 ID를 입력하세요
+# [[kv_namespaces]]
+# binding = "SESSION"
+# id = "your-actual-kv-namespace-id"
