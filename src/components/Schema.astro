@@ -5,11 +5,12 @@ interface Props {
 }
 
 const { type = 'School', data } = Astro.props;
+const safeData = data && typeof data === 'object' && !Array.isArray(data) ? data : {};
 
 const schema = {
   "@context": "https://schema.org",
   "@type": type,
-  ...data
+  ...safeData
 };
 ---
 
