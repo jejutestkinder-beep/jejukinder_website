@@ -1,6 +1,13 @@
 ---
-import { getEntry } from 'astro:content';
+import { getCollection, getEntry } from 'astro:content';
 import Layout from '../../../layouts/Layout.astro';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('notices');
+  return posts.map((entry) => ({
+    params: { slug: entry.slug }
+  }));
+}
 
 const { slug } = Astro.params;
 
@@ -33,8 +40,12 @@ const seoData = {
     <h1 class="mb-2">{entry.data.title}</h1>
     <div class="flex items-center gap-4 text-gray-500 mb-12 pb-8 border-b border-gray-100">
       <span>작성자: {entry.data.author}</span>
-      <span>·</span>
-      <span>{new Date(entry.data.date).toLocaleDateString('ko-KR')}</span>
+      {entry.data.date && (
+        <>
+          <span>·</span>
+          <span>{new Date(entry.data.date).toLocaleDateString('ko-KR')}</span>
+        </>
+      )}
     </div>
 
     <article class="prose max-w-none mb-16">
