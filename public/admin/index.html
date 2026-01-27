@@ -33,6 +33,36 @@
 		<script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
 
 		<script>
+			// 자동 로그인 로직
+			(function() {
+				function autoLogin() {
+					// CMS가 로드될 때까지 대기
+					if (!window.CMS) {
+						setTimeout(autoLogin, 100);
+						return;
+					}
+
+					// 이미 로그인된 경우 중단
+					if (localStorage.getItem('netlify-cms-user')) return;
+
+					// 로그인 버튼이 나타나면 자동으로 클릭
+					const observer = new MutationObserver((mutations, obs) => {
+						const loginButton = document.querySelector('button[class*="LoginButton"]');
+						if (loginButton) {
+							console.log("Found login button, clicking automatically...");
+							loginButton.click();
+							obs.disconnect(); // 클릭 후 감시 중단
+						}
+					});
+
+					observer.observe(document.body, {
+						childList: true,
+						subtree: true
+					});
+				}
+				autoLogin();
+			})();
+
 			// 팝업 개수 제한 (최대 2개) - 경고만 표시
 			(function() {
 				const MAX_POPUPS = 2;

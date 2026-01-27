@@ -2,6 +2,8 @@ backend:
   name: github
   repo: jejutestkinder-beep/jejukinder_website
   branch: main
+  base_url: https://auth.jejutestkinder.workers.dev # 👈 생성하신 Worker 주소로 바꾸세요
+  auth_endpoint: auth
 
 locale: 'ko'
 
