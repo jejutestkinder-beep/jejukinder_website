@@ -5,8 +5,9 @@ compatibility_flags = ["nodejs_compat"]
 # Cloudflare Pages 설정
 pages_build_output_dir = "./dist"
 
-# KV namespace는 사용하지 않는 경우 주석 처리하거나 삭제하세요
-# 실제 KV namespace를 사용하는 경우에만 아래 주석을 해제하고 실제 ID를 입력하세요
+# KV namespace는 사용하지 않으므로 제거했습니다
+# SESSION 바인딩이 필요한 경우 Cloudflare 대시보드에서 KV namespace를 생성하고
+# 아래 주석을 해제한 후 실제 namespace ID를 입력하세요
 # [[kv_namespaces]]
 # binding = "SESSION"
 # id = "your-actual-kv-namespace-id"
