@@ -57,7 +57,7 @@ const twitterCardType = twitterCard?.card || 'summary_large_image';
       { name: 'keywords', content: keywords },
     ],
   }}
-  openGraph={{
+  openGraph={ogTitle ? {
     basic: {
       title: ogTitle,
       type: ogType,
@@ -67,12 +67,12 @@ const twitterCardType = twitterCard?.card || 'summary_large_image';
       description: ogDescription,
       url: ogUrl,
     }
-  }}
-  twitter={{
-    card: twitterCardType,
+  } : undefined}
+  twitter={twitterTitle ? {
+    card: twitterCardType as any,
     title: twitterTitle,
     description: twitterDescription,
     image: twitterImage,
-  }}
+  } : undefined}
 />
 

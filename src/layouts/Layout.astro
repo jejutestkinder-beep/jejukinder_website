@@ -71,11 +71,11 @@ const {
 			description={description}
 			keywords={keywords}
 			canonical={canonical}
-			openGraph={openGraph}
-			twitterCard={twitterCard}
+			openGraph={openGraph || undefined}
+			twitterCard={twitterCard || undefined}
 		/>
 
-		<Schema type={schemaType} data={schemaData} />
+		{schemaData && <Schema type={schemaType} data={schemaData} />}
 	</head>
 
 	<body>
