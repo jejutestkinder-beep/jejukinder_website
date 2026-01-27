@@ -1,16 +1,19 @@
 ---
-import { getCollection } from 'astro:content';
+import { getEntry } from 'astro:content';
 import Layout from '../../../layouts/Layout.astro';
 
-export async function getStaticPaths() {
-  const notices = await getCollection('notices');
-  return notices.map((n) => ({
-    params: { slug: n.slug },
-    props: { entry: n },
-  }));
+const { slug } = Astro.params;
+
+if (!slug) {
+  return Astro.redirect('/notices/');
 }
 
-const { entry } = Astro.props;
+const entry = await getEntry('notices', slug);
+
+if (!entry) {
+  return Astro.redirect('/notices/');
+}
+
 const { Content } = await entry.render();
 
 const seoData = {

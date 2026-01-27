@@ -1,18 +1,21 @@
 ---
-import { getCollection } from 'astro:content';
+import { getEntry } from 'astro:content';
 import Layout from '../../../layouts/Layout.astro';
 import Hero from '../../../components/Hero.astro';
 import test1 from '../../../assets/hero-testimonial-reviews.jpeg';
 
-export async function getStaticPaths() {
-  const posts = await getCollection('testimonial');
-  return posts.map((p) => ({
-    params: { slug: p.slug },
-    props: { entry: p },
-  }));
+const { slug } = Astro.params;
+
+if (!slug) {
+  return Astro.redirect('/about/testimonial/');
 }
 
-const { entry } = Astro.props;
+const entry = await getEntry('testimonial', slug);
+
+if (!entry) {
+  return Astro.redirect('/about/testimonial/');
+}
+
 const { Content } = await entry.render();
 
 const seoData = {
