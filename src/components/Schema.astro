@@ -1,16 +1,31 @@
 ---
 interface Props {
   type?: 'Organization' | 'LocalBusiness' | 'School' | 'Article';
-  data: any;
+  data?: any;
 }
 
 const { type = 'School', data } = Astro.props;
 
+// data가 유효한 객체인지 확인
+if (!data || typeof data !== 'object' || Array.isArray(data)) {
+  return;
+}
+
+// schema 객체 생성
 const schema = {
   "@context": "https://schema.org",
   "@type": type,
   ...data
 };
+
+// JSON 직렬화 시도
+let schemaJson: string;
+try {
+  schemaJson = JSON.stringify(schema);
+} catch (error) {
+  console.error('Schema JSON stringify error:', error);
+  return;
+}
 ---
 
-<script type="application/ld+json" set:html={JSON.stringify(schema)} />
+<script type="application/ld+json" set:html={schemaJson} />

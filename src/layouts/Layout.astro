@@ -67,15 +67,17 @@ const {
 		<link href="https://fonts.googleapis.com/css2?family=Gaegu:wght@400;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet" />
 		
 		<Seo
-			title={title}
-			description={description}
+			title={title || '제주 발도르프 어린이집'}
+			description={description || '제주 발도르프 어린이집'}
 			keywords={keywords}
 			canonical={canonical}
 			openGraph={openGraph}
 			twitterCard={twitterCard}
 		/>
 
-		<Schema type={schemaType} data={schemaData} />
+		{schemaData && typeof schemaData === 'object' && (
+			<Schema type={schemaType} data={schemaData} />
+		)}
 	</head>
 
 	<body>
