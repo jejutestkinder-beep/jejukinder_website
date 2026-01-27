@@ -5,11 +5,7 @@ export const collections = {
     schema: z.object({
       title: z.string(),
       author: z.string(),
-      date: z.preprocess((val) => {
-        if (!val || val === '') return new Date();
-        if (val instanceof Date) return val;
-        return new Date(val as string);
-      }, z.date()).optional(),
+      date: z.coerce.date().optional(),
       image: z.string().optional(),
       seo_description: z.string().optional(),
       keywords: z.string().optional(),
@@ -22,11 +18,7 @@ export const collections = {
       title: z.string(),
       author: z.string(),
       category: z.enum(['행사 안내', '학교 소식', '기타']),
-      date: z.preprocess((val) => {
-        if (!val || val === '') return new Date();
-        if (val instanceof Date) return val;
-        return new Date(val as string);
-      }, z.date()).optional(),
+      date: z.coerce.date().optional(),
       image: z.string().optional(),
       seo_description: z.string().optional(),
       keywords: z.string().optional(),
@@ -37,11 +29,7 @@ export const collections = {
     schema: z.object({
       title: z.string(),
       author: z.string(),
-      date: z.preprocess((val) => {
-        if (!val || val === '') return new Date();
-        if (val instanceof Date) return val;
-        return new Date(val as string);
-      }, z.date()).optional(),
+      date: z.coerce.date().optional(),
       image: z.string().optional(),
       seo_description: z.string().optional(),
       keywords: z.string().optional(),
