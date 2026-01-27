@@ -17,10 +17,9 @@ collections:
     label: "공지사항"
     folder: "src/content/notices"
     create: true
-    slug: "{{year}}-{{month}}-{{day}}-{{url_slug}}"
+    slug: "{{year}}-{{month}}-{{day}}-{{hour}}{{minute}}"
     fields:
       - { label: "제목", name: "title", widget: "string" }
-      - { label: "URL 슬러그 (영어)", name: "url_slug", widget: "string", hint: "영문과 대시(-)만 사용하세요. 예: school-event-2026", required: true }
       - { label: "작성자", name: "author", widget: "string", required: true }
       - { label: "작성일", name: "date", widget: "datetime", required: true }
       - { label: "대표 이미지", name: "image", widget: "object", required: false, fields: [
@@ -40,10 +39,9 @@ collections:
     label: "게시판"
     folder: "src/content/board"
     create: true
-    slug: "{{year}}-{{month}}-{{day}}-{{url_slug}}"
+    slug: "{{year}}-{{month}}-{{day}}-{{hour}}{{minute}}"
     fields:
       - { label: "제목", name: "title", widget: "string" }
-      - { label: "URL 슬러그 (영어)", name: "url_slug", widget: "string", hint: "영문과 대시(-)만 사용하세요. 예: school-story-2026", required: true }
       - { label: "작성자", name: "author", widget: "string", required: true }
       - { label: "카테고리", name: "category", widget: "select", options: ["행사 안내", "학교 소식", "기타"], required: true }
       - { label: "작성일", name: "date", widget: "datetime" }
@@ -62,10 +60,9 @@ collections:
     label: "어린이집 후기"
     folder: "src/content/testimonial"
     create: true
-    slug: "{{year}}-{{month}}-{{day}}-{{url_slug}}"
+    slug: "{{year}}-{{month}}-{{day}}-{{hour}}{{minute}}"
     fields:
       - { label: "제목", name: "title", widget: "string" }
-      - { label: "URL 슬러그 (영어)", name: "url_slug", widget: "string", hint: "영문과 대시(-)만 사용하세요. 예: graduation-review", required: true }
       - { label: "작성자", name: "author", widget: "string", required: true, hint: "예: OOO 어머니, OOO 졸업생" }
       - { label: "작성일", name: "date", widget: "datetime", required: true }
       - { label: "대표 이미지", name: "image", widget: "object", required: false, fields: [
