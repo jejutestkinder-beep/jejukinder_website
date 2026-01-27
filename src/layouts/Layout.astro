@@ -1,8 +1,6 @@
 ---
 import Navigation from '../components/navigation.astro';
 import Footer from '../components/SiteFooter.astro';
-import Seo from '../components/Seo.astro';
-import Schema from '../components/Schema.astro';
 import '../styles/global.css';
 
 interface Props {
@@ -32,24 +30,15 @@ const {
   title = '제주 발도르프 어린이집',
   description = '제주 발도르프 어린이집',
   canonical,
-  openGraph,
-  twitterCard,
   keywords,
-  schemaType = 'Organization',
-  schemaData = {
-    "name": "제주발도르프어린이집",
-    "alternateName": ["제주 발도르프 어린이집", "제주발도르프"],
-    "description": "제주도에 위치한 발도르프 교육 철학을 실천하는 어린이집입니다.",
-    "url": "https://jejuwaldorf-kinder.com",
-    "logo": "https://jejuwaldorf-kinder.com/favicon.svg",
-    "address": {
-      "@type": "PostalAddress",
-      "addressLocality": "제주특별자치도",
-      "addressCountry": "KR"
-    }
-  },
   naverVerification
 } = Astro.props;
+
+const safeTitle = typeof title === 'string' ? title : String(title ?? '');
+const safeDescription = typeof description === 'string' ? description : String(description ?? '');
+const safeKeywords = typeof keywords === 'string' ? keywords : keywords == null ? '' : String(keywords);
+const safeCanonical = typeof canonical === 'string' ? canonical : canonical == null ? '' : String(canonical);
+const canonicalUrl = safeCanonical || Astro.url.href;
 ---
 
 <!doctype html>
@@ -66,16 +55,10 @@ const {
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 		<link href="https://fonts.googleapis.com/css2?family=Gaegu:wght@400;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet" />
 		
-		<Seo
-			title={title}
-			description={description}
-			keywords={keywords}
-			canonical={canonical}
-			openGraph={openGraph}
-			twitterCard={twitterCard}
-		/>
-
-		<Schema type={schemaType} data={schemaData} />
+		<title>{safeTitle}</title>
+		<meta name="description" content={safeDescription} />
+		{safeKeywords && <meta name="keywords" content={safeKeywords} />}
+		<link rel="canonical" href={canonicalUrl} />
 	</head>
 
 	<body>
