@@ -18,14 +18,19 @@ if (!entry) {
 
 const { Content } = await entry.render();
 
+// entry.body를 안전하게 문자열로 변환
+const bodyText = typeof entry.body === 'string' ? entry.body : String(entry.body || '');
+const descriptionText = bodyText.replace(/[#*`\[\]()]/g, '').substring(0, 160).trim();
+const description = entry.data.seo_description || descriptionText || entry.data.title;
+
 const seoData = {
   title: `${entry.data.title} | 제주발도르프어린이집 후기`,
-  description: entry.data.seo_description || entry.body.substring(0, 160),
+  description: description,
   keywords: entry.data.keywords,
   openGraph: {
     title: entry.data.title,
-    description: entry.data.seo_description || entry.body.substring(0, 160),
-    image: entry.data.image
+    description: description,
+    image: entry.data.image || undefined
   }
 };
 ---
