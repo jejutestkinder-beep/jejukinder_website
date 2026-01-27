@@ -73,7 +73,7 @@ const popupNotices = popupNoticesRaw.filter((item): item is { notice: { slug: st
   keywords="제주 발도르프 어린이집, 제주 발도르프, 제주 숲유치원, 한경면 어린이집, 제주 어린이집, 숲체험, 제주 발도르프 킨더"
   naverVerification="bb450b666d48a8f3962cb3ad50aa34a6d4ca0c29"
 >
-  {popupNotices.map(({ notice, Content }, index) => (
+  {popupNotices.length > 0 && popupNotices.map(({ notice, Content }, index) => (
     <NoticePopup notice={notice} Content={Content} index={index} />
   ))}
 

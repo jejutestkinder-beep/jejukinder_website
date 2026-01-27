@@ -12,8 +12,10 @@ export default defineConfig({
     site: 'https://jejuwaldorf-kinder.com',
     output: 'server', // server로 사용하고 prerender 로 제어한대
     adapter: cloudflare({
-        // 2. 이미지 처리 방식을 'passthrough'로 설정하여 빌드 속도를 대폭 높입니다.
-        imageService: 'passthrough' 
+        // 이미지 처리 방식을 기본값으로 두거나 필요한 설정을 따릅니다.
+        platformProxy: {
+            enabled: true
+        }
     }),
     integrations: [
         tailwind(),
