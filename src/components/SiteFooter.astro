@@ -8,19 +8,22 @@ const socialLinks = [
     platform: 'instagram',
     href: 'https://www.instagram.com/jeju_waldorf_kinder',
     displayName: '제주 발도르프 어린이집',
-    iconName: 'instagram'
+    iconName: 'instagram',
+    tooltip: '어린이집 인스타그램'
   },
   {
     platform: '제주자유발도르프학교',
     href: 'https://blog.naver.com/jeju_waldorf',
     displayName: '제주자유발도르프학교',
-    iconName: 'link'
+    iconName: 'link',
+    tooltip: '제주자유발도르프학교'
   },
   {
     platform: 'youtube',
     href: 'https://www.youtube.com/@제주발도르프',
     displayName: '제주자유발도르프유튜브',
-    iconName: 'youtube'
+    iconName: 'youtube',
+    tooltip: '제주발도르프학교 유튜브'
   }
 ];
 
@@ -101,12 +104,19 @@ const footerNav = [
       <div class="flex flex-col items-center md:items-end gap-8">
         <div class="flex gap-6">
           {socialLinks.map((link) => (
-            <a href={link.href} target="_blank" rel="noopener noreferrer" class="group flex items-center justify-center hover:opacity-80 transition-opacity">
+            <a 
+              href={link.href} 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              class="social-link group relative flex items-center justify-center hover:opacity-80 transition-opacity"
+              aria-label={link.tooltip}
+            >
               <Icon 
                 name={link.iconName} 
                 class="w-7 h-7 transition-all duration-300 group-hover:scale-110" 
                 style="color: #472A2A;" 
               />
+              <span class="social-tooltip">{link.tooltip}</span>
             </a>
           ))}
         </div>
@@ -125,5 +135,42 @@ const footerNav = [
   }
   .info-text {
     color: #472A2A !important;
+  }
+  
+  .social-link {
+    position: relative;
+  }
+  
+  .social-tooltip {
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-8px);
+    background-color: #472A2A;
+    color: white;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 12px;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease-in-out, transform 0.2s ease-in-out;
+    z-index: 10;
+    margin-bottom: 8px;
+  }
+  
+  .social-tooltip::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 5px solid transparent;
+    border-top-color: #472A2A;
+  }
+  
+  .social-link:hover .social-tooltip {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
   }
 </style>
