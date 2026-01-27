@@ -49,30 +49,30 @@ const twitterCardType = twitterCard?.card || 'summary_large_image';
 ---
 
 <SEO
-  title={title || ''}
-  description={description || ''}
+  title={title}
+  description={description}
   canonical={canonical || currentUrl}
-  extend={keywords ? {
+  extend={{
     meta: [
-      { name: 'keywords', content: String(keywords) },
+      { name: 'keywords', content: keywords },
     ],
-  } : undefined}
-  openGraph={ogTitle ? {
+  }}
+  openGraph={{
     basic: {
-      title: String(ogTitle),
-      type: String(ogType),
-      image: String(ogImage),
-      url: String(ogUrl),
+      title: ogTitle,
+      type: ogType,
+      image: ogImage,
+      url: ogUrl,
     },
     optional: {
-      description: String(ogDescription),
+      description: ogDescription,
     }
-  } : undefined}
-  twitter={twitterTitle ? {
-    card: String(twitterCardType) as any,
-    title: String(twitterTitle),
-    description: String(twitterDescription),
-    image: String(twitterImage),
-  } : undefined}
+  }}
+  twitter={{
+    card: twitterCardType,
+    title: twitterTitle,
+    description: twitterDescription,
+    image: twitterImage,
+  }}
 />
 
