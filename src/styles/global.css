@@ -90,6 +90,10 @@
   pre code {
     @apply bg-transparent p-0;
   }
+
+  .prose img {
+    border-radius: 16px;
+  }
 }
 
 /* Form Components */

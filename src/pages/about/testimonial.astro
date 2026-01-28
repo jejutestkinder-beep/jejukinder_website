@@ -17,7 +17,13 @@ const testimonials = testimonialsRaw
   .map(post => ({
     ...post,
     formattedDate: (post.data.date ? new Date(post.data.date) : new Date()).toLocaleDateString('ko-KR'),
-    previewText: post.body.replace(/[#*`]/g, '').substring(0, 200)
+    previewText: post.body
+      .replace(/!\[[^\]]*\]\([^)]*\)/g, '')
+      .replace(/\[[^\]]*\]\([^)]*\)/g, '')
+      .replace(/[#*`]/g, '')
+      .replace(/\s+/g, ' ')
+      .trim()
+      .substring(0, 200)
   }));
 ---
 
@@ -59,7 +65,7 @@ const testimonials = testimonialsRaw
               <h3 class="text-xl font-bold mb-4 line-clamp-1 group-hover:text-custom-rose transition-colors">
                 {post.data.title}
               </h3>
-              <p class="text-gray-600 line-clamp-4 text-sm leading-relaxed mb-6 flex-grow">
+              <p class="text-gray-600 line-clamp-3 text-sm leading-relaxed mb-6 flex-grow">
                 {post.previewText}
               </p>
               <div class="text-xs text-gray-400">
