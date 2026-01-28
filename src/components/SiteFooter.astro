@@ -16,14 +16,17 @@ const socialLinks = [
     href: 'https://blog.naver.com/jeju_waldorf',
     displayName: '제주자유발도르프학교',
     iconName: 'link',
-    tooltip: '제주자유발도르프학교'
+    tooltip: '제주자유발도르프학교 홈페이지'
 
   },
   {
     platform: 'youtube',
     href: 'https://www.youtube.com/@제주발도르프',
     displayName: '제주자유발도르프유튜브',
-    iconName: 'youtube'
+    iconName: 'youtube',
+    tooltip: '제주자유발도르프학교 유튜브'
+
+
   }
 ];
 
@@ -104,12 +107,21 @@ const footerNav = [
       <div class="flex flex-col items-center md:items-end gap-8">
         <div class="flex gap-6">
           {socialLinks.map((link) => (
-            <a href={link.href} target="_blank" rel="noopener noreferrer" class="group flex items-center justify-center hover:opacity-80 transition-opacity">
+            <a
+              href={link.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={link.tooltip || link.displayName}
+              class="group relative flex items-center justify-center hover:opacity-80 transition-opacity"
+            >
               <Icon 
                 name={link.iconName} 
                 class="w-7 h-7 transition-all duration-300 group-hover:scale-110" 
                 style="color: #472A2A;" 
               />
+              {link.tooltip && (
+                <span class="footer-tooltip" role="tooltip">{link.tooltip}</span>
+              )}
             </a>
           ))}
         </div>
@@ -128,5 +140,27 @@ const footerNav = [
   }
   .info-text {
     color: #472A2A !important;
+  }
+  .footer-tooltip {
+    position: absolute;
+    bottom: calc(100% + 8px);
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(55, 38, 38, 0.95);
+    color: #fff;
+    padding: 6px 8px;
+    border-radius: 6px;
+    font-size: 12px;
+    line-height: 1.2;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.15s ease, visibility 0.15s ease;
+    z-index: 10;
+  }
+  .group:hover .footer-tooltip {
+    opacity: 1;
+    visibility: visible;
   }
 </style>
