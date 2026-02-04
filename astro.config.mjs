@@ -8,8 +8,10 @@ import sitemap from '@astrojs/sitemap';
 
 const addTestimonialImageCaptions = () => {
     return (tree, file) => {
-        const filePath = String(file?.path || '');
-        if (!filePath.includes('/testimonial/')) return;
+        const rawPath = String(file?.path || file?.history?.[0] || '');
+        const filePath = rawPath.replace(/\\/g, '/');
+        const isTestimonial = filePath.includes('/content/testimonial/') || filePath.includes('/testimonial/');
+        if (!isTestimonial) return;
 
         const walk = (node) => {
             if (!node || !Array.isArray(node.children)) return;
