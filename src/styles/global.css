@@ -73,6 +73,10 @@
     @apply mb-2 text-lg md:text-xl text-gray-700;
   }
 
+  figcaption.image-caption {
+    @apply mt-2 text-base md:text-lg text-gray-600;
+  }
+
   /* Blockquote */
   blockquote {
     @apply border-l-4 border-custom-green pl-4 py-2 mb-4 italic text-gray-600;

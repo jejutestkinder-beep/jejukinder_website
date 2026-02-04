@@ -6,10 +6,52 @@ import tailwind from '@astrojs/tailwind';
 import icon from 'astro-icon';
 import sitemap from '@astrojs/sitemap';
 
+const addTestimonialImageCaptions = () => {
+    return (tree, file) => {
+        const filePath = String(file?.path || '');
+        if (!filePath.includes('/testimonial/')) return;
+
+        const walk = (node) => {
+            if (!node || !Array.isArray(node.children)) return;
+
+            for (let i = 0; i < node.children.length; i += 1) {
+                const child = node.children[i];
+
+                if (child?.type === 'element' && child.tagName === 'img') {
+                    const title = child.properties?.title;
+                    if (typeof title === 'string' && title.trim()) {
+                        node.children[i] = {
+                            type: 'element',
+                            tagName: 'figure',
+                            properties: { className: ['captioned-image'] },
+                            children: [
+                                child,
+                                {
+                                    type: 'element',
+                                    tagName: 'figcaption',
+                                    properties: { className: ['image-caption'] },
+                                    children: [{ type: 'text', value: title.trim() }]
+                                }
+                            ]
+                        };
+                    }
+                } else {
+                    walk(child);
+                }
+            }
+        };
+
+        walk(tree);
+    };
+};
+
 // https://astro.build/config
 export default defineConfig({
     site: 'https://jejuwaldorf-kinder.com',
     output: 'static',
+    markdown: {
+        rehypePlugins: [addTestimonialImageCaptions()]
+    },
     integrations: [
         tailwind(),
         icon({
