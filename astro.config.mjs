@@ -7,11 +7,7 @@ import icon from 'astro-icon';
 import sitemap from '@astrojs/sitemap';
 
 const addTestimonialImageCaptions = () => {
-    return (tree, file) => {
-        const rawPath = String(file?.path || file?.history?.[0] || '');
-        const filePath = rawPath.replace(/\\/g, '/');
-        const isTestimonial = filePath.includes('/content/testimonial/') || filePath.includes('/testimonial/');
-        if (!isTestimonial) return;
+    return (tree) => {
 
         const toCaptionFigure = (imgNode, titleText) => {
             return {
