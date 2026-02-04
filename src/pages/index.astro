@@ -48,7 +48,12 @@ const popupNotices = await Promise.all(
   limitedCandidates.map(async (notice) => {
     const rendered = await notice.render();
     return {
-      notice,
+      notice: {
+        slug: notice.slug,
+        data: {
+          title: notice.data.title || ''
+        }
+      },
       Content: rendered.Content
     };
   })

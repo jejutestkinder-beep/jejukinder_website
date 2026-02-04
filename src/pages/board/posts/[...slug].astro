@@ -1,6 +1,7 @@
 ---
 import { getCollection, getEntry } from 'astro:content';
 import Layout from '../../../layouts/Layout.astro';
+import { normalizeUploadPath } from '../../../utils/image';
 
 export async function getStaticPaths() {
   const posts = await getCollection('board');
@@ -30,7 +31,7 @@ const seoData = {
   openGraph: {
     title: entry.data.title,
     description: entry.data.seo_description || entry.body.substring(0, 160),
-    image: entry.data.image
+    image: entry.data.image ? normalizeUploadPath(entry.data.image) : undefined
   }
 };
 ---

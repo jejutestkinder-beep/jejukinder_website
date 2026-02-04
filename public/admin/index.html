@@ -120,7 +120,8 @@
 						const author = data.author;
 						const date = data.date;
 						const body = widgetFor('body');
-						const imageUrl = data.image || null;
+						const raw = data.image && data.image.trim();
+const imageUrl = raw ? (raw.startsWith('/') ? raw : '/' + raw) : null;
 
 						return h('div', { 
 							className: 'p-8 max-w-4xl mx-auto bg-white',

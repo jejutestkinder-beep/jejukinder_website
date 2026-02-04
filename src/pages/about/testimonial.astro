@@ -4,6 +4,7 @@ import Hero from '../../components/Hero.astro';
 import { getCollection } from 'astro:content';
 import { Image } from 'astro:assets';
 import test1 from '../../assets/testimonial-hero-01.avif';
+import { normalizeUploadPath } from '../../utils/image';
 
 const testimonialsRaw = await getCollection('testimonial');
 
@@ -46,7 +47,7 @@ const testimonials = testimonialsRaw
             <div class="aspect-[16/10] overflow-hidden relative bg-gray-100">
               {post.data.image ? (
                 <img 
-                  src={post.data.image} 
+                  src={normalizeUploadPath(post.data.image)} 
                   alt={post.data.title}
                   class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 />
