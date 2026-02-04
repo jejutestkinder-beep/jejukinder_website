@@ -39,7 +39,7 @@ const currentUrl = canonical || new URL(Astro.url.pathname, siteUrl).href;
 // Open Graph 기본값 설정
 const ogTitle = toString(openGraph?.title || title);
 const ogDescription = toString(openGraph?.description || description);
-const ogImage = toString(openGraph?.image || `${siteUrl}/og-image.jpg`);
+const ogImage = toString(openGraph?.image || `${siteUrl}/seo-image.jpg`);
 const ogUrl = toString(openGraph?.url || currentUrl);
 const ogType = toString(openGraph?.type || 'website');
 
