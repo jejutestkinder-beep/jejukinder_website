@@ -1,6 +1,6 @@
 {
 	"main": "dist/_worker.js/index.js",
-	"name": "school-site",
+	"name": "jejuwaldorf-kinder-website",
   "compatibility_date": "2026-01-20",
   "compatibility_flags": [
     "nodejs_compat",
